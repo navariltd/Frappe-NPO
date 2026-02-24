@@ -1,0 +1,9 @@
+# Copyright (c) 2026, hussain@frappe.io and Contributors
+# See license.txt
+
+# import frappe
+from frappe.tests.utils import FrappeTestCase
+
+
+class TestDonationAllocationCriteriaType(FrappeTestCase):
+	pass

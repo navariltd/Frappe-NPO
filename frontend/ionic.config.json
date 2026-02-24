@@ -1,0 +1,10 @@
+{
+  "name": "Changemakers",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue",
+  "server": {
+    "url": "http://localhost:8080/"
+  }
+}

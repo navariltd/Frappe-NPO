@@ -1,0 +1,1058 @@
+{
+  "actions": [],
+  "allow_import": 1,
+  "allow_rename": 1,
+  "autoname": "format:BENE-{YYYY}-{MM}-{#####}",
+  "creation": "2022-10-13 12:42:02.875677",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "personal_information_section",
+    "first_name",
+    "last_name",
+    "full_name",
+    "column_break_3",
+    "beneficiary_no",
+    "beneficiary_type",
+    "column_break_4",
+    "gender",
+    "dob",
+    "age",
+    "recruitment_section",
+    "recruitment_phase",
+    "column_break_qgbq",
+    "branch",
+    "accounting_dimensions_section",
+    "cost_center",
+    "dimension_col_break",
+    "section_break_axct",
+    "donors",
+    "section_break_vzck",
+    "created_by",
+    "section_break_uwdz",
+    "bottom_save_button",
+    "address_contact_tab",
+    "column_break_ifez",
+    "contact_html",
+    "column_break_sytn",
+    "address_html",
+    "section_break_epas",
+    "email",
+    "phone_number",
+    "column_break_flhe",
+    "native_full_address",
+    "location_section",
+    "state",
+    "district",
+    "column_break_kcuc",
+    "zone",
+    "ward",
+    "column_break_xrsq",
+    "habitation",
+    "point_of_contact_section",
+    "poc_name",
+    "column_break_23",
+    "poc_phone",
+    "image",
+    "programme_tab",
+    "programme_section",
+    "program",
+    "programme_start_date",
+    "programme_end_date",
+    "lead_donor",
+    "subdonor",
+    "column_break_fypz",
+    "scholarship_status",
+    "program_country",
+    "programme_state",
+    "programme_county",
+    "institution",
+    "course_section",
+    "course",
+    "thematic_area",
+    "column_break_kvlj",
+    "course_level",
+    "identity_tab",
+    "identity_section",
+    "languages_known",
+    "religion",
+    "column_break_stbz",
+    "residency",
+    "nationality",
+    "id_number",
+    "column_break_17",
+    "place_of_birth",
+    "ethnicity",
+    "social_category",
+    "section_break_glmz",
+    "is_identity_proof_available",
+    "identity_proofs",
+    "tab_4_tab",
+    "health_section",
+    "disability_condition",
+    "column_break_24",
+    "chronic_illness",
+    "native_place_section",
+    "native_state",
+    "column_break_iefk",
+    "native_district",
+    "history_section",
+    "has_history",
+    "previous_beneficiary_details",
+    "tab_5_tab",
+    "family_information_section",
+    "household_size",
+    "marital_status",
+    "column_break_31",
+    "fathers_name",
+    "spouses_name",
+    "section_break_fhbu",
+    "has_dependents",
+    "dependants",
+    "housing_section",
+    "type_of_structure",
+    "column_break_isdf",
+    "lives_in_rental",
+    "section_break_bsgr",
+    "housing_description",
+    "tab_6_tab",
+    "supplier",
+    "create_supplier",
+    "create_bank_account",
+    "column_break_zvdz",
+    "student",
+    "column_break_uvuj",
+    "collector",
+    "section_break_zarq",
+    "status",
+    "replaced_by",
+    "column_break_tvlz",
+    "activation_date",
+    "archive_date",
+    "column_break_zfbd",
+    "archive_reason",
+    "education_section",
+    "education_level",
+    "is_employeed",
+    "column_break_40",
+    "employment_type",
+    "other_employment_type",
+    "connections_tab"
+  ],
+  "fields": [
+    {
+      "fieldname": "state",
+      "fieldtype": "Link",
+      "label": "State",
+      "options": "State"
+    },
+    {
+      "fieldname": "district",
+      "fieldtype": "Link",
+      "label": "City/District",
+      "options": "District"
+    },
+    {
+      "fieldname": "zone",
+      "fieldtype": "Link",
+      "label": "Zone/Block",
+      "options": "Zone"
+    },
+    {
+      "fieldname": "ward",
+      "fieldtype": "Link",
+      "in_standard_filter": 1,
+      "label": "Ward/GP",
+      "length": 600,
+      "options": "Ward"
+    },
+    {
+      "fieldname": "habitation",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Hotspot Name/Habitation",
+      "options": "Habitation"
+    },
+    {
+      "fieldname": "religion",
+      "fieldtype": "Link",
+      "label": "Religion",
+      "options": "Religion"
+    },
+    {
+      "fieldname": "disability_condition",
+      "fieldtype": "Table MultiSelect",
+      "label": "Disability Condition",
+      "options": "Disability Condition Item"
+    },
+    {
+      "default": "No",
+      "fieldname": "is_identity_proof_available",
+      "fieldtype": "Select",
+      "label": "Documents Available?",
+      "options": "Yes\nNo\nCan't Say"
+    },
+    {
+      "depends_on": "eval:doc.is_identity_proof_available==\"Yes\"",
+      "fieldname": "identity_proofs",
+      "fieldtype": "Table",
+      "label": "Identity Proofs",
+      "options": "Identity Proof Type"
+    },
+    {
+      "fieldname": "first_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "First Name",
+      "reqd": 1
+    },
+    {
+      "fieldname": "last_name",
+      "fieldtype": "Data",
+      "label": "Last Name"
+    },
+    {
+      "fieldname": "personal_information_section",
+      "fieldtype": "Section Break",
+      "label": "Personal Information"
+    },
+    {
+      "fieldname": "column_break_4",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "location_section",
+      "fieldtype": "Section Break",
+      "label": "Location"
+    },
+    {
+      "fieldname": "health_section",
+      "fieldtype": "Section Break",
+      "label": "Health"
+    },
+    {
+      "fieldname": "identity_section",
+      "fieldtype": "Section Break",
+      "label": "Identity"
+    },
+    {
+      "fieldname": "column_break_3",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "column_break_17",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "point_of_contact_section",
+      "fieldtype": "Section Break",
+      "label": "Point Of Contact"
+    },
+    {
+      "fieldname": "poc_name",
+      "fieldtype": "Data",
+      "label": "POC Name"
+    },
+    {
+      "fieldname": "column_break_23",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "poc_phone",
+      "fieldtype": "Data",
+      "label": "POC Phone",
+      "options": "Phone"
+    },
+    {
+      "allow_in_quick_entry": 1,
+      "fieldname": "age",
+      "fieldtype": "Int",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Age",
+      "non_negative": 1,
+      "search_index": 1
+    },
+    {
+      "fieldname": "gender",
+      "fieldtype": "Link",
+      "label": "Gender",
+      "options": "Gender"
+    },
+    {
+      "default": "Unknown",
+      "fieldname": "marital_status",
+      "fieldtype": "Select",
+      "label": "Marital Status",
+      "options": "Unknown\nUnmarried\nMarried\nDivorced\nSeparated\nWidowed"
+    },
+    {
+      "fieldname": "image",
+      "fieldtype": "Attach Image",
+      "hidden": 1,
+      "label": "Image"
+    },
+    {
+      "fieldname": "family_information_section",
+      "fieldtype": "Section Break",
+      "label": "Family Information"
+    },
+    {
+      "fieldname": "fathers_name",
+      "fieldtype": "Data",
+      "label": "Father's Name"
+    },
+    {
+      "fieldname": "column_break_31",
+      "fieldtype": "Column Break"
+    },
+    {
+      "depends_on": "eval:doc.marital_status==\"Married\"",
+      "fieldname": "spouses_name",
+      "fieldtype": "Data",
+      "label": "Spouse's Name"
+    },
+    {
+      "default": "Unknown",
+      "fieldname": "social_category",
+      "fieldtype": "Select",
+      "label": "Social Category",
+      "options": "SC\nST\nOBC\nGeneral\nUnknown"
+    },
+    {
+      "fieldname": "column_break_24",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "chronic_illness",
+      "fieldtype": "Table MultiSelect",
+      "label": "Chronic Illness",
+      "options": "Chronic Illness Item"
+    },
+    {
+      "fieldname": "education_section",
+      "fieldtype": "Section Break",
+      "label": "Education & Employment"
+    },
+    {
+      "fieldname": "education_level",
+      "fieldtype": "Link",
+      "label": "Education Level",
+      "options": "Education Level"
+    },
+    {
+      "default": "0",
+      "fieldname": "is_employeed",
+      "fieldtype": "Check",
+      "label": "Is Employeed?"
+    },
+    {
+      "depends_on": "eval:doc.is_employeed",
+      "fieldname": "employment_type",
+      "fieldtype": "Select",
+      "label": "Employment Type",
+      "options": "\nLabor\nHospitality\nRestaurants\nHousework\nBegging\nOther"
+    },
+    {
+      "depends_on": "eval:doc.is_employeed==1&&doc.employment_type==\"Other\"",
+      "fieldname": "other_employment_type",
+      "fieldtype": "Data",
+      "label": "Please Specify",
+      "mandatory_depends_on": "eval:doc.is_employeed==1&&doc.employment_type==\"Other\""
+    },
+    {
+      "fieldname": "column_break_40",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "phone_number",
+      "fieldtype": "Data",
+      "label": "Phone Number",
+      "options": "Phone"
+    },
+    {
+      "fieldname": "section_break_glmz",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "native_place_section",
+      "fieldtype": "Section Break",
+      "label": "Native Place"
+    },
+    {
+      "fieldname": "native_state",
+      "fieldtype": "Link",
+      "label": "State",
+      "options": "State"
+    },
+    {
+      "fieldname": "column_break_iefk",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "native_district",
+      "fieldtype": "Link",
+      "label": "District",
+      "options": "District"
+    },
+    {
+      "description": "Include block, GP, village or any other identifier info",
+      "fieldname": "native_full_address",
+      "fieldtype": "Small Text",
+      "label": "Full Address"
+    },
+    {
+      "fieldname": "section_break_uwdz",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "bottom_save_button",
+      "fieldtype": "Button",
+      "label": "Save"
+    },
+    {
+      "fieldname": "languages_known",
+      "fieldtype": "Table MultiSelect",
+      "label": "Languages Known",
+      "options": "Language Multiselect"
+    },
+    {
+      "fieldname": "section_break_vzck",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "created_by",
+      "fieldtype": "Data",
+      "label": "Created By",
+      "read_only": 1
+    },
+    {
+      "fieldname": "full_name",
+      "fieldtype": "Data",
+      "label": "Full Name"
+    },
+    {
+      "fieldname": "recruitment_phase",
+      "fieldtype": "Link",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Recruitment Phase",
+      "options": "Recruitment Phase"
+    },
+    {
+      "fieldname": "address_contact_tab",
+      "fieldtype": "Tab Break",
+      "label": "Address & Contact"
+    },
+    {
+      "fieldname": "identity_tab",
+      "fieldtype": "Tab Break",
+      "label": "Identity"
+    },
+    {
+      "fieldname": "tab_4_tab",
+      "fieldtype": "Tab Break",
+      "label": "Health & History"
+    },
+    {
+      "fieldname": "tab_5_tab",
+      "fieldtype": "Tab Break",
+      "label": "Family & Housing"
+    },
+    {
+      "fieldname": "tab_6_tab",
+      "fieldtype": "Tab Break",
+      "label": "Other Info"
+    },
+    {
+      "fieldname": "connections_tab",
+      "fieldtype": "Tab Break",
+      "label": "Connections",
+      "show_dashboard": 1
+    },
+    {
+      "fieldname": "branch",
+      "fieldtype": "Link",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Branch",
+      "no_copy": 1,
+      "options": "Branch"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Link",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Status",
+      "no_copy": 1,
+      "options": "Beneficiary Status"
+    },
+    {
+      "fieldname": "section_break_fhbu",
+      "fieldtype": "Section Break"
+    },
+    {
+      "depends_on": "eval:doc.has_dependents==1",
+      "fieldname": "dependants",
+      "fieldtype": "Table",
+      "label": "Dependants",
+      "options": "Beneficiary Dependent"
+    },
+    {
+      "fieldname": "ethnicity",
+      "fieldtype": "Data",
+      "label": "Ethnicity"
+    },
+    {
+      "fieldname": "address_html",
+      "fieldtype": "HTML",
+      "label": "Address HTML"
+    },
+    {
+      "fieldname": "column_break_ifez",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "contact_html",
+      "fieldtype": "HTML",
+      "label": "Contact HTML"
+    },
+    {
+      "fieldname": "column_break_tvlz",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "place_of_birth",
+      "fieldtype": "Data",
+      "label": "Place of Birth"
+    },
+    {
+      "fieldname": "nationality",
+      "fieldtype": "Link",
+      "label": "Nationality",
+      "options": "Country"
+    },
+    {
+      "fieldname": "activation_date",
+      "fieldtype": "Date",
+      "label": "Activation date",
+      "no_copy": 1
+    },
+    {
+      "fieldname": "archive_date",
+      "fieldtype": "Date",
+      "label": "Archive Date",
+      "no_copy": 1
+    },
+    {
+      "depends_on": "eval: doc.archive_date",
+      "fieldname": "archive_reason",
+      "fieldtype": "Small Text",
+      "label": "Archive reason"
+    },
+    {
+      "fieldname": "housing_section",
+      "fieldtype": "Section Break",
+      "label": "Housing"
+    },
+    {
+      "default": "0",
+      "fieldname": "lives_in_rental",
+      "fieldtype": "Check",
+      "label": "Lives in rental"
+    },
+    {
+      "fieldname": "type_of_structure",
+      "fieldtype": "Select",
+      "label": "Type of Structure",
+      "options": "Permanent\nSemi Permanent\nOther"
+    },
+    {
+      "fieldname": "housing_description",
+      "fieldtype": "Small Text",
+      "label": "Housing description"
+    },
+    {
+      "fieldname": "column_break_isdf",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "section_break_bsgr",
+      "fieldtype": "Section Break"
+    },
+    {
+      "default": "0",
+      "fieldname": "has_dependents",
+      "fieldtype": "Check",
+      "label": "Has dependents"
+    },
+    {
+      "fieldname": "history_section",
+      "fieldtype": "Section Break",
+      "label": "History"
+    },
+    {
+      "default": "0",
+      "fieldname": "has_history",
+      "fieldtype": "Check",
+      "label": "Has previously been receiving relief aid (FOOD) from any other organization"
+    },
+    {
+      "depends_on": "eval:doc.has_history==1",
+      "fieldname": "previous_beneficiary_details",
+      "fieldtype": "Small Text",
+      "label": "Previous beneficiary details"
+    },
+    {
+      "collapsible": 1,
+      "fieldname": "accounting_dimensions_section",
+      "fieldtype": "Section Break",
+      "label": "Accounting Dimensions"
+    },
+    {
+      "fieldname": "cost_center",
+      "fieldtype": "Table MultiSelect",
+      "in_preview": 1,
+      "label": "Cost Center",
+      "options": "Beneficiary Program"
+    },
+    {
+      "fieldname": "dimension_col_break",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "dob",
+      "fieldtype": "Date",
+      "label": "Date of Birth"
+    },
+    {
+      "allow_in_quick_entry": 1,
+      "fieldname": "beneficiary_no",
+      "fieldtype": "Data",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Beneficiary No",
+      "no_copy": 1,
+      "non_negative": 1,
+      "search_index": 1
+    },
+    {
+      "fieldname": "replaced_by",
+      "fieldtype": "Link",
+      "label": "Replaced by",
+      "no_copy": 1,
+      "options": "Beneficiary"
+    },
+    {
+      "fieldname": "collector",
+      "fieldtype": "Link",
+      "label": "Collector",
+      "options": "Collector"
+    },
+    {
+      "fieldname": "student",
+      "fieldtype": "Link",
+      "label": "Student",
+      "options": "Student"
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "Email",
+      "mandatory_depends_on": "eval: doc.beneficiary_type == \"Student\"",
+      "options": "Email"
+    },
+    {
+      "fieldname": "beneficiary_type",
+      "fieldtype": "Link",
+      "label": "Beneficiary Type",
+      "options": "Beneficiary Type"
+    },
+    {
+      "fieldname": "residency",
+      "fieldtype": "Link",
+      "label": "Residency",
+      "options": "Country"
+    },
+    {
+      "fieldname": "course",
+      "fieldtype": "Link",
+      "label": "Course",
+      "options": "Course"
+    },
+    {
+      "fieldname": "column_break_fypz",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "program",
+      "fieldtype": "Link",
+      "label": "Programme",
+      "options": "Program"
+    },
+    {
+      "fieldname": "scholarship_status",
+      "fieldtype": "Select",
+      "label": "Scholarship Status",
+      "options": "\nSuccessful: Completed/Graduated\nUnsuccessful: Failed\nUnsuccessful: Other (Died)"
+    },
+    {
+      "fieldname": "course_level",
+      "fieldtype": "Select",
+      "label": "Course Level",
+      "options": "\nPostgraduate Masters\nPostgraduate Doctorate"
+    },
+    {
+      "fieldname": "thematic_area",
+      "fieldtype": "Link",
+      "label": "Thematic Area",
+      "options": "Thematic Area"
+    },
+    {
+      "fieldname": "programme_start_date",
+      "fieldtype": "Date",
+      "label": "Programme Start Date"
+    },
+    {
+      "fieldname": "programme_end_date",
+      "fieldtype": "Date",
+      "label": "Programme End Date"
+    },
+    {
+      "fieldname": "lead_donor",
+      "fieldtype": "Link",
+      "label": "Lead Donor",
+      "options": "Donor"
+    },
+    {
+      "fieldname": "subdonor",
+      "fieldtype": "Link",
+      "label": "Sub Donor",
+      "options": "Donor"
+    },
+    {
+      "fieldname": "program_country",
+      "fieldtype": "Link",
+      "label": "Programme Country",
+      "options": "Country"
+    },
+    {
+      "fieldname": "programme_state",
+      "fieldtype": "Data",
+      "label": "Programme State"
+    },
+    {
+      "fieldname": "programme_county",
+      "fieldtype": "Data",
+      "label": "Programme County"
+    },
+    {
+      "fieldname": "institution",
+      "fieldtype": "Link",
+      "label": "Institution",
+      "options": "Learning Centre"
+    },
+    {
+      "fieldname": "column_break_kvlj",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "programme_tab",
+      "fieldtype": "Tab Break",
+      "label": "Programme Details"
+    },
+    {
+      "fieldname": "programme_section",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "course_section",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "household_size",
+      "fieldtype": "Int",
+      "label": "Household Size"
+    },
+    {
+      "fieldname": "supplier",
+      "fieldtype": "Link",
+      "label": "Supplier",
+      "options": "Supplier"
+    },
+    {
+      "fieldname": "column_break_sytn",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "column_break_zvdz",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "column_break_uvuj",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "column_break_stbz",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "recruitment_section",
+      "fieldtype": "Section Break",
+      "label": "Recruitment"
+    },
+    {
+      "fieldname": "column_break_qgbq",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "section_break_zarq",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "section_break_epas",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "column_break_flhe",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "column_break_kcuc",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "column_break_xrsq",
+      "fieldtype": "Column Break"
+    },
+    {
+      "depends_on": "eval: !doc.supplier",
+      "fieldname": "create_supplier",
+      "fieldtype": "Button",
+      "label": "Create Supplier"
+    },
+    {
+      "fieldname": "column_break_zfbd",
+      "fieldtype": "Column Break"
+    },
+    {
+      "depends_on": "eval: doc.supplier",
+      "fieldname": "create_bank_account",
+      "fieldtype": "Button",
+      "label": "Create Bank Account"
+    },
+    {
+      "fieldname": "section_break_axct",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "donors",
+      "fieldtype": "Table",
+      "label": "Donors",
+      "no_copy": 1,
+      "options": "Beneficiary Donor Assignment",
+      "read_only_depends_on": "frm.doc.status !== \"Replacement Pending\""
+    },
+    {
+      "fieldname": "id_number",
+      "fieldtype": "Data",
+      "label": "ID Number"
+    }
+  ],
+  "image_field": "image",
+  "index_web_pages_for_search": 1,
+  "links": [
+    {
+      "group": "General",
+      "link_doctype": "Daily Visit Update",
+      "link_fieldname": "beneficiary"
+    },
+    {
+      "group": "General",
+      "link_doctype": "Entitlement Request",
+      "link_fieldname": "beneficiary"
+    },
+    {
+      "group": "Health",
+      "link_doctype": "Hospitalisation Record",
+      "link_fieldname": "beneficiary"
+    },
+    {
+      "group": "Cases",
+      "link_doctype": "Case",
+      "link_fieldname": "beneficiary"
+    },
+    {
+      "group": "Health",
+      "link_doctype": "Medical Case Sheet",
+      "link_fieldname": "beneficiary"
+    }
+  ],
+  "modified": "2026-02-02 08:19:17.122953",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Beneficiary",
+  "naming_rule": "Expression (old style)",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "import": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "import": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Partner SMT",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Admin (Partner)",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Social Worker",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Program Manager",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Healthcare Team Member",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "SMT(NGO)-Field Co-ordinator",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Medical Co-ordinator",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Learning Centre POC",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Non Profit Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "row_format": "Dynamic",
+  "search_fields": "age,zone,ward,habitation",
+  "show_title_field_in_link": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [
+    {
+      "color": "Green",
+      "title": "Active"
+    },
+    {
+      "color": "Red",
+      "title": "Inactive"
+    },
+    {
+      "color": "Purple",
+      "title": "Alumni"
+    },
+    {
+      "color": "Blue",
+      "title": "Deceased"
+    }
+  ],
+  "title_field": "full_name",
+  "track_changes": 1
+}

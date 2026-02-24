@@ -1,0 +1,82 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2026-01-27 13:24:42.996543",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "donor",
+    "beneficiary_no",
+    "project",
+    "column_break_lpms",
+    "entitlement_currency",
+    "entitlement_amount"
+  ],
+  "fields": [
+    {
+      "fieldname": "donor",
+      "fieldtype": "Link",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Donor",
+      "options": "Donor",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_lpms",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "beneficiary_no",
+      "fieldtype": "Data",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Beneficiary No"
+    },
+    {
+      "fieldname": "entitlement_currency",
+      "fieldtype": "Link",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Entitlement Currency",
+      "options": "Currency"
+    },
+    {
+      "fieldname": "entitlement_amount",
+      "fieldtype": "Currency",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Entitlement Amount"
+    },
+    {
+      "fieldname": "project",
+      "fieldtype": "Link",
+      "label": "Project",
+      "options": "Project"
+    }
+  ],
+  "grid_page_length": 50,
+  "index_web_pages_for_search": 1,
+  "istable": 1,
+  "links": [],
+  "modified": "2026-02-03 16:07:22.594156",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Beneficiary Donor Assignment",
+  "owner": "Administrator",
+  "permissions": [],
+  "row_format": "Dynamic",
+  "rows_threshold_for_grid_search": 20,
+  "sort_field": "creation",
+  "sort_order": "DESC",
+  "states": []
+}

@@ -1,0 +1,139 @@
+{
+  "actions": [],
+  "allow_import": 1,
+  "allow_rename": 1,
+  "autoname": "format:SH-ADM-{MM}-{YYYY}-{####}",
+  "creation": "2022-10-24 23:03:19.898205",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": ["shelter_home", "beneficiary"],
+  "fields": [
+    {
+      "fieldname": "shelter_home",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Shelter Home",
+      "options": "Shelter Home",
+      "reqd": 1
+    },
+    {
+      "fieldname": "beneficiary",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Beneficiary",
+      "options": "Beneficiary",
+      "reqd": 1
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [
+    {
+      "group": "Exit",
+      "link_doctype": "Shelter Home Exit Record",
+      "link_fieldname": "admission_record"
+    }
+  ],
+  "modified": "2026-02-03 15:46:49.722741",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Shelter Home Admission Record",
+  "naming_rule": "Expression (old style)",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Admin (Partner)",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Social Worker",
+      "select": 1,
+      "share": 1
+    },
+    {
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Program Manager",
+      "select": 1,
+      "share": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Partner SMT",
+      "select": 1,
+      "share": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Shelter Team Member",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "SMT(NGO)-Field Co-ordinator",
+      "select": 1,
+      "share": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Non Profit Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "quick_entry": 1,
+  "row_format": "Dynamic",
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1
+}

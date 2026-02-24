@@ -1,0 +1,403 @@
+{
+  "actions": [],
+  "allow_import": 1,
+  "allow_rename": 1,
+  "autoname": "prompt",
+  "creation": "2022-10-13 14:12:03.023421",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "general_section",
+    "type",
+    "column_break_fssq",
+    "admission_criteria",
+    "address_section",
+    "state",
+    "ward",
+    "column_break_agxr",
+    "district",
+    "pin_code",
+    "column_break_jalt",
+    "zone",
+    "section_break_vfmr",
+    "full_address",
+    "point_of_contact_section",
+    "poc_name",
+    "trust_head",
+    "website",
+    "column_break_tdor",
+    "poc_phone",
+    "email",
+    "capacity_details_section",
+    "total_capacity",
+    "column_break_rzte",
+    "num_vacant_available",
+    "details_section",
+    "organisation_type",
+    "specified_organisation_type",
+    "column_break_eqit",
+    "establishment_year",
+    "full_time_staff",
+    "is_80g_available",
+    "property_details_tab",
+    "ownership_of_property",
+    "property_size",
+    "column_break_nnqy",
+    "specified_ownership",
+    "financial_details_tab",
+    "sources_of_income",
+    "services_tab",
+    "types_of_support_needed",
+    "column_break_qcfn",
+    "conducts_medical_camps",
+    "does_entitlements",
+    "conducts_regular_vocational_training_workshops",
+    "image"
+  ],
+  "fields": [
+    {
+      "fieldname": "state",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "State",
+      "options": "State",
+      "reqd": 1
+    },
+    {
+      "fieldname": "district",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "District",
+      "options": "District",
+      "reqd": 1
+    },
+    {
+      "fieldname": "zone",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Zone",
+      "options": "Zone",
+      "reqd": 1
+    },
+    {
+      "fieldname": "ward",
+      "fieldtype": "Link",
+      "label": "Ward",
+      "options": "Ward",
+      "reqd": 1
+    },
+    {
+      "fieldname": "full_time_staff",
+      "fieldtype": "Int",
+      "label": "Full Time Staff",
+      "non_negative": 1
+    },
+    {
+      "fieldname": "address_section",
+      "fieldtype": "Section Break",
+      "label": "Address"
+    },
+    {
+      "fieldname": "column_break_agxr",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "column_break_jalt",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "details_section",
+      "fieldtype": "Section Break",
+      "label": "Organisation Details"
+    },
+    {
+      "fieldname": "column_break_eqit",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "section_break_vfmr",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "full_address",
+      "fieldtype": "Small Text",
+      "label": "Full Address"
+    },
+    {
+      "fieldname": "organisation_type",
+      "fieldtype": "Select",
+      "label": "Organisation Type",
+      "options": "Trust\nSociety\nOthers"
+    },
+    {
+      "depends_on": "eval:doc.organisation_type==\"Others\"",
+      "fieldname": "specified_organisation_type",
+      "fieldtype": "Data",
+      "label": "Specified Organisation Type",
+      "mandatory_depends_on": "eval:doc.organisation_type==\"Others\""
+    },
+    {
+      "fieldname": "pin_code",
+      "fieldtype": "Data",
+      "label": "Pin Code",
+      "non_negative": 1
+    },
+    {
+      "fieldname": "establishment_year",
+      "fieldtype": "Int",
+      "label": "Establishment Year",
+      "length": 4,
+      "non_negative": 1
+    },
+    {
+      "default": "0",
+      "fieldname": "is_80g_available",
+      "fieldtype": "Check",
+      "label": "Is 80G Available?"
+    },
+    {
+      "fieldname": "point_of_contact_section",
+      "fieldtype": "Section Break",
+      "label": "Point Of Contact"
+    },
+    {
+      "fieldname": "poc_name",
+      "fieldtype": "Data",
+      "label": "POC Name"
+    },
+    {
+      "fieldname": "column_break_tdor",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "poc_phone",
+      "fieldtype": "Data",
+      "label": "POC Phone",
+      "options": "Phone"
+    },
+    {
+      "fieldname": "trust_head",
+      "fieldtype": "Data",
+      "label": "NGO/Trust Head"
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "Email",
+      "options": "Email"
+    },
+    {
+      "fieldname": "website",
+      "fieldtype": "Data",
+      "label": "Website"
+    },
+    {
+      "fieldname": "capacity_details_section",
+      "fieldtype": "Section Break",
+      "label": "Capacity Details"
+    },
+    {
+      "fieldname": "total_capacity",
+      "fieldtype": "Int",
+      "label": "Total Capacity",
+      "non_negative": 1
+    },
+    {
+      "fieldname": "column_break_rzte",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "num_vacant_available",
+      "fieldtype": "Int",
+      "label": "Vacant Beds Available",
+      "non_negative": 1
+    },
+    {
+      "fieldname": "ownership_of_property",
+      "fieldtype": "Select",
+      "label": "Ownership Of Property",
+      "options": "Own\nOthers",
+      "reqd": 1
+    },
+    {
+      "depends_on": "eval:doc.ownership_of_property==\"Others\"",
+      "fieldname": "specified_ownership",
+      "fieldtype": "Data",
+      "label": "Specified Ownership",
+      "mandatory_depends_on": "eval:doc.ownership_of_property==\"Others\""
+    },
+    {
+      "fieldname": "sources_of_income",
+      "fieldtype": "Table MultiSelect",
+      "label": "Sources Of Income",
+      "options": "Shelter Income Source"
+    },
+    {
+      "fieldname": "financial_details_tab",
+      "fieldtype": "Tab Break",
+      "label": "Financial Details"
+    },
+    {
+      "fieldname": "property_details_tab",
+      "fieldtype": "Tab Break",
+      "label": "Property Details"
+    },
+    {
+      "fieldname": "property_size",
+      "fieldtype": "Int",
+      "label": "Property Size (in sq. ft)",
+      "non_negative": 1
+    },
+    {
+      "fieldname": "column_break_nnqy",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "services_tab",
+      "fieldtype": "Tab Break",
+      "label": "Services"
+    },
+    {
+      "default": "0",
+      "fieldname": "conducts_medical_camps",
+      "fieldtype": "Check",
+      "label": "Conducts Medical Camps?"
+    },
+    {
+      "default": "0",
+      "fieldname": "does_entitlements",
+      "fieldtype": "Check",
+      "label": "Does Entitlements?"
+    },
+    {
+      "default": "0",
+      "fieldname": "conducts_regular_vocational_training_workshops",
+      "fieldtype": "Check",
+      "label": "Conducts Regular Vocational Training Workshops"
+    },
+    {
+      "fieldname": "image",
+      "fieldtype": "Attach Image",
+      "hidden": 1,
+      "label": "Image"
+    },
+    {
+      "fieldname": "type",
+      "fieldtype": "Link",
+      "label": "Type",
+      "options": "Shelter Home Type"
+    },
+    {
+      "fieldname": "general_section",
+      "fieldtype": "Section Break",
+      "label": "General"
+    },
+    {
+      "fieldname": "column_break_fssq",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "admission_criteria",
+      "fieldtype": "Table MultiSelect",
+      "label": "Admission Criteria",
+      "options": "Admission Criterion"
+    },
+    {
+      "fieldname": "types_of_support_needed",
+      "fieldtype": "Table MultiSelect",
+      "label": "Types of Support Needed",
+      "options": "Support Type"
+    },
+    {
+      "fieldname": "column_break_qcfn",
+      "fieldtype": "Column Break"
+    }
+  ],
+  "image_field": "image",
+  "index_web_pages_for_search": 1,
+  "links": [
+    {
+      "link_doctype": "Shelter Home Service Record",
+      "link_fieldname": "shelter_home"
+    }
+  ],
+  "modified": "2026-02-03 15:50:30.270816",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Shelter Home",
+  "naming_rule": "Set by user",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Admin (Partner)",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Partner SMT",
+      "select": 1,
+      "share": 1
+    },
+    {
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Social Worker",
+      "select": 1,
+      "share": 1
+    },
+    {
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "SMT(NGO)-Field Co-ordinator",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Non Profit Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "row_format": "Dynamic",
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": []
+}

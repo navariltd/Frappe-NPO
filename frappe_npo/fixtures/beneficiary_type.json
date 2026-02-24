@@ -1,0 +1,20 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Beneficiary Type",
+  "modified": "2026-01-16 13:59:32.737107",
+  "name": "Student"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Beneficiary Type",
+  "modified": "2026-01-16 13:59:41.838096",
+  "name": "Others"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Beneficiary Type",
+  "modified": "2026-01-16 14:00:44.932173",
+  "name": "Teacher"
+ }
+]

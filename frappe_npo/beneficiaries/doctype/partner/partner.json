@@ -1,0 +1,170 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "autoname": "naming_series:",
+  "creation": "2025-05-30 09:40:35.075858",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "naming_series",
+    "partner_name",
+    "column_break_5",
+    "partner_type",
+    "email_id",
+    "image",
+    "customer_section",
+    "customer",
+    "customer_name",
+    "supplier_section",
+    "supplier",
+    "address_and_contact_tab",
+    "address_contacts",
+    "address_html",
+    "column_break_9",
+    "contact_html"
+  ],
+  "fields": [
+    {
+      "fieldname": "naming_series",
+      "fieldtype": "Select",
+      "label": "Series",
+      "options": "NPO-MEM-.YYYY.-",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_5",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "email_id",
+      "fieldtype": "Data",
+      "label": "Email Address",
+      "options": "Email"
+    },
+    {
+      "fieldname": "image",
+      "fieldtype": "Attach Image",
+      "hidden": 1,
+      "label": "Image",
+      "no_copy": 1,
+      "print_hide": 1
+    },
+    {
+      "collapsible": 1,
+      "fieldname": "customer_section",
+      "fieldtype": "Section Break",
+      "label": "Customer"
+    },
+    {
+      "fieldname": "customer",
+      "fieldtype": "Link",
+      "label": "Customer",
+      "options": "Customer"
+    },
+    {
+      "fetch_from": "customer.customer_name",
+      "fieldname": "customer_name",
+      "fieldtype": "Data",
+      "label": "Customer Name",
+      "read_only": 1
+    },
+    {
+      "collapsible": 1,
+      "fieldname": "supplier_section",
+      "fieldtype": "Section Break",
+      "label": "Supplier"
+    },
+    {
+      "fieldname": "supplier",
+      "fieldtype": "Link",
+      "label": "Supplier",
+      "options": "Supplier"
+    },
+    {
+      "depends_on": "eval:!doc.__islocal;",
+      "fieldname": "address_contacts",
+      "fieldtype": "Section Break",
+      "label": "Address and Contact",
+      "options": "fa fa-map-marker"
+    },
+    {
+      "fieldname": "address_html",
+      "fieldtype": "HTML",
+      "label": "Address HTML"
+    },
+    {
+      "fieldname": "column_break_9",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "contact_html",
+      "fieldtype": "HTML",
+      "label": "Contact HTML"
+    },
+    {
+      "fieldname": "partner_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Partner Name",
+      "reqd": 1
+    },
+    {
+      "fieldname": "partner_type",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Partner Type",
+      "options": "Partner Type",
+      "reqd": 1
+    },
+    {
+      "fieldname": "address_and_contact_tab",
+      "fieldtype": "Tab Break",
+      "label": "Address and Contact"
+    }
+  ],
+  "image_field": "image",
+  "links": [],
+  "modified": "2025-05-30 09:48:20.522989",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Partner",
+  "naming_rule": "By \"Naming Series\" field",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Non Profit Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Non Profit Member",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "restrict_to_domain": "Non Profit",
+  "row_format": "Dynamic",
+  "search_fields": "partner_type",
+  "show_title_field_in_link": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "title_field": "partner_name",
+  "track_changes": 1,
+  "translated_doctype": 1
+}

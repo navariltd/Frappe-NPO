@@ -1,0 +1,84 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2024-11-14 08:22:33.835581",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "name1",
+    "phone",
+    "column_break_tuxb",
+    "age",
+    "relationship",
+    "employed"
+  ],
+  "fields": [
+    {
+      "fieldname": "phone",
+      "fieldtype": "Data",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Phone",
+      "reqd": 1
+    },
+    {
+      "fieldname": "age",
+      "fieldtype": "Int",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Age",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_tuxb",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "relationship",
+      "fieldtype": "Data",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Relationship",
+      "reqd": 1
+    },
+    {
+      "default": "0",
+      "fieldname": "employed",
+      "fieldtype": "Check",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Employed"
+    },
+    {
+      "fieldname": "name1",
+      "fieldtype": "Data",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Name",
+      "reqd": 1
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "istable": 1,
+  "links": [],
+  "modified": "2024-11-14 09:30:54.855903",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Beneficiary Dependent",
+  "owner": "Administrator",
+  "permissions": [],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": []
+}

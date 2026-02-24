@@ -1,0 +1,90 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Case Type",
+  "is_enabled": 1,
+  "modified": "2025-06-18 12:33:32.301113",
+  "name": "Civil Case",
+  "type": "Civil Case"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Case Type",
+  "is_enabled": 1,
+  "modified": "2025-06-26 11:05:38.354492",
+  "name": "Environment & Land Case",
+  "type": "Environment & Land Case"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Case Type",
+  "is_enabled": 1,
+  "modified": "2023-06-18 01:22:55.445919",
+  "name": "Shelter",
+  "type": "Shelter"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Case Type",
+  "is_enabled": 1,
+  "modified": "2023-06-18 01:23:01.138360",
+  "name": "Medical",
+  "type": "Medical"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Case Type",
+  "is_enabled": 1,
+  "modified": "2023-06-18 01:23:05.368430",
+  "name": "Food",
+  "type": "Food"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Case Type",
+  "is_enabled": 1,
+  "modified": "2023-06-18 01:23:46.368805",
+  "name": "Other",
+  "type": "Other"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Case Type",
+  "is_enabled": 1,
+  "modified": "2023-06-18 01:26:14.586694",
+  "name": "Hygiene",
+  "type": "Hygiene"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Case Type",
+  "is_enabled": 1,
+  "modified": "2024-11-14 15:49:14.354275",
+  "name": "Bereavement",
+  "type": "Bereavement"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Case Type",
+  "is_enabled": 1,
+  "modified": "2024-12-02 12:57:34.380437",
+  "name": "Assessment",
+  "type": "Assessment"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Case Type",
+  "is_enabled": 1,
+  "modified": "2024-11-14 11:28:18.772667",
+  "name": "Local Administration Acknowledgement",
+  "type": "Local Administration Acknowledgement"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Case Type",
+  "is_enabled": 1,
+  "modified": "2024-11-15 13:22:09.973923",
+  "name": "Disqualification",
+  "type": "Disqualification"
+ }
+]

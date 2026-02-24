@@ -1,0 +1,144 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "autoname": "format:{title} - {branch} {funding_pool}",
+  "creation": "2024-11-12 17:02:46.919463",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "title",
+    "funding_pool",
+    "branch",
+    "beneficiary_number_series",
+    "column_break_xzim",
+    "total_slots",
+    "available_slots",
+    "start_date",
+    "end_date",
+    "connections_tab"
+  ],
+  "fields": [
+    {
+      "fieldname": "end_date",
+      "fieldtype": "Date",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "End date"
+    },
+    {
+      "fieldname": "start_date",
+      "fieldtype": "Date",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Start date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "title",
+      "fieldtype": "Data",
+      "label": "Title",
+      "reqd": 1,
+      "unique": 1
+    },
+    {
+      "fieldname": "column_break_xzim",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "connections_tab",
+      "fieldtype": "Tab Break",
+      "label": "Connections",
+      "show_dashboard": 1
+    },
+    {
+      "default": "0",
+      "fieldname": "total_slots",
+      "fieldtype": "Int",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Total slots",
+      "reqd": 1
+    },
+    {
+      "fieldname": "funding_pool",
+      "fieldtype": "Link",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Funding pool",
+      "options": "Funding Pool",
+      "reqd": 1
+    },
+    {
+      "fieldname": "available_slots",
+      "fieldtype": "Int",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Available slots",
+      "read_only": 1
+    },
+    {
+      "fieldname": "beneficiary_number_series",
+      "fieldtype": "Data",
+      "label": "Beneficiary number series"
+    },
+    {
+      "fieldname": "branch",
+      "fieldtype": "Link",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Branch",
+      "options": "Branch",
+      "reqd": 1
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2026-02-02 09:28:50.928277",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Recruitment Phase",
+  "naming_rule": "Expression (old style)",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Non Profit Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "row_format": "Dynamic",
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": []
+}

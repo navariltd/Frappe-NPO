@@ -1,3 +1,5 @@
+from frappe import _
+
 app_name = "frappe_npo"
 app_title = "Frappe NPO"
 app_publisher = "Navari Ltd"
@@ -8,7 +10,7 @@ app_license = "agpl-3.0"
 # Apps
 # ------------------
 
-# required_apps = []
+required_apps = ["erpnext"]
 
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
@@ -26,8 +28,11 @@ app_license = "agpl-3.0"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/frappe_npo/css/frappe_npo.css"
-# app_include_js = "/assets/frappe_npo/js/frappe_npo.js"
+app_include_js = "/assets/frappe_npo/js/frappe_npo.js"
 
+website_route_rules = [
+    {"from_route": "/c/<path:app_path>", "to_route": "c"},
+]
 # include js, css files in header of web template
 # web_include_css = "/assets/frappe_npo/css/frappe_npo.css"
 # web_include_js = "/assets/frappe_npo/js/frappe_npo.js"
@@ -43,7 +48,12 @@ app_license = "agpl-3.0"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+    "Stock Entry": "beneficiaries/overrides/stock_entry.js",
+    "Sales Order": "beneficiaries/overrides/sales_order.js",
+    "Project": "beneficiaries/overrides/project.js",
+    "Payment Entry": "beneficiaries/overrides/payment_entry.js",
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -86,7 +96,8 @@ app_license = "agpl-3.0"
 # ------------
 
 # before_install = "frappe_npo.install.before_install"
-# after_install = "frappe_npo.install.after_install"
+after_install = "frappe_npo.install.after_install"
+after_migrate = "frappe_npo.install.after_migrate"
 
 # Uninstallation
 # ------------
@@ -132,47 +143,38 @@ app_license = "agpl-3.0"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+    "User": {
+        "after_insert": "frappe_npo.beneficiaries.doctype.changemakers_user_profile.changemakers_user_profile.create_user_profile",
+        "on_trash": [
+            "frappe_npo.beneficiaries.doctype.changemakers_user_profile.changemakers_user_profile.delete_user_profile",
+        ],
+    },
+    "ToDo": {
+        "before_save": "frappe_npo.controllers.case.before_save",
+    },
+}
 
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"frappe_npo.tasks.all"
-# 	],
-# 	"daily": [
-# 		"frappe_npo.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"frappe_npo.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"frappe_npo.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"frappe_npo.tasks.monthly"
-# 	],
-# }
+scheduler_events = {
+    "daily": [
+        "frappe_npo.non_profit.doctype.membership.membership.set_expired_status",
+    ],
+}
 
 # Testing
 # -------
 
-# before_tests = "frappe_npo.install.before_tests"
+before_tests = "frappe_npo.non_profit.utils.before_tests"
 
 # Extend DocType Class
 # ------------------------------
-#
-# Specify custom mixins to extend the standard doctype controller.
-# extend_doctype_class = {
-# 	"Task": "frappe_npo.custom.task.CustomTaskMixin"
-# }
+
+extend_doctype_class = {
+    "Payment Entry": "frappe_npo.non_profit.custom_doctype.payment_entry.NonProfitPaymentEntry",
+}
 
 # Overriding Methods
 # ------------------------------
@@ -250,3 +252,82 @@ app_license = "agpl-3.0"
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+
+global_search_doctypes = {
+    "Non Profit": [
+        {"doctype": "Certified Consultant", "index": 1},
+        {"doctype": "Certification Application", "index": 2},
+        {"doctype": "Volunteer", "index": 3},
+        {"doctype": "Membership", "index": 4},
+        {"doctype": "Member", "index": 5},
+        {"doctype": "Donor", "index": 6},
+        {"doctype": "Chapter", "index": 7},
+        {"doctype": "Grant Application", "index": 8},
+        {"doctype": "Volunteer Type", "index": 9},
+        {"doctype": "Donor Type", "index": 10},
+        {"doctype": "Membership Type", "index": 11},
+    ]
+}
+
+standard_portal_menu_items = [
+    {
+        "title": _("Certification"),
+        "route": "/certification",
+        "reference_doctype": "Certification Application",
+        "role": "Non Profit Portal User",
+    },
+]
+
+fixtures = [
+    {
+        "doctype": "Property Setter",
+        "filters": [
+            ["is_system_generated", "=", 0],
+            ["module", "=", "Non Profit"],
+        ],
+    },
+    "Custom HTML Block",
+    "Case Type",
+    "State",
+    "Payment Type",
+    {"dt": "Client Script", "filters": {"name": "Action: Create User Profile"}},
+    {
+        "dt": "Role",
+        "filters": {
+            "role_name": (
+                "in",
+                [
+                    "Social Worker",
+                    "Shelter Team Member",
+                    "Healthcare Team Member",
+                    "Food Team Member",
+                    "SMT(NGO)-Field Co-ordinator",
+                    "Medical Co-ordinator",
+                    "Program Manager",
+                    "Partner SMT",
+                    "Data MIS/Documentation (Admin)",
+                ],
+            )
+        },
+    },
+    {
+        "doctype": "Custom Field",
+        "filters": [
+            [
+                "dt",
+                "in",
+                ("Project", "Stock Entry", "Budget", "Task", "Case"),
+            ],
+            ["is_system_generated", "=", 0],
+            ["module", "=", "Beneficiaries"],
+        ],
+    },
+]
+
+accounting_dimension_doctypes = [
+    "Beneficiary",
+    "Donor",
+    "Donation Allocation",
+    "Donation Allocation Item",
+    "Donation Disbursement Entry",
+]

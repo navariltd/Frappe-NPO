@@ -1,0 +1,55 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "autoname": "prompt",
+  "creation": "2026-01-15 12:01:06.914837",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": ["section_break_uf0b"],
+  "fields": [
+    {
+      "fieldname": "section_break_uf0b",
+      "fieldtype": "Section Break"
+    }
+  ],
+  "grid_page_length": 50,
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2026-02-03 15:59:05.674605",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Donation Allocation Criteria Type",
+  "naming_rule": "Set by user",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Non Profit Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "row_format": "Dynamic",
+  "rows_threshold_for_grid_search": 20,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": []
+}

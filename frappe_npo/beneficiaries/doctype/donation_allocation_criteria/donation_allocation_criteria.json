@@ -1,0 +1,86 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2026-01-15 11:58:38.639601",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "parameter",
+    "condition_and_formula_section",
+    "condition",
+    "column_break_wnse",
+    "formula",
+    "section_break_hrlf",
+    "amount"
+  ],
+  "fields": [
+    {
+      "fieldname": "parameter",
+      "fieldtype": "Link",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Parameter",
+      "options": "Donation Allocation Criteria Type",
+      "reqd": 1
+    },
+    {
+      "fieldname": "condition_and_formula_section",
+      "fieldtype": "Section Break",
+      "label": "Condition and formula"
+    },
+    {
+      "fieldname": "condition",
+      "fieldtype": "Code",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Condition"
+    },
+    {
+      "fieldname": "column_break_wnse",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "formula",
+      "fieldtype": "Code",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Formula"
+    },
+    {
+      "fieldname": "section_break_hrlf",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "amount",
+      "fieldtype": "Currency",
+      "in_filter": 1,
+      "in_list_view": 1,
+      "in_preview": 1,
+      "in_standard_filter": 1,
+      "label": "Amount",
+      "non_negative": 1
+    }
+  ],
+  "grid_page_length": 50,
+  "index_web_pages_for_search": 1,
+  "istable": 1,
+  "links": [],
+  "modified": "2026-01-15 12:07:47.121134",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Donation Allocation Criteria",
+  "owner": "Administrator",
+  "permissions": [],
+  "row_format": "Dynamic",
+  "rows_threshold_for_grid_search": 20,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": []
+}

@@ -1,0 +1,55 @@
+{
+  "cookies": [
+    {
+      "name": "sid",
+      "value": "20be16f8639c99af5a7e1e9eddcd3866e68cf36d5327c4af04bb6c5c",
+      "domain": "changemakers.localhost",
+      "path": "/",
+      "expires": 1675728105,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "system_user",
+      "value": "yes",
+      "domain": "changemakers.localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "full_name",
+      "value": "Administrator",
+      "domain": "changemakers.localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "user_id",
+      "value": "Administrator",
+      "domain": "changemakers.localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "user_image",
+      "value": "",
+      "domain": "changemakers.localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}

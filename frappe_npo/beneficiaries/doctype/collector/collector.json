@@ -1,0 +1,85 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "autoname": "format:{first_name} {last_name} - {####}",
+  "creation": "2024-11-15 14:00:25.504820",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "first_name",
+    "middle_name",
+    "column_break_mjjo",
+    "last_name",
+    "national_id_number"
+  ],
+  "fields": [
+    {
+      "fieldname": "first_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "First name",
+      "reqd": 1
+    },
+    {
+      "fieldname": "middle_name",
+      "fieldtype": "Data",
+      "label": "Middle name"
+    },
+    {
+      "fieldname": "last_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Last name",
+      "reqd": 1
+    },
+    {
+      "fieldname": "national_id_number",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "National Id Number",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_mjjo",
+      "fieldtype": "Column Break"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2026-02-02 09:28:34.519770",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Collector",
+  "naming_rule": "Expression (old style)",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Non Profit Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "row_format": "Dynamic",
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": []
+}

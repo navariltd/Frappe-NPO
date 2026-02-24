@@ -1,0 +1,258 @@
+{
+  "actions": [],
+  "allow_import": 1,
+  "autoname": "autoincrement",
+  "creation": "2022-12-26 18:19:13.320208",
+  "default_view": "List",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "beneficiary",
+    "age",
+    "is_in_shelter",
+    "shelter_home",
+    "column_break_gzfi",
+    "contact",
+    "gender",
+    "shelter_incharge",
+    "habitation",
+    "meeting_details_section",
+    "meeting_date",
+    "meeting_outcome",
+    "column_break_zzzd",
+    "meeting_time",
+    "other_notes",
+    "police_formalities_section",
+    "police_station",
+    "column_break_kjnh",
+    "police_memo"
+  ],
+  "fields": [
+    {
+      "fieldname": "beneficiary",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Beneficiary",
+      "options": "Beneficiary",
+      "reqd": 1
+    },
+    {
+      "fetch_from": "beneficiary.age",
+      "fieldname": "age",
+      "fieldtype": "Int",
+      "label": "Age",
+      "read_only": 1
+    },
+    {
+      "fetch_from": "beneficiary.gender",
+      "fieldname": "gender",
+      "fieldtype": "Link",
+      "label": "Gender",
+      "options": "Gender",
+      "read_only": 1
+    },
+    {
+      "fetch_from": "beneficiary.phone_number",
+      "fieldname": "contact",
+      "fieldtype": "Data",
+      "label": "Contact",
+      "read_only": 1
+    },
+    {
+      "fieldname": "meeting_date",
+      "fieldtype": "Date",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Meeting Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "meeting_time",
+      "fieldtype": "Time",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Meeting Time",
+      "reqd": 1
+    },
+    {
+      "fieldname": "meeting_outcome",
+      "fieldtype": "Select",
+      "label": "Meeting Outcome",
+      "options": "Meeting went well and the Beneficiary returned to home\nMeeting went well but the Beneficiary didn\u2019t go home\nFamily members did not come\nBeneficiary didn\u2019t go for the meeting\nMismatch"
+    },
+    {
+      "fieldname": "column_break_gzfi",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "meeting_details_section",
+      "fieldtype": "Section Break",
+      "label": "Meeting Details"
+    },
+    {
+      "fieldname": "column_break_zzzd",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "police_formalities_section",
+      "fieldtype": "Section Break",
+      "label": "Police Formalities"
+    },
+    {
+      "fieldname": "police_station",
+      "fieldtype": "Data",
+      "label": "Police Station"
+    },
+    {
+      "fieldname": "column_break_kjnh",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "police_memo",
+      "fieldtype": "Attach",
+      "label": "Police Memo"
+    },
+    {
+      "default": "0",
+      "fieldname": "is_in_shelter",
+      "fieldtype": "Check",
+      "label": "Is in shelter home?"
+    },
+    {
+      "depends_on": "eval:doc.is_in_shelter==true",
+      "fieldname": "shelter_home",
+      "fieldtype": "Link",
+      "label": "Shelter Home",
+      "mandatory_depends_on": "eval:doc.is_in_shelter==true",
+      "options": "Shelter Home"
+    },
+    {
+      "depends_on": "eval:doc.is_in_shelter==true",
+      "fieldname": "shelter_incharge",
+      "fieldtype": "Data",
+      "label": "Shelter Incharge"
+    },
+    {
+      "depends_on": "eval:doc.is_in_shelter==false",
+      "fieldname": "habitation",
+      "fieldtype": "Link",
+      "label": "Habitation",
+      "options": "Habitation"
+    },
+    {
+      "description": "Departure Location, etc.",
+      "fieldname": "other_notes",
+      "fieldtype": "Long Text",
+      "label": "Other Notes"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2026-02-03 15:48:32.703116",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Family Reintegration",
+  "naming_rule": "Autoincrement",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Admin (Partner)",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Partner SMT",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Social Worker",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Program Manager",
+      "select": 1,
+      "share": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Shelter Team Member",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "SMT(NGO)-Field Co-ordinator",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Non Profit Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "row_format": "Dynamic",
+  "show_title_field_in_link": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "title_field": "beneficiary"
+}

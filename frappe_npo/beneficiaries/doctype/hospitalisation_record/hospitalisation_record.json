@@ -1,0 +1,216 @@
+{
+  "actions": [],
+  "allow_import": 1,
+  "allow_rename": 1,
+  "autoname": "format:HOSP-{MM}-{YYYY}-{####}",
+  "creation": "2022-10-20 22:02:13.524222",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "hospital",
+    "admitted_at",
+    "column_break_3",
+    "beneficiary",
+    "discharged_at",
+    "section_break_qmpd",
+    "patient_id",
+    "illness_description",
+    "column_break_ovbv",
+    "under_doctor",
+    "discharge_summary",
+    "section_break_6",
+    "bill_amount",
+    "section_break_nvkj",
+    "bottom_save_button",
+    "column_break_qori"
+  ],
+  "fields": [
+    {
+      "fieldname": "hospital",
+      "fieldtype": "Link",
+      "label": "Hospital",
+      "options": "Healthcare Provider"
+    },
+    {
+      "fieldname": "admitted_at",
+      "fieldtype": "Datetime",
+      "in_list_view": 1,
+      "label": "Admitted At"
+    },
+    {
+      "fieldname": "column_break_3",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "beneficiary",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Beneficiary",
+      "options": "Beneficiary",
+      "reqd": 1
+    },
+    {
+      "fieldname": "discharged_at",
+      "fieldtype": "Datetime",
+      "label": "Discharged At"
+    },
+    {
+      "fieldname": "section_break_6",
+      "fieldtype": "Section Break",
+      "label": "Bill Details"
+    },
+    {
+      "fieldname": "bill_amount",
+      "fieldtype": "Currency",
+      "label": "Bill Amount"
+    },
+    {
+      "fieldname": "section_break_qmpd",
+      "fieldtype": "Section Break"
+    },
+    {
+      "description": "From the Hospital",
+      "fieldname": "patient_id",
+      "fieldtype": "Data",
+      "label": "Patient ID"
+    },
+    {
+      "fieldname": "illness_description",
+      "fieldtype": "Small Text",
+      "label": "Illness Description"
+    },
+    {
+      "fieldname": "column_break_ovbv",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "under_doctor",
+      "fieldtype": "Data",
+      "label": "Admitted Under Doctor"
+    },
+    {
+      "fieldname": "discharge_summary",
+      "fieldtype": "Small Text",
+      "label": "Discharge / Medical Summary"
+    },
+    {
+      "fieldname": "section_break_nvkj",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "bottom_save_button",
+      "fieldtype": "Button",
+      "label": "Save"
+    },
+    {
+      "fieldname": "column_break_qori",
+      "fieldtype": "Column Break"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2026-02-03 15:53:48.362046",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Hospitalisation Record",
+  "naming_rule": "Expression (old style)",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "import": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "import": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Admin (Partner)",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Partner SMT",
+      "share": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Social Worker",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Healthcare Team Member",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "SMT(NGO)-Field Co-ordinator",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Medical Co-ordinator",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Non Profit Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "row_format": "Dynamic",
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": []
+}

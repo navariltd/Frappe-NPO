@@ -1,0 +1,31 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2024-12-12 11:37:32.999074",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": ["chronic_illness"],
+  "fields": [
+    {
+      "fieldname": "chronic_illness",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Chronic Illness",
+      "options": "Chronic Illness Type",
+      "reqd": 1
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "istable": 1,
+  "links": [],
+  "modified": "2024-12-12 11:38:07.503344",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Chronic Illness Item",
+  "owner": "Administrator",
+  "permissions": [],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": []
+}

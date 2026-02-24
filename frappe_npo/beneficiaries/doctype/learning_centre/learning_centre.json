@@ -1,0 +1,231 @@
+{
+  "actions": [],
+  "allow_import": 1,
+  "allow_rename": 1,
+  "autoname": "prompt",
+  "creation": "2022-12-27 13:22:20.568074",
+  "default_view": "List",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "date_of_commencement",
+    "capacity",
+    "column_break_fbbr",
+    "type",
+    "organisation",
+    "generate_supplier_on_creation",
+    "address_section",
+    "state",
+    "zone",
+    "habitation",
+    "column_break_vkgq",
+    "district",
+    "ward",
+    "pin_code",
+    "section_break_goye",
+    "full_address",
+    "landmark",
+    "poc_section",
+    "poc_name",
+    "poc_alternate_phone",
+    "column_break_hask",
+    "poc_phone"
+  ],
+  "fields": [
+    {
+      "fieldname": "date_of_commencement",
+      "fieldtype": "Date",
+      "label": "Date Of Commencement"
+    },
+    {
+      "fieldname": "type",
+      "fieldtype": "Select",
+      "label": "Type",
+      "options": "Micro Learning Centre\nTution Centre"
+    },
+    {
+      "fieldname": "address_section",
+      "fieldtype": "Section Break",
+      "label": "Address"
+    },
+    {
+      "fieldname": "state",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "State",
+      "options": "State"
+    },
+    {
+      "fieldname": "zone",
+      "fieldtype": "Link",
+      "label": "Zone/Block",
+      "options": "Zone"
+    },
+    {
+      "fieldname": "habitation",
+      "fieldtype": "Link",
+      "label": "Hotspot Name/Habitation",
+      "options": "Habitation"
+    },
+    {
+      "fieldname": "column_break_vkgq",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "district",
+      "fieldtype": "Link",
+      "label": "City/District",
+      "options": "District"
+    },
+    {
+      "fieldname": "ward",
+      "fieldtype": "Link",
+      "label": "Ward/GP",
+      "options": "Ward"
+    },
+    {
+      "fieldname": "section_break_goye",
+      "fieldtype": "Section Break"
+    },
+    {
+      "fieldname": "full_address",
+      "fieldtype": "Small Text",
+      "label": "Full Address"
+    },
+    {
+      "fieldname": "pin_code",
+      "fieldtype": "Data",
+      "label": "Pin Code",
+      "non_negative": 1
+    },
+    {
+      "fieldname": "column_break_fbbr",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "landmark",
+      "fieldtype": "Data",
+      "label": "Landmark"
+    },
+    {
+      "fieldname": "capacity",
+      "fieldtype": "Int",
+      "label": "Capacity",
+      "non_negative": 1
+    },
+    {
+      "fieldname": "poc_section",
+      "fieldtype": "Section Break",
+      "label": "Point Of Contact"
+    },
+    {
+      "fieldname": "poc_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "POC Name"
+    },
+    {
+      "fieldname": "poc_alternate_phone",
+      "fieldtype": "Data",
+      "label": "POC Alternate Phone",
+      "options": "Phone"
+    },
+    {
+      "fieldname": "column_break_hask",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "poc_phone",
+      "fieldtype": "Data",
+      "label": "POC Phone",
+      "options": "Phone"
+    },
+    {
+      "fieldname": "organisation",
+      "fieldtype": "Link",
+      "label": "Organisation",
+      "options": "Organisation"
+    },
+    {
+      "default": "0",
+      "fieldname": "generate_supplier_on_creation",
+      "fieldtype": "Check",
+      "label": "Generate Supplier on Creation"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2026-02-03 15:56:07.617869",
+  "modified_by": "Administrator",
+  "module": "Beneficiaries",
+  "name": "Learning Centre",
+  "naming_rule": "Set by user",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Admin (Partner)",
+      "select": 1,
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Partner SMT",
+      "select": 1,
+      "share": 1
+    },
+    {
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Program Manager",
+      "select": 1,
+      "share": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Non Profit Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "row_format": "Dynamic",
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1
+}

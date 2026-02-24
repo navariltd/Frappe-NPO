@@ -1,0 +1,225 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:email",
+ "creation": "2017-09-19 16:20:27.510196",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "primary_details_section",
+  "donor_name",
+  "email",
+  "phone_number",
+  "salutation",
+  "column_break_5",
+  "donor_type",
+  "id_number",
+  "image",
+  "customer",
+  "create_customer",
+  "donor_info_section",
+  "birthday_date",
+  "date_registered",
+  "column_break_15",
+  "is_a_frequent_donor",
+  "charter",
+  "accounting_dimensions_section",
+  "cost_center",
+  "dimension_col_break",
+  "address_and_contact_tab",
+  "address_contacts",
+  "address_html",
+  "column_break_9",
+  "contact_html",
+  "connections_tab"
+ ],
+ "fields": [
+  {
+   "fieldname": "primary_details_section",
+   "fieldtype": "Section Break",
+   "label": "Primary Details"
+  },
+  {
+   "fieldname": "donor_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Donor Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "Phone Number"
+  },
+  {
+   "fieldname": "salutation",
+   "fieldtype": "Link",
+   "label": "Salutation",
+   "options": "Salutation"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "donor_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Donor Type",
+   "options": "Donor Type",
+   "reqd": 1
+  },
+  {
+   "description": "Link this donor to a Customer record for accounting purposes.",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Linked Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "id_number",
+   "fieldtype": "Data",
+   "label": "ID Number"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Image",
+   "no_copy": 1,
+   "print_hide": 1
+  },
+  {
+   "fieldname": "donor_info_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_a_frequent_donor",
+   "fieldtype": "Check",
+   "label": "Is a frequent donor?"
+  },
+  {
+   "fieldname": "birthday_date",
+   "fieldtype": "Date",
+   "label": "Birthday Date"
+  },
+  {
+   "fieldname": "date_registered",
+   "fieldtype": "Date",
+   "label": "Date Registered"
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "charter",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Charter",
+   "options": "Funding Pool"
+  },
+  {
+   "depends_on": "eval:!doc.__islocal;",
+   "fieldname": "address_contacts",
+   "fieldtype": "Section Break",
+   "label": "Address and Contact",
+   "options": "fa fa-map-marker"
+  },
+  {
+   "fieldname": "address_html",
+   "fieldtype": "HTML",
+   "label": "Address HTML"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contact_html",
+   "fieldtype": "HTML",
+   "label": "Contact HTML"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "accounting_dimensions_section",
+   "fieldtype": "Section Break",
+   "label": "Accounting Dimensions"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Table MultiSelect",
+   "label": "Cost Center",
+   "options": "Beneficiary Program"
+  },
+  {
+   "fieldname": "dimension_col_break",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "create_customer",
+   "fieldtype": "Button",
+   "label": "Create Customer"
+  },
+  {
+   "fieldname": "address_and_contact_tab",
+   "fieldtype": "Tab Break",
+   "label": "Address and Contact"
+  },
+  {
+   "fieldname": "connections_tab",
+   "fieldtype": "Tab Break",
+   "label": "Connections",
+   "show_dashboard": 1
+  }
+ ],
+ "image_field": "image",
+ "links": [
+  {
+   "link_doctype": "Donation",
+   "link_fieldname": "donor"
+  }
+ ],
+ "modified": "2026-01-27 11:31:51.998451",
+ "modified_by": "Administrator",
+ "module": "Non Profit",
+ "name": "Donor",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Non Profit Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "restrict_to_domain": "Non Profit",
+ "row_format": "Dynamic",
+ "search_fields": "donor_name,email,phone_number",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "donor_name",
+ "track_changes": 1,
+ "translated_doctype": 1
+}
