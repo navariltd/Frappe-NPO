@@ -10,14 +10,14 @@ class BeneficiaryUserProfile(Document):
 
 
 def create_user_profile(doc, method=None):
-    if not frappe.db.exists("Changemakers User Profile", {"user": doc.name}):
-        frappe.get_doc(doctype="Changemakers User Profile", user=doc.name).insert(
+    if not frappe.db.exists("Beneficiary User Profile", {"user": doc.name}):
+        frappe.get_doc(doctype="Beneficiary User Profile", user=doc.name).insert(
             ignore_permissions=True
         )
         frappe.db.commit()
 
 
 def delete_user_profile(doc, method=None):
-    exists = frappe.db.exists("Changemakers User Profile", {"user": doc.name})
+    exists = frappe.db.exists("Beneficiary User Profile", {"user": doc.name})
     if exists:
-        return frappe.get_doc("Changemakers User Profile", {"user": doc.name}).delete()
+        return frappe.get_doc("Beneficiary User Profile", {"user": doc.name}).delete()
