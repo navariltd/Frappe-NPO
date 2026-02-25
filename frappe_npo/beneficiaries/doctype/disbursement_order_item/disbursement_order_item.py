@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class BeneficiaryDisbursementEntryItem(Document):
+class DisbursementOrderItem(Document):
 	pass
