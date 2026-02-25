@@ -54,12 +54,9 @@ frappe.ui.form.on("Disbursement Order", {
 		} else {
 			if (frm.doc.docstatus === 0) {
 				if (!(frm.doc.beneficiaries || []).length && !frm.is_new()) {
-					frm.page.set_primary_action(
-						__("Get Beneficiaries"),
-						function () {
-							frm.events.get_beneficiary_details(frm);
-						},
-					);
+					frm.page.set_primary_action(__("Get Beneficiaries"), function () {
+						frm.events.get_beneficiary_details(frm);
+					});
 				}
 			} else if (frm.doc.docstatus === 1) {
 				if (!frm.doc.entries_created) {
@@ -77,18 +74,15 @@ frappe.ui.form.on("Disbursement Order", {
 							doctype: "Sales Invoice",
 							fields: ["name"],
 							filters: {
-								donation_disbursement_entry: frm.doc.name,
+								disbursement_order: frm.doc.name,
 							},
 						},
 						callback: function (r) {
 							if (r.message && r.message.length > 0) {
 							} else {
-								frm.add_custom_button(
-									__("Create Sales Invoice"),
-									function () {
-										frm.events.create_sales_invoice(frm);
-									},
-								).addClass("btn-primary");
+								frm.add_custom_button(__("Create Sales Invoice"), function () {
+									frm.events.create_sales_invoice(frm);
+								}).addClass("btn-primary");
 							}
 						},
 					});
@@ -126,8 +120,7 @@ frappe.ui.form.on("Disbursement Order", {
 						child.qty = item_row.qty || 0;
 						child.rate = item_row.rate || 0;
 						child.uom = item_row.uom;
-						child.amount =
-							(item_row.qty || 0) * (item_row.rate || 0);
+						child.amount = (item_row.qty || 0) * (item_row.rate || 0);
 
 						child.mode_of_payment = frm.doc.mode_of_payment;
 					});
@@ -141,23 +134,18 @@ frappe.ui.form.on("Disbursement Order", {
 
 	process_disbursement: function (frm) {
 		let method_name =
-			frm.doc.allocation_type === "Cash"
-				? "make_payment_entries"
-				: "make_stock_entries";
+			frm.doc.allocation_type === "Cash" ? "make_payment_entries" : "make_stock_entries";
 
-		frappe.confirm(
-			__("Create disbursement entries for all beneficiaries?"),
-			function () {
-				frappe.call({
-					doc: frm.doc,
-					method: method_name,
-					freeze: true,
-					callback: function () {
-						frm.reload_doc();
-					},
-				});
-			},
-		);
+		frappe.confirm(__("Create disbursement entries for all beneficiaries?"), function () {
+			frappe.call({
+				doc: frm.doc,
+				method: method_name,
+				freeze: true,
+				callback: function () {
+					frm.reload_doc();
+				},
+			});
+		});
 	},
 
 	create_sales_invoice: function (frm) {
@@ -174,11 +162,7 @@ frappe.ui.form.on("Disbursement Order", {
 					frappe.msgprint(__("Sales Invoice could not be created."));
 					return;
 				} else {
-					frappe.set_route(
-						"Form",
-						"Sales Invoice",
-						data.sales_invoice,
-					);
+					frappe.set_route("Form", "Sales Invoice", data.sales_invoice);
 				}
 			},
 		});
@@ -213,10 +197,7 @@ frappe.ui.form.on("Disbursement Order", {
 								item[3] !== null,
 						);
 
-					frm.set_value(
-						"saved_filters",
-						JSON.stringify(frm.advanced_filters),
-					);
+					frm.set_value("saved_filters", JSON.stringify(frm.advanced_filters));
 				},
 			});
 
@@ -228,11 +209,7 @@ frappe.ui.form.on("Disbursement Order", {
 						frm.advanced_filters = saved;
 
 						saved.forEach((f) => {
-							if (
-								Array.isArray(f) &&
-								f[3] !== undefined &&
-								f[3] !== null
-							) {
+							if (Array.isArray(f) && f[3] !== undefined && f[3] !== null) {
 								frm.filter_list.add_filter(...f);
 							}
 						});
@@ -285,10 +262,7 @@ frappe.ui.form.on("Disbursement Order", {
 			],
 			primary_action_label: __("Download"),
 			primary_action(values) {
-				frm.events.download_beneficiary_template(
-					frm,
-					values.format.toLowerCase(),
-				);
+				frm.events.download_beneficiary_template(frm, values.format.toLowerCase());
 				d.hide();
 			},
 		});
@@ -384,11 +358,8 @@ function sync_items_with_sales_order(
 
 			const so_items = r.message.items || [];
 
-			frm.doc[child_table_field] = frm.doc[child_table_field].filter(
-				(item) =>
-					so_items.some(
-						(so_item) => so_item.item_code === item[item_field],
-					),
+			frm.doc[child_table_field] = frm.doc[child_table_field].filter((item) =>
+				so_items.some((so_item) => so_item.item_code === item[item_field]),
 			);
 
 			so_items.forEach((so_item) => {
@@ -413,22 +384,16 @@ function sync_items_with_sales_order(
 				seen[item[item_field]] = true;
 			});
 			if (duplicates.length) {
-				frappe.throw(
-					`Duplicate items not allowed: ${duplicates.join(", ")}`,
-				);
+				frappe.throw(`Duplicate items not allowed: ${duplicates.join(", ")}`);
 			}
 
-			frm.set_query(
-				item_field,
-				child_table_field,
-				function (doc, cdt, cdn) {
-					return {
-						filters: {
-							item_code: ["in", so_items.map((i) => i.item_code)],
-						},
-					};
-				},
-			);
+			frm.set_query(item_field, child_table_field, function (doc, cdt, cdn) {
+				return {
+					filters: {
+						item_code: ["in", so_items.map((i) => i.item_code)],
+					},
+				};
+			});
 		},
 	});
 }

@@ -139,7 +139,7 @@ class DisbursementOrder(Document):
             {
                 "doctype": "File",
                 "file_name": filename,
-                "attached_to_doctype": "Donation Disbursement Entry",
+                "attached_to_doctype": "Disbursement Order",
                 "attached_to_name": self.name or "",
                 "content": filedata,
                 "is_private": 0,
