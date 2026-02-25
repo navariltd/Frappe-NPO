@@ -68,28 +68,7 @@
   ],
   "custom_perms": [],
   "doctype": "Sales Order",
-  "links": [
-    {
-      "creation": "2026-01-28 10:51:18.834283",
-      "custom": 1,
-      "docstatus": 0,
-      "group": "Donation",
-      "hidden": 0,
-      "idx": 0,
-      "is_child_table": 0,
-      "link_doctype": "Donation Disbursement Entry",
-      "link_fieldname": "sales_order",
-      "modified": "2026-01-28 10:51:18.834283",
-      "modified_by": "Administrator",
-      "name": "vt4uf3a56u",
-      "owner": "Administrator",
-      "parent": "Sales Order",
-      "parent_doctype": null,
-      "parentfield": "links",
-      "parenttype": "Customize Form",
-      "table_fieldname": null
-    }
-  ],
+  "links": [],
   "property_setters": [],
   "sync_on_migrate": 1
 }
