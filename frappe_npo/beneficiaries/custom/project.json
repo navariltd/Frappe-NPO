@@ -1052,7 +1052,7 @@
       "hidden": 0,
       "idx": 0,
       "is_child_table": 0,
-      "link_doctype": "Donation Disbursement Entry",
+      "link_doctype": "Disbursement Order",
       "link_fieldname": "project",
       "modified": "2026-01-28 10:59:30.656903",
       "modified_by": "Administrator",
