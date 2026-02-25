@@ -33,7 +33,7 @@ env.bak/
 venv.bak/
 
 # Dependency directories
-node_modules/
+**/node_modules/
 jspm_packages/
 
 # IDEs and editors
@@ -53,3 +53,5 @@ jspm_packages/
 
 # Aider AI Chat
 .aider*
+
+frappe_npo/public/frontend
