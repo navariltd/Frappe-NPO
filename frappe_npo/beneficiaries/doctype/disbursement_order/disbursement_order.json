@@ -1,0 +1,362 @@
+{
+ "actions": [],
+ "allow_copy": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-01-15 12:20:27.787660",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "allocation_section",
+  "column_break_16",
+  "naming_series",
+  "disbursement_type",
+  "donation",
+  "donor",
+  "column_break_vkxq",
+  "company",
+  "from_date",
+  "to_date",
+  "column_break_pvqe",
+  "customers_purchase_order",
+  "customers_purchase_order_date",
+  "accounts_section",
+  "paid_from",
+  "column_break_xmyu",
+  "accounting_dimensions_section",
+  "cost_center",
+  "column_break_qxej",
+  "project",
+  "allocation_items_section",
+  "items",
+  "distribute_items_equally",
+  "select_beneficiaries_section",
+  "total_amount",
+  "amended_from",
+  "column_break_jixf",
+  "total_bank_transfer_fee",
+  "beneficiaries_tab",
+  "section_break_kvsp",
+  "beneficiary_type",
+  "column_break_grob",
+  "state",
+  "column_break_llhb",
+  "district",
+  "advanced_filters_section",
+  "filter_list",
+  "saved_filters",
+  "section_break_cqdf",
+  "beneficiaries",
+  "entries_created",
+  "connections_tab"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "DON-DBSE-.YYYY.-.#####"
+  },
+  {
+   "default": "Today",
+   "depends_on": "eval:doc.dates_based_on != 'Joining Date'",
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date",
+   "mandatory_depends_on": "eval:doc.dates_based_on == 'Custom Range'",
+   "read_only_depends_on": "eval:doc.dates_based_on == 'Leave Period'",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "mandatory_depends_on": "eval:doc.dates_based_on != 'Leave Period'",
+   "read_only_depends_on": "eval:doc.dates_based_on == 'Leave Period'",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "remember_last_selected_value": 1
+  },
+  {
+   "fieldname": "advanced_filters_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "filter_list",
+   "fieldtype": "HTML",
+   "label": "Filter List"
+  },
+  {
+   "fieldname": "allocation_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_vkxq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "select_beneficiaries_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "donation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Donation",
+   "options": "Donation"
+  },
+  {
+   "fieldname": "donor",
+   "fieldtype": "Link",
+   "label": "Donor",
+   "options": "Donor"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project",
+   "search_index": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "search_index": 1
+  },
+  {
+   "fieldname": "allocation_items_section",
+   "fieldtype": "Section Break",
+   "label": "Items"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Disbursement Order Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_pvqe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "accounting_dimensions_section",
+   "fieldtype": "Section Break",
+   "label": "Accounting Dimensions"
+  },
+  {
+   "fieldname": "column_break_qxej",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "beneficiaries",
+   "fieldtype": "Table",
+   "label": "Beneficiaries",
+   "options": "Beneficiary Disbursement Entry Party"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Disbursement Order",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "beneficiaries_tab",
+   "fieldtype": "Tab Break",
+   "label": "Beneficiaries"
+  },
+  {
+   "fieldname": "connections_tab",
+   "fieldtype": "Tab Break",
+   "label": "Connections",
+   "show_dashboard": 1
+  },
+  {
+   "fieldname": "section_break_cqdf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_kvsp",
+   "fieldtype": "Section Break",
+   "label": "Filters"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Link",
+   "label": "State",
+   "options": "Territory"
+  },
+  {
+   "fieldname": "beneficiary_type",
+   "fieldtype": "Link",
+   "label": "Beneficiary Type",
+   "options": "Beneficiary Type"
+  },
+  {
+   "fieldname": "column_break_grob",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Link",
+   "label": "Locality",
+   "options": "District"
+  },
+  {
+   "fieldname": "column_break_llhb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "If checked, the selected items will be assigned to every beneficiary. If unchecked, you can adjust item assignments for each beneficiary.",
+   "fieldname": "distribute_items_equally",
+   "fieldtype": "Check",
+   "label": "Distribute Items Equally"
+  },
+  {
+   "fieldname": "saved_filters",
+   "fieldtype": "JSON",
+   "hidden": 1,
+   "label": "Saved Filters"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "accounts_section",
+   "fieldtype": "Section Break",
+   "label": "Accounts"
+  },
+  {
+   "fieldname": "paid_from",
+   "fieldtype": "Link",
+   "label": "Company Bank Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_xmyu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "entries_created",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Entries created"
+  },
+  {
+   "fieldname": "customers_purchase_order",
+   "fieldtype": "Data",
+   "label": "Customer's Purchase Order",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customers_purchase_order_date",
+   "fieldtype": "Date",
+   "label": "Customer's Purchase Order Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "disbursement_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Disbursement Type",
+   "options": "\nCash\nPhysical Goods\nServices",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_jixf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_bank_transfer_fee",
+   "fieldtype": "Currency",
+   "label": "Total Bank Transfer Fee",
+   "non_negative": 1,
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "group": "Disbursement",
+   "link_doctype": "Payment Entry",
+   "link_fieldname": "donation_disbursement_entry"
+  },
+  {
+   "group": "Disbursement",
+   "link_doctype": "Stock Entry",
+   "link_fieldname": "donation_disbursement_entry"
+  },
+  {
+   "group": "Invoice",
+   "link_doctype": "Sales Invoice",
+   "link_fieldname": "donation_disbursement_entry"
+  }
+ ],
+ "modified": "2026-02-25 08:51:17.403040",
+ "modified_by": "Administrator",
+ "module": "Beneficiaries",
+ "name": "Disbursement Order",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Non Profit Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

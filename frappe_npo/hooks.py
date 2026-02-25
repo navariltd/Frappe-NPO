@@ -49,10 +49,11 @@ website_route_rules = [
 
 # include js in doctype views
 doctype_js = {
-    "Stock Entry": "beneficiaries/overrides/stock_entry.js",
-    "Sales Order": "beneficiaries/overrides/sales_order.js",
-    "Project": "beneficiaries/overrides/project.js",
-    "Payment Entry": "beneficiaries/overrides/payment_entry.js",
+    "Stock Entry": "overrides/stock_entry.js",
+    "Sales Order": "overrides/sales_order.js",
+    "Project": "overrides/project.js",
+    "Payment Entry": "overrides/payment_entry.js",
+    "Sales Person": "overrides/sales_person.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}

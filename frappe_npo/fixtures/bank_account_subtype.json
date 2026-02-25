@@ -1,0 +1,16 @@
+[
+  {
+    "account_subtype": "Proxy",
+    "docstatus": 0,
+    "doctype": "Bank Account Subtype",
+    "modified": "2026-02-25 07:11:20.232201",
+    "name": "Proxy"
+  },
+  {
+    "account_subtype": "Beneficiary",
+    "docstatus": 0,
+    "doctype": "Bank Account Subtype",
+    "modified": "2026-02-25 07:11:42.751865",
+    "name": "Beneficiary"
+  }
+]
