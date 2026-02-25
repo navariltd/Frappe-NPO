@@ -1,0 +1,134 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-02-25 08:31:22.449987",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "beneficiary",
+  "bank_account",
+  "focal_point",
+  "column_break_fitv",
+  "status",
+  "beneficiary_contact",
+  "beneficiary_address",
+  "section_break_zazt",
+  "currency",
+  "amount",
+  "column_break_jqeq",
+  "comments"
+ ],
+ "fields": [
+  {
+   "fieldname": "beneficiary",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Beneficiary",
+   "options": "Beneficiary",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Bank Account",
+   "options": "Bank Account"
+  },
+  {
+   "fieldname": "focal_point",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Focal Point",
+   "options": "Focal Point"
+  },
+  {
+   "fieldname": "beneficiary_contact",
+   "fieldtype": "Link",
+   "label": "Beneficiary Contact",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "beneficiary_address",
+   "fieldtype": "Link",
+   "label": "Beneficiary Address",
+   "options": "Address"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Amount",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Open\nVerified\nNot Verified"
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Small Text",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Comments"
+  },
+  {
+   "fieldname": "column_break_fitv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_zazt",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_jqeq",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-02-25 08:42:55.389514",
+ "modified_by": "Administrator",
+ "module": "Beneficiaries",
+ "name": "Verification Request Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -12,45 +12,21 @@ from frappe.utils.xlsxutils import make_xlsx
 
 from ....utils.data import extract_data_from_file, get_doctype_headers
 
-class DonationDisbursementEntry(Document):
+
+class DisbursementOrder(Document):
     def before_save(self):
         total_amount = 0
         for row in self.beneficiaries or []:
             row.amount = (row.qty or 0) * (row.rate or 0)
             total_amount += row.amount or 0
 
-        if self.sales_order:
-            sales_order = frappe.get_doc("Sales Order", self.sales_order)
-
-            item_codes = [item.item_code for item in (self.items or [])]
-            
-            if item_codes:
-                order_items = [
-                    {
-                        "item_code": so_item.item_code,
-                        "item_name": so_item.item_name,
-                        "qty": so_item.qty,
-                        "rate": so_item.rate,
-                        "amount": so_item.amount,
-                        "uom": so_item.uom,
-                    }
-                    for so_item in sales_order.items
-                    if so_item.item_code in item_codes
-                ]
-                
-                order_items_total = sum(item.get("amount", 0) for item in order_items)
-                if total_amount > order_items_total:
-                    frappe.throw(
-                        _("Total disbursement amount {0} exceeds Sales Order total {1}").format(
-                            total_amount, order_items_total
-                        )
-                    )
-            
         self.total_amount = total_amount
 
     def before_submit(self):
         if not self.beneficiaries:
-            frappe.throw(_("At least one beneficiary must be allocated before submitting."))
+            frappe.throw(
+                _("At least one beneficiary must be allocated before submitting.")
+            )
 
     @frappe.whitelist()
     def get_beneficiaries(self, advanced_filters=None):
@@ -68,32 +44,38 @@ class DonationDisbursementEntry(Document):
             for ben in beneficiaries:
                 beneficiary_no = frappe.get_value(
                     "Beneficiary Donor Assignment",
-                    {"parent": ben.name, "parentfield": "donors", "parenttype": "Beneficiary", "donor": self.donor},
+                    {
+                        "parent": ben.name,
+                        "parentfield": "donors",
+                        "parenttype": "Beneficiary",
+                        "donor": self.donor,
+                    },
                     ["beneficiary_no"],
                 )
                 ben.beneficiary_no = beneficiary_no if beneficiary_no else None
-                
+
         return beneficiaries
 
     def get_filters(self):
         filter_fields = [
-                "state", 
-                "beneficiary_type", 
-                "district", 
-                "zone", 
-                "branch", 
-                "donor"
-            ]
+            "state",
+            "beneficiary_type",
+            "district",
+            "zone",
+            "branch",
+            "donor",
+        ]
         filters = [["status", "=", "Active"]]
 
         for d in filter_fields:
             if self.get(d):
                 if d == "donor":
-                    filters.append(["Beneficiary Donor Assignment", "donor", "=", self.get(d)])
+                    filters.append(
+                        ["Beneficiary Donor Assignment", "donor", "=", self.get(d)]
+                    )
                 else:
                     filters.append([d, "=", self.get(d)])
         return filters
-
 
     @frappe.whitelist()
     def allocate_beneficiaries(self, beneficiaries):
@@ -153,50 +135,51 @@ class DonationDisbursementEntry(Document):
         else:
             frappe.throw(_("Invalid file type. Only CSV or Excel supported"))
 
-        file_doc = frappe.get_doc({
-            "doctype": "File",
-            "file_name": filename,
-            "attached_to_doctype": "Donation Disbursement Entry",
-            "attached_to_name": self.name or "",
-            "content": filedata,
-            "is_private": 0,
-        })
+        file_doc = frappe.get_doc(
+            {
+                "doctype": "File",
+                "file_name": filename,
+                "attached_to_doctype": "Donation Disbursement Entry",
+                "attached_to_name": self.name or "",
+                "content": filedata,
+                "is_private": 0,
+            }
+        )
         file_doc.insert(ignore_permissions=True)
         return file_doc.file_url
-    
+
     @frappe.whitelist()
     def upload_beneficiaries(self, file_url):
         headers = get_doctype_headers("Beneficiary Disbursement Entry Party")
         rows = extract_data_from_file(file_url)
-        
+
         rows_to_upload = [r for r in rows if not r.get("beneficiary")]
-        
+
         from ..beneficiary.beneficiary import upload_beneficiary_list
-        
+
         upload_results = {"beneficiaries": [], "errors": []}
         if rows_to_upload:
             upload_results = upload_beneficiary_list(file_url, donor=self.donor)
 
         mapped_rows = []
-        
+
         for idx, row in enumerate(rows):
             beneficiary_id = row.get("beneficiary")
-            
-            if not beneficiary_id and idx < len(upload_results.get("beneficiaries", [])):
+
+            if not beneficiary_id and idx < len(
+                upload_results.get("beneficiaries", [])
+            ):
                 beneficiary_id = upload_results["beneficiaries"][idx]
 
             mapped_row = {}
             for header in headers:
                 mapped_row[header] = row.get(header, "")
-            
+
             mapped_row["beneficiary"] = beneficiary_id
             mapped_rows.append(mapped_row)
 
-        return {
-            "mapped_items": mapped_rows,
-            "errors": upload_results.get("errors", [])
-        }
-    
+        return {"mapped_items": mapped_rows, "errors": upload_results.get("errors", [])}
+
     @frappe.whitelist()
     def make_payment_entries(self):
         for row in self.beneficiaries:
@@ -220,7 +203,7 @@ class DonationDisbursementEntry(Document):
                     "project": self.project,
                     "paid_amount": row.amount,
                     "received_amount": row.amount,
-                    "donation_disbursement_entry": self.name,
+                    "disbursement_order": self.name,
                     "remarks": f"Donation disbursement to beneficiary {row.beneficiary}",
                 }
             )
@@ -228,7 +211,9 @@ class DonationDisbursementEntry(Document):
             row.payment_entry = payment_entry.name
         self.entries_created = True
         self.save()
-        frappe.msgprint(f"Payment Entries created for {len(self.beneficiaries)} beneficiaries")
+        frappe.msgprint(
+            f"Payment Entries created for {len(self.beneficiaries)} beneficiaries"
+        )
 
     @frappe.whitelist()
     def make_stock_entries(self):
@@ -236,9 +221,9 @@ class DonationDisbursementEntry(Document):
         for row in self.beneficiaries:
             if row.stock_entry:
                 continue
-            
+
             beneficiary = row.beneficiary
-            
+
             if beneficiary not in beneficiaries_by_beneficiary:
                 beneficiaries_by_beneficiary[beneficiary] = []
             beneficiaries_by_beneficiary[beneficiary].append(row)
@@ -262,47 +247,49 @@ class DonationDisbursementEntry(Document):
                     "stock_entry_type": "Material Issue",
                     "from_warehouse": self.source_warehouse,
                     "beneficiary": beneficiary,
-                    "supplier": frappe.get_value("Beneficiary", beneficiary, "supplier"),
+                    "supplier": frappe.get_value(
+                        "Beneficiary", beneficiary, "supplier"
+                    ),
                     "company": self.company,
                     "posting_date": today(),
                     "cost_center": self.cost_center,
                     "project": self.project,
-                    "donation_disbursement_entry": self.name,
+                    "disbursement_order": self.name,
                     "items": items,
                 }
             )
             stock_entry.insert(ignore_permissions=True)
-            
+
             for row in rows:
                 row.stock_entry = stock_entry.name
 
         self.entries_created = True
         self.save()
-        frappe.msgprint(f"Stock Entries created for {len(beneficiaries_by_beneficiary)} beneficiary(ies)")
+        frappe.msgprint(
+            f"Stock Entries created for {len(beneficiaries_by_beneficiary)} beneficiary(ies)"
+        )
 
     @frappe.whitelist()
     def create_sales_invoice(self):
-        customer = frappe.get_value("Donor", self.donor, "customer") if self.donor else None
+        customer = (
+            frappe.get_value("Donor", self.donor, "customer") if self.donor else None
+        )
 
-        data = {
-            "items": {},
-            "customer": customer,
-            "currency": None,
-            "total_amount": 0
-        }
+        data = {"items": {}, "customer": customer, "currency": None, "total_amount": 0}
 
         if self.allocation_type == "Cash":
             payment_entries = frappe.get_all(
                 "Payment Entry",
-                filters={
-                    "donation_disbursement_entry": self.name,
-                    "docstatus": 1
-                },
+                filters={"disbursement_order": self.name, "docstatus": 1},
                 fields=["paid_amount as amount", "paid_from_account_currency"],
             )
 
             data["total_amount"] = sum(pe.amount for pe in payment_entries)
-            data["currency"] = payment_entries[0].paid_from_account_currency if payment_entries else None
+            data["currency"] = (
+                payment_entries[0].paid_from_account_currency
+                if payment_entries
+                else None
+            )
 
             if self.items:
                 item = self.items[0]
@@ -318,10 +305,7 @@ class DonationDisbursementEntry(Document):
         elif self.allocation_type == "Items":
             stock_entries = frappe.get_all(
                 "Stock Entry",
-                filters={
-                    "donation_disbursement_entry": self.name,
-                    "docstatus": 1
-                },
+                filters={"disbursement_order": self.name, "docstatus": 1},
                 fields=["name", "total_outgoing_value as amount"],
             )
 
@@ -332,8 +316,13 @@ class DonationDisbursementEntry(Document):
                     "Stock Entry Detail",
                     filters={"parent": se.name},
                     fields=[
-                        "item_code", "item_name", "amount", "qty",
-                        "basic_rate", "uom", "s_warehouse as warehouse"
+                        "item_code",
+                        "item_name",
+                        "amount",
+                        "qty",
+                        "basic_rate",
+                        "uom",
+                        "s_warehouse as warehouse",
                     ],
                 )
 
@@ -364,7 +353,7 @@ class DonationDisbursementEntry(Document):
         si.flags.ignore_links = True
 
         si.customer = data["customer"]
-        si.donation_disbursement_entry = self.name
+        si.disbursement_order = self.name
 
         for item in data["items"].values():
             row = si.append("items", {})
@@ -382,6 +371,4 @@ class DonationDisbursementEntry(Document):
 
         si.insert(ignore_permissions=True)
 
-        return {
-            "sales_invoice": si.name
-        }
+        return {"sales_invoice": si.name}

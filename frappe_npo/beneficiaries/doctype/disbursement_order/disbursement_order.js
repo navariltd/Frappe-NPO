@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 
 var in_progress = false;
-frappe.ui.form.on("Donation Disbursement Entry", {
+frappe.ui.form.on("Disbursement Order", {
 	setup: function (frm) {
 		frm.events.setup_beneficiary_filter_group(frm);
 	},

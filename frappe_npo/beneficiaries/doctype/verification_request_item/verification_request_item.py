@@ -1,9 +1,9 @@
-# Copyright (c) 2025, hussain@frappe.io and contributors
+# Copyright (c) 2026, Navari Ltd and contributors
 # For license information, please see license.txt
 
 # import frappe
 from frappe.model.document import Document
 
 
-class BeneficiaryDisbursementEntryItem(Document):
+class VerificationRequestItem(Document):
 	pass

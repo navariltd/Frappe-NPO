@@ -88,7 +88,7 @@ function setup_beneficiary_query(frm) {
 
 	if (project && frm.doc.stock_entry_type == "Distribution") {
 		frappe.call({
-			method: "frappe_npo.beneficiaries.overrides.stock_entry_query.get_filtered_beneficiaries",
+			method: "frappe_npo.overrides.stock_entry_query.get_filtered_beneficiaries",
 			args: {
 				project: project,
 			},
@@ -134,7 +134,7 @@ function setup_collector_query(frm) {
 function load_bom_items(frm) {
 	if (frm.doc.project && frm.doc.stock_entry_type == "Distribution") {
 		frappe.call({
-			method: "frappe_npo.beneficiaries.overrides.stock_entry_query.get_bom_items",
+			method: "frappe_npo.overrides.stock_entry_query.get_bom_items",
 			args: { project: frm.doc.project },
 			callback: function (r) {
 				if (r.message && r.message.length > 0) {
