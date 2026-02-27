@@ -61,7 +61,7 @@ frappe.ui.form.on("Disbursement Order", {
 			} else if (frm.doc.docstatus === 1) {
 				if (!frm.doc.entries_created) {
 					let label =
-						frm.doc.allocation_type === "Cash"
+						frm.doc.disbursement_type === "Cash"
 							? __("Create Payment Entries")
 							: __("Create Stock Entries");
 					frm.page.set_primary_action(label, () => {
@@ -134,7 +134,7 @@ frappe.ui.form.on("Disbursement Order", {
 
 	process_disbursement: function (frm) {
 		let method_name =
-			frm.doc.allocation_type === "Cash" ? "make_payment_entries" : "make_stock_entries";
+			frm.doc.disbursement_type === "Cash" ? "make_payment_entries" : "make_stock_entries";
 
 		frappe.confirm(__("Create disbursement entries for all beneficiaries?"), function () {
 			frappe.call({
@@ -168,7 +168,7 @@ frappe.ui.form.on("Disbursement Order", {
 		});
 	},
 
-	allocation_type: function (frm) {
+	disbursement_type: function (frm) {
 		frm.clear_table("beneficiaries");
 		frm.refresh();
 	},

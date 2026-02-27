@@ -277,7 +277,7 @@ class DisbursementOrder(Document):
 
         data = {"items": {}, "customer": customer, "currency": None, "total_amount": 0}
 
-        if self.allocation_type == "Cash":
+        if self.disbursement_type == "Cash":
             payment_entries = frappe.get_all(
                 "Payment Entry",
                 filters={"disbursement_order": self.name, "docstatus": 1},
@@ -302,7 +302,7 @@ class DisbursementOrder(Document):
                     "rate": data["total_amount"],
                 }
 
-        elif self.allocation_type == "Items":
+        elif self.disbursement_type == "Items":
             stock_entries = frappe.get_all(
                 "Stock Entry",
                 filters={"disbursement_order": self.name, "docstatus": 1},
