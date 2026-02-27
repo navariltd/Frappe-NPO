@@ -8,8 +8,9 @@
  "engine": "InnoDB",
  "field_order": [
   "beneficiaries_tab",
-  "statedistrict_imported",
   "enable_food_distribution",
+  "enable_territory_dimension",
+  "enable_beneficiary_dimension",
   "column_break_kltk",
   "generate_supplier_when_learning_center_is_created",
   "generate_supplier_when_beneficiary_is_created",
@@ -58,13 +59,6 @@
  "fields": [
   {
    "default": "0",
-   "fieldname": "statedistrict_imported",
-   "fieldtype": "Check",
-   "label": "State/District Imported",
-   "read_only": 1
-  },
-  {
-   "default": "0",
    "fieldname": "enable_food_distribution",
    "fieldtype": "Check",
    "label": "Enable Food Distribution"
@@ -97,7 +91,7 @@
    "label": "Manage Beneficiary Lifecycle"
   },
   {
-   "default": "0",
+   "default": "1",
    "fieldname": "allow_beneficiary_status_editing",
    "fieldtype": "Check",
    "label": "Allow Beneficiary Status Editing"
@@ -356,12 +350,24 @@
    "fieldtype": "Table",
    "label": "Disbursement Accounts",
    "options": "Party Account"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_beneficiary_dimension",
+   "fieldtype": "Check",
+   "label": "Enable Beneficiary Dimension"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_territory_dimension",
+   "fieldtype": "Check",
+   "label": "Enable Territory Dimension"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-02-25 08:04:51.339889",
+ "modified": "2026-02-27 14:12:26.338767",
  "modified_by": "Administrator",
  "module": "Frappe NPO",
  "name": "Frappe NPO Settings",

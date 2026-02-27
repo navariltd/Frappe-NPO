@@ -47,7 +47,7 @@ def get_custom_fields():
         "Company": [
             dict(
                 fieldname="non_profit_section",
-                label="Non Profit Settings",
+                label="Frappe NPO Settings",
                 fieldtype="Section Break",
                 insert_after="asset_received_but_not_billed",
                 collapsible=1,

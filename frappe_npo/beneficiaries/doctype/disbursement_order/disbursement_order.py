@@ -6,9 +6,6 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import today
 import json
-import csv
-from io import StringIO, BytesIO
-from frappe.utils.xlsxutils import make_xlsx
 
 from ....utils.data import extract_data_from_file, get_doctype_headers
 
@@ -22,11 +19,119 @@ class DisbursementOrder(Document):
 
         self.total_amount = total_amount
 
+        if self.beneficiaries and self.disbursement_type == "Cash":
+            self.calculate_bank_transfer_fees()
+
     def before_submit(self):
         if not self.beneficiaries:
             frappe.throw(
                 _("At least one beneficiary must be allocated before submitting.")
             )
+
+    def on_submit(self):
+        if self.beneficiaries and self.disbursement_type == "Cash":
+            self.create_territory_sales_orders()
+
+    def calculate_bank_transfer_fees(self):
+        from frappe.query_builder import DocType, Criterion
+
+        Territory = DocType("Territory")
+        SalesPerson = DocType("Sales Person")
+        BankAccount = DocType("Bank Account")
+        Bank = DocType("Bank")
+
+        query = (
+            frappe.qb.from_(Territory)
+            .inner_join(SalesPerson)
+            .on(Territory.territory_manager == SalesPerson.name)
+            .inner_join(BankAccount)
+            .on(SalesPerson.bank_account == BankAccount.name)
+            .inner_join(Bank)
+            .on(BankAccount.bank == Bank.name)
+            .select(Territory.name.as_("territory"), Bank.bank_charge.as_("charge"))
+        )
+
+        territory_charges = {d.territory: d.charge for d in query.run(as_dict=True)}
+        total_transfer_fees = 0
+        for row in self.beneficiaries:
+            beneficiary_territory = frappe.db.get_value(
+                "Beneficiary", row.beneficiary, "territory"
+            )
+
+            if beneficiary_territory in territory_charges:
+                row.bank_transfer_fee = territory_charges[beneficiary_territory]
+                total_transfer_fees += row.bank_transfer_fee or 0
+            else:
+                row.bank_transfer_fee = 0
+
+        self.total_bank_transfer_fee = total_transfer_fees
+
+    def create_territory_sales_orders(self):
+        territory_data = {}
+
+        for row in self.beneficiaries:
+            territory = row.territory or frappe.db.get_value(
+                "Beneficiary", row.beneficiary, "territory"
+            )
+
+            if not territory:
+                continue
+
+            if territory not in territory_data:
+                territory_data[territory] = {"distribution_amount": 0, "bank_fees": 0}
+
+            territory_data[territory]["distribution_amount"] += row.amount or 0
+            territory_data[territory]["bank_fees"] += row.bank_transfer_fee or 0
+
+        customer = (
+            frappe.get_value("Donor", self.donor, "customer") if self.donor else None
+        )
+
+        if not customer:
+            frappe.msgprint(
+                _("No Customer linked to Donor. Skipping Sales Order creation.")
+            )
+            return
+
+        for territory, totals in territory_data.items():
+            so = frappe.new_doc("Sales Order")
+            so.customer = customer
+            so.transaction_date = today()
+            so.delivery_date = self.to_date or today()
+            so.company = self.company
+            so.territory = territory
+            so.donor = self.donor
+            so.disbursement_order = self.name
+
+            if totals["distribution_amount"] > 0:
+                so.append(
+                    "items",
+                    {
+                        "item_code": "Cash Distribution",
+                        "qty": 1,
+                        "rate": totals["distribution_amount"],
+                        "delivery_date": so.delivery_date,
+                    },
+                )
+
+            if totals["bank_fees"] > 0:
+                so.append(
+                    "items",
+                    {
+                        "item_code": "Bank Transfer Charges",
+                        "qty": 1,
+                        "rate": totals["bank_fees"],
+                        "delivery_date": so.delivery_date,
+                    },
+                )
+
+            if so.items:
+                so.insert(ignore_permissions=True)
+                frappe.msgprint(
+                    _("Sales Order {0} created for Territory {1}").format(
+                        so.name, territory
+                    )
+                )
 
     @frappe.whitelist()
     def get_beneficiaries(self, advanced_filters=None):
@@ -36,9 +141,7 @@ class DisbursementOrder(Document):
         beneficiaries = frappe.get_list(
             "Beneficiary",
             filters=self.get_filters() + (advanced_filters or []),
-            fields=[
-                "name",
-            ],
+            fields=["name", "full_name", "beneficiary_type", "district", "territory"],
         )
         if self.donor:
             for ben in beneficiaries:
@@ -58,7 +161,7 @@ class DisbursementOrder(Document):
 
     def get_filters(self):
         filter_fields = [
-            "state",
+            "territory",
             "beneficiary_type",
             "district",
             "zone",
@@ -108,49 +211,8 @@ class DisbursementOrder(Document):
         return {"success": True}
 
     @frappe.whitelist()
-    def download_beneficiary_template(self, file_type="csv"):
-        headers = get_doctype_headers("Beneficiary Disbursement Entry Party")
-
-        sample_rows = []
-        for row in (self.beneficiaries or [])[:5]:
-            sample_rows.append([getattr(row, h, "") or "" for h in headers])
-
-        if not sample_rows:
-            sample_rows = [["" for _ in headers] for _ in range(5)]
-
-        if file_type.lower() == "csv":
-            output = StringIO()
-            writer = csv.writer(output)
-            writer.writerow(headers)
-            writer.writerows(sample_rows)
-            filedata = output.getvalue().encode("utf-8")
-            filename = "donation_beneficiary_template.csv"
-
-        elif file_type.lower() in ["xlsx", "excel"]:
-            data = [headers] + sample_rows
-            xlsx_file = make_xlsx(data, sheet_name="Beneficiaries")
-            filedata = xlsx_file.getvalue()
-            filename = "donation_beneficiary_template.xlsx"
-
-        else:
-            frappe.throw(_("Invalid file type. Only CSV or Excel supported"))
-
-        file_doc = frappe.get_doc(
-            {
-                "doctype": "File",
-                "file_name": filename,
-                "attached_to_doctype": "Disbursement Order",
-                "attached_to_name": self.name or "",
-                "content": filedata,
-                "is_private": 0,
-            }
-        )
-        file_doc.insert(ignore_permissions=True)
-        return file_doc.file_url
-
-    @frappe.whitelist()
     def upload_beneficiaries(self, file_url):
-        headers = get_doctype_headers("Beneficiary Disbursement Entry Party")
+        headers = get_doctype_headers("Disbursement Order Party")
         rows = extract_data_from_file(file_url)
 
         rows_to_upload = [r for r in rows if not r.get("beneficiary")]
@@ -176,6 +238,8 @@ class DisbursementOrder(Document):
                 mapped_row[header] = row.get(header, "")
 
             mapped_row["beneficiary"] = beneficiary_id
+            mapped_row["district"] = row.get("district") or row.get("locality")
+            mapped_row["territory"] = row.get("territory") or row.get("state")
             mapped_rows.append(mapped_row)
 
         return {"mapped_items": mapped_rows, "errors": upload_results.get("errors", [])}
@@ -277,7 +341,7 @@ class DisbursementOrder(Document):
 
         data = {"items": {}, "customer": customer, "currency": None, "total_amount": 0}
 
-        if self.allocation_type == "Cash":
+        if self.disbursement_type == "Cash":
             payment_entries = frappe.get_all(
                 "Payment Entry",
                 filters={"disbursement_order": self.name, "docstatus": 1},
@@ -302,7 +366,7 @@ class DisbursementOrder(Document):
                     "rate": data["total_amount"],
                 }
 
-        elif self.allocation_type == "Items":
+        elif self.disbursement_type == "Items":
             stock_entries = frappe.get_all(
                 "Stock Entry",
                 filters={"disbursement_order": self.name, "docstatus": 1},

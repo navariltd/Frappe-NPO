@@ -15,6 +15,7 @@
   "column_break_3",
   "beneficiary_no",
   "beneficiary_type",
+  "status",
   "column_break_4",
   "gender",
   "dob",
@@ -28,12 +29,15 @@
   "dimension_col_break",
   "section_break_axct",
   "donors",
+  "payment_details_section",
+  "bank_account",
   "section_break_vzck",
   "created_by",
   "section_break_uwdz",
   "bottom_save_button",
   "address_contact_tab",
   "column_break_ifez",
+  "is_proxy",
   "contact_html",
   "column_break_sytn",
   "address_html",
@@ -107,7 +111,6 @@
   "collector",
   "column_break_zvdz",
   "section_break_zarq",
-  "status",
   "replaced_by",
   "column_break_tvlz",
   "activation_date",
@@ -132,6 +135,10 @@
   {
    "fieldname": "district",
    "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "City/District",
    "options": "District"
   },
@@ -186,8 +193,7 @@
    "fieldname": "first_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "First Name",
-   "reqd": 1
+   "label": "First Name"
   },
   {
    "fieldname": "last_name",
@@ -250,10 +256,8 @@
    "allow_in_quick_entry": 1,
    "fieldname": "age",
    "fieldtype": "Int",
-   "in_filter": 1,
    "in_list_view": 1,
    "in_preview": 1,
-   "in_standard_filter": 1,
    "label": "Age",
    "non_negative": 1,
    "search_index": 1
@@ -414,7 +418,12 @@
   {
    "fieldname": "full_name",
    "fieldtype": "Data",
-   "label": "Full Name"
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Full Name",
+   "reqd": 1
   },
   {
    "fieldname": "recruitment_phase",
@@ -741,6 +750,8 @@
   {
    "fieldname": "donors",
    "fieldtype": "Table",
+   "in_filter": 1,
+   "in_standard_filter": 1,
    "label": "Donors",
    "no_copy": 1,
    "options": "Beneficiary Donor Assignment",
@@ -754,8 +765,32 @@
   {
    "fieldname": "territory",
    "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Territory",
    "options": "Territory"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_proxy",
+   "fieldtype": "Check",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Is Proxy"
+  },
+  {
+   "fieldname": "payment_details_section",
+   "fieldtype": "Section Break",
+   "label": "Payment Details"
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "label": "Bank Account",
+   "options": "Bank Account"
   }
  ],
  "image_field": "image",
@@ -787,7 +822,7 @@
    "link_fieldname": "beneficiary"
   }
  ],
- "modified": "2026-02-25 07:42:45.649076",
+ "modified": "2026-02-27 12:37:14.421296",
  "modified_by": "Administrator",
  "module": "Beneficiaries",
  "name": "Beneficiary",

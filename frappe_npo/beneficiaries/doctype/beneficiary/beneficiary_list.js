@@ -4,17 +4,43 @@
 frappe.listview_settings["Beneficiary"] = {
 	onload: function (listview) {
 		listview.page.add_inner_button(__("Upload Beneficiaries"), function () {
-			new frappe.ui.FileUploader({
-				allow_multiple: false,
-				restrictions: {
-					allowed_file_types: [".csv", ".xlsx", ".xls"],
-				},
-				on_success: (file) => {
+			const d = new frappe.ui.Dialog({
+				title: __("Upload Beneficiaries"),
+				fields: [
+					{
+						label: __("Template Format"),
+						fieldtype: "Select",
+						fieldname: "format",
+						options: ["Excel", "CSV"],
+						default: "Excel",
+					},
+					{
+						fieldtype: "HTML",
+						fieldname: "download_help",
+						options: `
+                            <div style="margin-bottom: 20px;">
+                                <button class="btn btn-xs btn-default" id="download-template-btn">
+                                    <i class="fa fa-download"></i> ${__("Download Template")}
+                                </button>
+                            </div>
+                        `,
+					},
+					{
+						label: __("Select File"),
+						fieldtype: "Attach",
+						fieldname: "file",
+						reqd: 1,
+					},
+					{
+						fieldtype: "HTML",
+						fieldname: "results_area",
+					},
+				],
+				primary_label: __("Upload"),
+				primary_action: (values) => {
 					frappe.call({
 						method: "frappe_npo.beneficiaries.doctype.beneficiary.beneficiary.upload_beneficiary_list",
-						args: {
-							file_url: file.file_url,
-						},
+						args: { file_url: values.file },
 						freeze: true,
 						freeze_message: __("Processing file..."),
 						callback: function (r) {
@@ -22,60 +48,63 @@ frappe.listview_settings["Beneficiary"] = {
 							const beneficiaries = result.beneficiaries || [];
 							const errors = result.errors || [];
 
+							let result_html = "";
+
 							if (beneficiaries.length) {
-								frappe.show_alert(
-									{
-										message: __("{0} beneficiaries processed successfully", [
-											beneficiaries.length,
-										]),
-										indicator: "green",
-									},
-									7,
-								);
+								result_html += `
+                                    <div class="alert alert-success" style="margin-top: 15px;">
+                                        ${__("{0} beneficiaries processed successfully", [beneficiaries.length])}
+                                    </div>
+                                `;
 							}
 
 							if (errors.length) {
-								let html = `
-									<div style="max-height: 400px; overflow: auto">
-										<table class="table table-bordered table-sm">
-											<thead>
-												<tr>
-													<th>${__("Row")}</th>
-													<th>${__("Field")}</th>
-													<th>${__("Error")}</th>
-												</tr>
-											</thead>
-											<tbody>
-								`;
-
-								errors.forEach((e) => {
-									html += `
-										<tr>
-											<td>${e.row || "-"}</td>
-											<td>${e.field || "-"}</td>
-											<td>${frappe.utils.escape_html(e.error || "")}</td>
-										</tr>
-									`;
-								});
-
-								html += `
-											</tbody>
-										</table>
-									</div>
-								`;
-
-								frappe.msgprint({
-									title: __("Upload Errors"),
-									message: html,
-									indicator: "red",
-									wide: true,
-								});
+								result_html += `
+                                    <div style="margin-top: 15px;">
+                                        <h6 class="text-danger">${__("Upload Errors")}</h6>
+                                        <div style="max-height: 200px; overflow-y: auto; border: 1px solid #d1d8dd;">
+                                            <table class="table table-bordered table-sm small">
+                                                <thead class="bg-light">
+                                                    <tr>
+                                                        <th>${__("Row")}</th>
+                                                        <th>${__("Field")}</th>
+                                                        <th>${__("Error")}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    ${errors
+														.map(
+															(e) => `
+                                                        <tr>
+                                                            <td>${e.row || "-"}</td>
+                                                            <td>${e.field || "-"}</td>
+                                                            <td class="text-danger">${frappe.utils.escape_html(e.error || "")}</td>
+                                                        </tr>
+                                                    `,
+														)
+														.join("")}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                `;
 							}
+
+							d.get_field("results_area").$wrapper.html(result_html);
 
 							listview.refresh();
 						},
 					});
 				},
+			});
+
+			d.show();
+
+			d.$wrapper.find("#download-template-btn").on("click", () => {
+				const method =
+					"frappe_npo.beneficiaries.doctype.beneficiary.beneficiary.export_beneficiary_template";
+				const args = { file_format: d.get_value("format") };
+				window.open(`/api/method/${method}?${$.param(args)}`);
 			});
 		});
 	},

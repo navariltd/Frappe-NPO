@@ -12,27 +12,6 @@ frappe.ui.form.on("Disbursement Order", {
 			frm.set_value("from_date", frappe.datetime.nowdate());
 		}
 
-		frm.set_query("paid_to", function () {
-			return {
-				filters: {
-					account_type: "Payable",
-					root_type: "Liability",
-					is_group: 0,
-					company: frm.doc.company,
-				},
-			};
-		});
-
-		frm.set_query("paid_from", function () {
-			return {
-				filters: {
-					account_type: ["in", ["Bank", "Cash"]],
-					is_group: 0,
-					company: frm.doc.company,
-				},
-			};
-		});
-
 		frm.set_query("source_warehouse", function () {
 			return {
 				filters: {
@@ -41,8 +20,11 @@ frappe.ui.form.on("Disbursement Order", {
 				},
 			};
 		});
+		set_district_filter(frm);
+	},
 
-		sync_items_with_sales_order(frm, "sales_order", "items", "item_code");
+	territory: function (frm) {
+		set_district_filter(frm);
 	},
 
 	refresh: function (frm) {
@@ -61,7 +43,7 @@ frappe.ui.form.on("Disbursement Order", {
 			} else if (frm.doc.docstatus === 1) {
 				if (!frm.doc.entries_created) {
 					let label =
-						frm.doc.allocation_type === "Cash"
+						frm.doc.disbursement_type === "Cash"
 							? __("Create Payment Entries")
 							: __("Create Stock Entries");
 					frm.page.set_primary_action(label, () => {
@@ -91,10 +73,6 @@ frappe.ui.form.on("Disbursement Order", {
 		}
 	},
 
-	sales_order: function (frm) {
-		sync_items_with_sales_order(frm, "sales_order", "items", "item_code");
-	},
-
 	get_beneficiary_details: function (frm) {
 		return frappe.call({
 			doc: frm.doc,
@@ -117,6 +95,8 @@ frappe.ui.form.on("Disbursement Order", {
 						child.beneficiary = ben.name;
 						child.beneficiary_no = ben.beneficiary_no;
 						child.item_code = item_row.item_code;
+						child.territory = ben.territory;
+						child.district = ben.district;
 						child.qty = item_row.qty || 0;
 						child.rate = item_row.rate || 0;
 						child.uom = item_row.uom;
@@ -134,7 +114,7 @@ frappe.ui.form.on("Disbursement Order", {
 
 	process_disbursement: function (frm) {
 		let method_name =
-			frm.doc.allocation_type === "Cash" ? "make_payment_entries" : "make_stock_entries";
+			frm.doc.disbursement_type === "Cash" ? "make_payment_entries" : "make_stock_entries";
 
 		frappe.confirm(__("Create disbursement entries for all beneficiaries?"), function () {
 			frappe.call({
@@ -168,7 +148,7 @@ frappe.ui.form.on("Disbursement Order", {
 		});
 	},
 
-	allocation_type: function (frm) {
+	disbursement_type: function (frm) {
 		frm.clear_table("beneficiaries");
 		frm.refresh();
 	},
@@ -250,49 +230,53 @@ frappe.ui.form.on("Disbursement Order", {
 
 	download_template_dialog: function (frm) {
 		const d = new frappe.ui.Dialog({
-			title: __("Select Template Format"),
+			title: __("Download Template"),
 			fields: [
 				{
 					label: __("Format"),
 					fieldname: "format",
 					fieldtype: "Select",
-					options: ["CSV", "Excel"],
+					options: ["Excel", "CSV"],
 					default: "Excel",
 				},
+				{
+					label: __("Include Beneficiary Fields"),
+					fieldname: "include_beneficiary_data",
+					fieldtype: "Check",
+					default: 0,
+				},
 			],
-			primary_action_label: __("Download"),
-			primary_action(values) {
-				frm.events.download_beneficiary_template(frm, values.format.toLowerCase());
+			primary_label: __("Download"),
+			primary_action: (values) => {
+				let fields = frappe
+					.get_meta("Disbursement Order Party")
+					.fields.filter((df) => !frappe.model.no_value_type.includes(df.fieldtype))
+					.map((df) => df.fieldname);
+
+				if (values.include_beneficiary_data) {
+					let ben_fields = frappe
+						.get_meta("Beneficiary")
+						.fields.filter((df) => !frappe.model.no_value_type.includes(df.fieldtype))
+						.map((df) => df.fieldname);
+
+					fields = [...new Set([...fields, ...ben_fields])];
+				}
+
+				const method =
+					"frappe_npo.beneficiaries.doctype.beneficiary.beneficiary.export_beneficiary_template";
+				const args = {
+					file_format: values.format,
+					extra_fields: JSON.stringify(fields),
+					include_beneficiary_data: values.include_beneficiary_data,
+					first: false,
+				};
+
+				window.open(`/api/method/${method}?${$.param(args)}`);
 				d.hide();
 			},
 		});
-		d.show();
-	},
 
-	download_beneficiary_template: function (frm, type) {
-		frm.call({
-			method: "download_beneficiary_template",
-			doc: frm.doc,
-			args: { file_type: type || "csv" },
-			freeze: true,
-			freeze_message: __("Generating Template..."),
-			callback: function (r) {
-				if (r.message) {
-					const link = document.createElement("a");
-					link.href = r.message;
-					link.download = "";
-					document.body.appendChild(link);
-					link.click();
-					document.body.removeChild(link);
-				} else {
-					frappe.msgprint(__("Failed to generate template."));
-				}
-			},
-			error: function (err) {
-				frappe.msgprint(__("Failed to generate template."));
-				console.error(err);
-			},
-		});
+		d.show();
 	},
 
 	upload_list: function (frm) {
@@ -322,12 +306,12 @@ frappe.ui.form.on("Disbursement Order", {
 	},
 });
 
-frappe.ui.form.on("Beneficiary Disbursement Entry Item", {
+frappe.ui.form.on("Disbursement Order Item", {
 	rate: (frm, cdt, cdn) => update_row_amount(frm, cdt, cdn, "items"),
 	qty: (frm, cdt, cdn) => update_row_amount(frm, cdt, cdn, "items"),
 });
 
-frappe.ui.form.on("Beneficiary Disbursement Entry Party", {
+frappe.ui.form.on("Disbursement Order Party", {
 	rate: (frm, cdt, cdn) => update_row_amount(frm, cdt, cdn, "beneficiaries"),
 	qty: (frm, cdt, cdn) => update_row_amount(frm, cdt, cdn, "beneficiaries"),
 });
@@ -338,62 +322,12 @@ function update_row_amount(frm, cdt, cdn, field) {
 	frm.refresh_field(field);
 }
 
-function sync_items_with_sales_order(
-	frm,
-	sales_order_field,
-	child_table_field,
-	item_field = "item_code",
-) {
-	const so_name = frm.doc[sales_order_field];
-	if (!so_name) return;
-
-	frappe.call({
-		method: "frappe.client.get",
-		args: {
-			doctype: "Sales Order",
-			name: so_name,
-		},
-		callback: function (r) {
-			if (!r.message) return;
-
-			const so_items = r.message.items || [];
-
-			frm.doc[child_table_field] = frm.doc[child_table_field].filter((item) =>
-				so_items.some((so_item) => so_item.item_code === item[item_field]),
-			);
-
-			so_items.forEach((so_item) => {
-				if (
-					!frm.doc[child_table_field].some(
-						(item) => item[item_field] === so_item.item_code,
-					)
-				) {
-					frm.add_child(child_table_field, {
-						[item_field]: so_item.item_code,
-						uom: so_item.uom,
-					});
-				}
-			});
-
-			frm.refresh_field(child_table_field);
-
-			let seen = {};
-			let duplicates = [];
-			frm.doc[child_table_field].forEach((item) => {
-				if (seen[item[item_field]]) duplicates.push(item[item_field]);
-				seen[item[item_field]] = true;
-			});
-			if (duplicates.length) {
-				frappe.throw(`Duplicate items not allowed: ${duplicates.join(", ")}`);
-			}
-
-			frm.set_query(item_field, child_table_field, function (doc, cdt, cdn) {
-				return {
-					filters: {
-						item_code: ["in", so_items.map((i) => i.item_code)],
-					},
-				};
-			});
-		},
+function set_district_filter(frm) {
+	frm.set_query("district", function () {
+		return {
+			filters: {
+				territory: frm.doc.territory,
+			},
+		};
 	});
 }
