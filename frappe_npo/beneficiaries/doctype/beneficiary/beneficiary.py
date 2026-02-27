@@ -1,12 +1,16 @@
 # Copyright (c) 2022, hussain@frappe.io and contributors
 # For license information, please see license.txt
 
+import json
 import frappe
 from frappe import _
 from frappe.contacts.address_and_contact import load_address_and_contact
 from frappe.model.document import Document
 from frappe.query_builder import Field
 from frappe.utils import cint
+
+from frappe.utils.xlsxutils import make_xlsx
+from frappe.utils.csvutils import to_csv
 
 from ....utils.data import extract_data_from_file
 
@@ -61,7 +65,8 @@ class Beneficiary(Document):
 
     def before_save(self):
         self.set_created_by()
-        self.full_name = f"{self.first_name} {self.last_name or ''}"
+        if self.first_name or self.last_name:
+            self.full_name = f"{self.first_name} {self.last_name or ''}"
 
     def validate(self):
         self.validate_age()
@@ -193,6 +198,7 @@ def upload_beneficiary_list(file_url, donor=None):
 
     meta = frappe.get_meta(doctype)
     valid_fields = {df.fieldname for df in meta.fields}
+    valid_fields.add("locality")
     donor_field = "donor"
     beneficiary_no_field = "beneficiary_no"
     bank_fields = {
@@ -210,8 +216,8 @@ def upload_beneficiary_list(file_url, donor=None):
         beneficiary = None
 
         try:
-            if row.get("name") and frappe.db.exists(doctype, row.get("name")):
-                beneficiary = frappe.get_doc(doctype, row.get("name"))
+            if row.get("id") and frappe.db.exists(doctype, row.get("id")):
+                beneficiary = frappe.get_doc(doctype, row.get("id"))
             elif row.get("id_number") and frappe.db.exists(
                 doctype, {"id_number": row.get("id_number")}
             ):
@@ -219,8 +225,13 @@ def upload_beneficiary_list(file_url, donor=None):
                     doctype, {"id_number": row.get("id_number")}
                 )
                 beneficiary = frappe.get_doc(doctype, ben_name)
-            else:
+
+            if row.get("id") and not beneficiary:
+                continue
+
+            if not beneficiary:
                 beneficiary = frappe.new_doc(doctype)
+
         except Exception as e:
             errors.append({"row": idx, "error": str(e)})
             continue
@@ -235,13 +246,14 @@ def upload_beneficiary_list(file_url, donor=None):
 
             if field in valid_fields:
                 try:
-                    beneficiary.set(field, value)
+                    if field == "state":
+                        beneficiary.set("territory", value)
+                    elif field == "locality":
+                        beneficiary.set("district", value)
+                    else:
+                        beneficiary.set(field, value)
                 except Exception as e:
                     errors.append({"row": idx, "field": field, "error": str(e)})
-            else:
-                errors.append(
-                    {"row": idx, "field": field, "error": f"Field '{field}' missing"}
-                )
 
         try:
             beneficiary.save(ignore_permissions=True)
@@ -274,42 +286,97 @@ def upload_beneficiary_list(file_url, donor=None):
                 beneficiary.save(ignore_permissions=True)
             except Exception as e:
                 errors.append({"row": idx, "field": "donors", "error": str(e)})
-        elif row_donor or beneficiary_no:
-            errors.append(
-                {"row": idx, "error": "Donor and beneficiary_no required together"}
-            )
 
         bank_data = {f: row.get(f) for f in bank_fields if row.get(f)}
-        if bank_data:
+        if bank_data and len(bank_data) == len(bank_fields):
             try:
-                if len(bank_data) < len(bank_fields):
-                    missing = bank_fields - bank_data.keys()
-                    errors.append(
-                        {"row": idx, "error": f"Missing: {', '.join(missing)}"}
-                    )
-                else:
-                    if not frappe.db.exists("Bank", bank_data["bank_name"]):
-                        bank_doc = frappe.new_doc("Bank")
-                        bank_doc.bank_name = bank_data["bank_name"]
-                        bank_doc.insert(ignore_permissions=True)
+                if not frappe.db.exists("Bank", bank_data["bank_name"]):
+                    bank_doc = frappe.new_doc("Bank")
+                    bank_doc.bank_name = bank_data["bank_name"]
+                    bank_doc.insert(ignore_permissions=True)
 
-                    if not frappe.db.exists(
+                bank_account = (
+                    frappe.get_doc(
                         "Bank Account",
                         {"bank_account_no": bank_data["bank_account_number"]},
-                    ):
-                        bank_account = frappe.new_doc("Bank Account")
-                        bank_account.bank = bank_data["bank_name"]
-                        bank_account.bank_account_no = bank_data["bank_account_number"]
-                        bank_account.branch_code = bank_data["bank_branch_name"]
-                        bank_account.account_name = bank_data["account_holder_name"]
-                        bank_account.party_type = "Supplier"
-                        bank_account.party = getattr(beneficiary, "supplier", None)
-                        bank_account.insert(ignore_permissions=True)
+                    )
+                    if frappe.db.exists(
+                        "Bank Account",
+                        {"bank_account_no": bank_data["bank_account_number"]},
+                    )
+                    else frappe.new_doc("Bank Account")
+                )
+                bank_account.bank = bank_data["bank_name"]
+                bank_account.bank_account_no = bank_data["bank_account_number"]
+                bank_account.branch_code = bank_data["bank_branch_name"]
+                bank_account.account_name = bank_data["account_holder_name"]
+                bank_account.party_type = "Supplier"
+                bank_account.party = getattr(beneficiary, "supplier", None)
+                if beneficiary.is_proxy:
+                    bank_account.account_subtype = "Proxy"
+                else:
+                    bank_account.account_subtype = "Beneficiary"
+                bank_account.save(ignore_permissions=True)
+                beneficiary.bank_account = bank_account.name
+                beneficiary.save(ignore_permissions=True)
             except Exception as e:
                 errors.append({"row": idx, "field": "bank", "error": str(e)})
 
         processed.append(beneficiary.name)
 
     frappe.db.commit()
-
     return {"beneficiaries": processed, "errors": errors}
+
+
+@frappe.whitelist()
+def export_beneficiary_template(
+    file_format="Excel", extra_fields=None, first=False, include_beneficiary_data=True
+):
+    core_headers = [
+        "id",
+        "full_name",
+        "id_number",
+        "household_size",
+        "native_full_address",
+        "state",
+        "locality",
+        "is_proxy",
+        "phone_number",
+        "donor",
+        "beneficiary_no",
+        "bank_name",
+        "bank_branch_name",
+        "bank_account_number",
+        "account_holder_name",
+    ]
+
+    if isinstance(extra_fields, str):
+        try:
+            extra_fields = json.loads(extra_fields)
+        except (json.JSONDecodeError, ValueError):
+            extra_fields = []
+
+    fields = extra_fields or []
+
+    is_first = str(first).lower() == "true"
+    include_beneficiary_data = str(include_beneficiary_data).lower() == "true"
+
+    if not include_beneficiary_data:
+        headers = fields
+    elif is_first:
+        headers = fields + core_headers
+    else:
+        headers = core_headers + fields
+
+    data = [headers, [""] * len(headers)]
+
+    if file_format == "CSV":
+        frappe.response["result"] = str(to_csv(data))
+        frappe.response["type"] = "csv"
+        frappe.response["doctype"] = "Beneficiary_Template"
+    else:
+        xlsx_file = make_xlsx(data, "Beneficiary Template")
+
+        frappe.response["filename"] = "Beneficiary_Template.xlsx"
+        frappe.response["filecontent"] = xlsx_file.getvalue()
+        frappe.response["type"] = "binary"
