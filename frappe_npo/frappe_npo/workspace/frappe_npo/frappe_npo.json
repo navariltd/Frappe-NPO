@@ -1,7 +1,7 @@
 {
  "app": "frappe_npo",
  "charts": [],
- "content": "[{\"id\":\"6wv5vSis7r\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\",\"col\":12}},{\"id\":\"R5lGgc1m-1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Settings\",\"col\":4}},{\"id\":\"sRT_Bals63\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Beneficiary\",\"col\":4}},{\"id\":\"FTY7By9P-S\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Donor\",\"col\":4}},{\"id\":\"ehTjE0Mms7\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"1BUjwsQ3GV\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reports &amp; Masters</b></span>\",\"col\":12}},{\"id\":\"_RmqWK5xlO\",\"type\":\"card\",\"data\":{\"card_name\":\"Beneficiaries\",\"col\":4}},{\"id\":\"Cwv_RMxEPm\",\"type\":\"card\",\"data\":{\"card_name\":\"Donation\",\"col\":4}},{\"id\":\"BsuXUNbqZx\",\"type\":\"card\",\"data\":{\"card_name\":\"Membership\",\"col\":4}},{\"id\":\"f9XNMU-2gI\",\"type\":\"card\",\"data\":{\"card_name\":\"Volunteer\",\"col\":4}},{\"id\":\"MUo7eZfG6I\",\"type\":\"card\",\"data\":{\"card_name\":\"Certifications\",\"col\":4}},{\"id\":\"zcE5QvFDga\",\"type\":\"card\",\"data\":{\"card_name\":\"Chapter & Settings\",\"col\":4}},{\"id\":\"PaXwSjvWw4\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}},{\"id\":\"ZpuiUEUUS-\",\"type\":\"card\",\"data\":{\"card_name\":\"Health & Medical\",\"col\":4}},{\"id\":\"8ZSSVKeLla\",\"type\":\"card\",\"data\":{\"card_name\":\"Impact & Metrics\",\"col\":4}}]",
+ "content": "[{\"id\":\"6wv5vSis7r\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\",\"col\":12}},{\"id\":\"R5lGgc1m-1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Settings\",\"col\":4}},{\"id\":\"sRT_Bals63\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Beneficiary\",\"col\":4}},{\"id\":\"FTY7By9P-S\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Donor\",\"col\":4}},{\"id\":\"-WIPgG8_GT\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Disbursement Order\",\"col\":4}},{\"id\":\"ehTjE0Mms7\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"1BUjwsQ3GV\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reports &amp; Masters</b></span>\",\"col\":12}},{\"id\":\"_RmqWK5xlO\",\"type\":\"card\",\"data\":{\"card_name\":\"Beneficiaries\",\"col\":4}},{\"id\":\"Cwv_RMxEPm\",\"type\":\"card\",\"data\":{\"card_name\":\"Donation\",\"col\":4}},{\"id\":\"BsuXUNbqZx\",\"type\":\"card\",\"data\":{\"card_name\":\"Membership\",\"col\":4}},{\"id\":\"f9XNMU-2gI\",\"type\":\"card\",\"data\":{\"card_name\":\"Volunteer\",\"col\":4}},{\"id\":\"MUo7eZfG6I\",\"type\":\"card\",\"data\":{\"card_name\":\"Certifications\",\"col\":4}},{\"id\":\"zcE5QvFDga\",\"type\":\"card\",\"data\":{\"card_name\":\"Chapter & Settings\",\"col\":4}},{\"id\":\"PaXwSjvWw4\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}},{\"id\":\"ZpuiUEUUS-\",\"type\":\"card\",\"data\":{\"card_name\":\"Health & Medical\",\"col\":4}},{\"id\":\"8ZSSVKeLla\",\"type\":\"card\",\"data\":{\"card_name\":\"Impact & Metrics\",\"col\":4}}]",
  "creation": "2020-03-02 17:23:47.811421",
  "custom_blocks": [],
  "docstatus": 0,
@@ -9,7 +9,7 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "non-profit",
- "idx": 0,
+ "idx": 2,
  "is_hidden": 0,
  "label": "Frappe NPO",
  "links": [
@@ -460,7 +460,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-02-24 09:52:34.044693",
+ "modified": "2026-02-27 13:54:00.605656",
  "modified_by": "Administrator",
  "module": "Frappe NPO",
  "name": "Frappe NPO",
@@ -473,6 +473,14 @@
  "roles": [],
  "sequence_id": 18.0,
  "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Disbursement Order",
+   "link_to": "Disbursement Order",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
   {
    "color": "Grey",
    "doc_view": "List",
