@@ -22,11 +22,119 @@ class DisbursementOrder(Document):
 
         self.total_amount = total_amount
 
+        if self.beneficiaries and self.disbursement_type == "Cash":
+            self.calculate_bank_transfer_fees()
+
     def before_submit(self):
         if not self.beneficiaries:
             frappe.throw(
                 _("At least one beneficiary must be allocated before submitting.")
             )
+
+    def on_submit(self):
+        if self.beneficiaries and self.disbursement_type == "Cash":
+            self.create_territory_sales_orders()
+
+    def calculate_bank_transfer_fees(self):
+        from frappe.query_builder import DocType, Criterion
+
+        Territory = DocType("Territory")
+        SalesPerson = DocType("Sales Person")
+        BankAccount = DocType("Bank Account")
+        Bank = DocType("Bank")
+
+        query = (
+            frappe.qb.from_(Territory)
+            .inner_join(SalesPerson)
+            .on(Territory.territory_manager == SalesPerson.name)
+            .inner_join(BankAccount)
+            .on(SalesPerson.bank_account == BankAccount.name)
+            .inner_join(Bank)
+            .on(BankAccount.bank == Bank.name)
+            .select(Territory.name.as_("territory"), Bank.bank_charge.as_("charge"))
+        )
+
+        territory_charges = {d.territory: d.charge for d in query.run(as_dict=True)}
+        total_transfer_fees = 0
+        for row in self.beneficiaries:
+            beneficiary_territory = frappe.db.get_value(
+                "Beneficiary", row.beneficiary, "territory"
+            )
+
+            if beneficiary_territory in territory_charges:
+                row.bank_transfer_fee = territory_charges[beneficiary_territory]
+                total_transfer_fees += row.bank_transfer_fee or 0
+            else:
+                row.bank_transfer_fee = 0
+
+        self.total_bank_transfer_fee = total_transfer_fees
+
+    def create_territory_sales_orders(self):
+        territory_data = {}
+
+        for row in self.beneficiaries:
+            territory = row.territory or frappe.db.get_value(
+                "Beneficiary", row.beneficiary, "territory"
+            )
+
+            if not territory:
+                continue
+
+            if territory not in territory_data:
+                territory_data[territory] = {"distribution_amount": 0, "bank_fees": 0}
+
+            territory_data[territory]["distribution_amount"] += row.amount or 0
+            territory_data[territory]["bank_fees"] += row.bank_transfer_fee or 0
+
+        customer = (
+            frappe.get_value("Donor", self.donor, "customer") if self.donor else None
+        )
+
+        if not customer:
+            frappe.msgprint(
+                _("No Customer linked to Donor. Skipping Sales Order creation.")
+            )
+            return
+
+        for territory, totals in territory_data.items():
+            so = frappe.new_doc("Sales Order")
+            so.customer = customer
+            so.transaction_date = today()
+            so.delivery_date = self.to_date or today()
+            so.company = self.company
+            so.territory = territory
+            so.donor = self.donor
+            so.disbursement_order = self.name
+
+            if totals["distribution_amount"] > 0:
+                so.append(
+                    "items",
+                    {
+                        "item_code": "Cash Distribution",
+                        "qty": 1,
+                        "rate": totals["distribution_amount"],
+                        "delivery_date": so.delivery_date,
+                    },
+                )
+
+            if totals["bank_fees"] > 0:
+                so.append(
+                    "items",
+                    {
+                        "item_code": "Bank Transfer Charges",
+                        "qty": 1,
+                        "rate": totals["bank_fees"],
+                        "delivery_date": so.delivery_date,
+                    },
+                )
+
+            if so.items:
+                so.insert(ignore_permissions=True)
+                frappe.msgprint(
+                    _("Sales Order {0} created for Territory {1}").format(
+                        so.name, territory
+                    )
+                )
 
     @frappe.whitelist()
     def get_beneficiaries(self, advanced_filters=None):
@@ -36,9 +144,7 @@ class DisbursementOrder(Document):
         beneficiaries = frappe.get_list(
             "Beneficiary",
             filters=self.get_filters() + (advanced_filters or []),
-            fields=[
-                "name",
-            ],
+            fields=["name", "full_name", "beneficiary_type", "district", "territory"],
         )
         if self.donor:
             for ben in beneficiaries:
@@ -58,7 +164,7 @@ class DisbursementOrder(Document):
 
     def get_filters(self):
         filter_fields = [
-            "state",
+            "territory",
             "beneficiary_type",
             "district",
             "zone",
