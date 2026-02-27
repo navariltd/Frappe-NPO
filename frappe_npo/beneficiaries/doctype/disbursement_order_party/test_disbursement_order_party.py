@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestBeneficiaryDisbursementEntryParty(FrappeTestCase):
+class TestDisbursementOrderParty(FrappeTestCase):
 	pass

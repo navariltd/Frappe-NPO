@@ -322,12 +322,12 @@ frappe.ui.form.on("Disbursement Order", {
 	},
 });
 
-frappe.ui.form.on("Beneficiary Disbursement Entry Item", {
+frappe.ui.form.on("Disbursement Order Item", {
 	rate: (frm, cdt, cdn) => update_row_amount(frm, cdt, cdn, "items"),
 	qty: (frm, cdt, cdn) => update_row_amount(frm, cdt, cdn, "items"),
 });
 
-frappe.ui.form.on("Beneficiary Disbursement Entry Party", {
+frappe.ui.form.on("Disbursement Order Party", {
 	rate: (frm, cdt, cdn) => update_row_amount(frm, cdt, cdn, "beneficiaries"),
 	qty: (frm, cdt, cdn) => update_row_amount(frm, cdt, cdn, "beneficiaries"),
 });
