@@ -6,9 +6,6 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import today
 import json
-import csv
-from io import StringIO, BytesIO
-from frappe.utils.xlsxutils import make_xlsx
 
 from ....utils.data import extract_data_from_file, get_doctype_headers
 
@@ -214,49 +211,8 @@ class DisbursementOrder(Document):
         return {"success": True}
 
     @frappe.whitelist()
-    def download_beneficiary_template(self, file_type="csv"):
-        headers = get_doctype_headers("Beneficiary Disbursement Entry Party")
-
-        sample_rows = []
-        for row in (self.beneficiaries or [])[:5]:
-            sample_rows.append([getattr(row, h, "") or "" for h in headers])
-
-        if not sample_rows:
-            sample_rows = [["" for _ in headers] for _ in range(5)]
-
-        if file_type.lower() == "csv":
-            output = StringIO()
-            writer = csv.writer(output)
-            writer.writerow(headers)
-            writer.writerows(sample_rows)
-            filedata = output.getvalue().encode("utf-8")
-            filename = "donation_beneficiary_template.csv"
-
-        elif file_type.lower() in ["xlsx", "excel"]:
-            data = [headers] + sample_rows
-            xlsx_file = make_xlsx(data, sheet_name="Beneficiaries")
-            filedata = xlsx_file.getvalue()
-            filename = "donation_beneficiary_template.xlsx"
-
-        else:
-            frappe.throw(_("Invalid file type. Only CSV or Excel supported"))
-
-        file_doc = frappe.get_doc(
-            {
-                "doctype": "File",
-                "file_name": filename,
-                "attached_to_doctype": "Disbursement Order",
-                "attached_to_name": self.name or "",
-                "content": filedata,
-                "is_private": 0,
-            }
-        )
-        file_doc.insert(ignore_permissions=True)
-        return file_doc.file_url
-
-    @frappe.whitelist()
     def upload_beneficiaries(self, file_url):
-        headers = get_doctype_headers("Beneficiary Disbursement Entry Party")
+        headers = get_doctype_headers("Disbursement Order Party")
         rows = extract_data_from_file(file_url)
 
         rows_to_upload = [r for r in rows if not r.get("beneficiary")]
@@ -282,6 +238,8 @@ class DisbursementOrder(Document):
                 mapped_row[header] = row.get(header, "")
 
             mapped_row["beneficiary"] = beneficiary_id
+            mapped_row["district"] = row.get("district") or row.get("locality")
+            mapped_row["territory"] = row.get("territory") or row.get("state")
             mapped_rows.append(mapped_row)
 
         return {"mapped_items": mapped_rows, "errors": upload_results.get("errors", [])}
