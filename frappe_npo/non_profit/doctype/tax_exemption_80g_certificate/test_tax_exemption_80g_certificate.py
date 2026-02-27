@@ -24,7 +24,7 @@ class TestTaxExemption80GCertificate(FrappeTestCase):
         frappe.db.sql("delete from `tabTax Exemption 80G Certificate`")
         frappe.db.sql("delete from `tabMembership`")
         create_donor_type()
-        settings = frappe.get_doc("Non Profit Settings")
+        settings = frappe.get_doc("Frappe NPO Settings")
         settings.company = "_Test Company"
         settings.donation_company = "_Test Company"
         settings.default_donor_type = "_Test Donor"

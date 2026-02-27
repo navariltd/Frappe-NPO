@@ -10,7 +10,7 @@ from frappe_npo.non_profit.doctype.donation.donation import create_razorpay_dona
 class TestDonation(unittest.TestCase):
     def setUp(self):
         create_donor_type()
-        settings = frappe.get_doc("Non Profit Settings")
+        settings = frappe.get_doc("Frappe NPO Settings")
         settings.company = "_Test Company"
         settings.donation_company = "_Test Company"
         settings.default_donor_type = "_Test Donor"

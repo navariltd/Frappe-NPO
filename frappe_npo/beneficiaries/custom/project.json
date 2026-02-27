@@ -1043,28 +1043,7 @@
   ],
   "custom_perms": [],
   "doctype": "Project",
-  "links": [
-    {
-      "creation": "2026-01-28 10:59:30.656903",
-      "custom": 1,
-      "docstatus": 0,
-      "group": "Donation",
-      "hidden": 0,
-      "idx": 0,
-      "is_child_table": 0,
-      "link_doctype": "Disbursement Order",
-      "link_fieldname": "project",
-      "modified": "2026-01-28 10:59:30.656903",
-      "modified_by": "Administrator",
-      "name": "4mqfrjfeff",
-      "owner": "Administrator",
-      "parent": "Project",
-      "parent_doctype": null,
-      "parentfield": "links",
-      "parenttype": "Customize Form",
-      "table_fieldname": null
-    }
-  ],
+  "links": [],
   "property_setters": [
     {
       "_assign": null,

@@ -89,6 +89,20 @@ frappe.ui.form.on("Beneficiary", {
 		}
 
 		calculate_and_set_age(frm);
+
+		set_district_filter(frm);
+	},
+
+	first_name: function (frm) {
+		update_full_name(frm);
+	},
+
+	last_name: function (frm) {
+		update_full_name(frm);
+	},
+
+	territory: function (frm) {
+		set_district_filter(frm);
 	},
 
 	create_supplier: (frm) => {
@@ -228,4 +242,20 @@ function open_replacement_form(frm) {
 	});
 
 	dialog.show();
+}
+
+function update_full_name(frm) {
+	const firstName = frm.doc.first_name || "";
+	const lastName = frm.doc.last_name || "";
+	frm.set_value("full_name", `${firstName} ${lastName}`.trim());
+}
+
+function set_district_filter(frm) {
+	frm.set_query("district", function () {
+		return {
+			filters: {
+				territory: frm.doc.territory,
+			},
+		};
+	});
 }

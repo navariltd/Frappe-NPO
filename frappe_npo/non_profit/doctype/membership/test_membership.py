@@ -94,7 +94,7 @@ class TestMembership(FrappeTestCase):
 
 
 def set_config(key, value):
-    frappe.db.set_value("Non Profit Settings", None, key, value)
+    frappe.db.set_value("Frappe NPO Settings", None, key, value)
 
 
 def make_membership(member, payload={}):
@@ -134,7 +134,7 @@ def setup_membership():
     company = frappe.get_doc("Company", erpnext.get_default_company())
 
     # update non profit settings
-    settings = frappe.get_doc("Non Profit Settings")
+    settings = frappe.get_doc("Frappe NPO Settings")
     # Enable razorpay
     settings.enable_razorpay_for_memberships = 1
     settings.billing_cycle = "Monthly"

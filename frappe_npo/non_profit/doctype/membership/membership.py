@@ -70,7 +70,7 @@ class Membership(Document):
             self.from_date = add_days(last_membership.to_date, 1)
 
         if (
-            frappe.db.get_single_value("Non Profit Settings", "billing_cycle")
+            frappe.db.get_single_value("Frappe NPO Settings", "billing_cycle")
             == "Yearly"
         ):
             self.to_date = add_years(self.from_date, 1)
@@ -82,7 +82,7 @@ class Membership(Document):
             return
         self.load_from_db()
         self.db_set("paid", 1)
-        settings = frappe.get_doc("Non Profit Settings")
+        settings = frappe.get_doc("Frappe NPO Settings")
         if settings.allow_invoicing and settings.automate_membership_invoicing:
             self.generate_invoice(
                 with_payment_entry=settings.automate_membership_payment_entries,
@@ -108,7 +108,7 @@ class Membership(Document):
             )
 
         plan = frappe.get_doc("Membership Type", self.membership_type)
-        settings = frappe.get_doc("Non Profit Settings")
+        settings = frappe.get_doc("Frappe NPO Settings")
         self.validate_membership_type_and_settings(plan, settings)
 
         invoice = make_invoice(self, member, plan, settings)
@@ -124,7 +124,7 @@ class Membership(Document):
         return invoice
 
     def validate_membership_type_and_settings(self, plan, settings):
-        settings_link = get_link_to_form("Non Profit Settings", "Non Profit Settings")
+        settings_link = get_link_to_form("Frappe NPO Settings", "Frappe NPO Settings")
 
         if not settings.membership_debit_account:
             frappe.throw(
@@ -150,7 +150,7 @@ class Membership(Document):
             frappe.throw(
                 _(
                     "You need to set <b>Payment Account</b> for Membership in {0}"
-                ).format(get_link_to_form("Non Profit Settings", "Non Profit Settings"))
+                ).format(get_link_to_form("Frappe NPO Settings", "Frappe NPO Settings"))
             )
 
         from erpnext.accounts.doctype.payment_entry.payment_entry import (
@@ -171,11 +171,11 @@ class Membership(Document):
 
     @frappe.whitelist()
     def send_acknowlement(self):
-        settings = frappe.get_doc("Non Profit Settings")
+        settings = frappe.get_doc("Frappe NPO Settings")
         if not settings.send_email:
             frappe.throw(
                 _("You need to enable <b>Send Acknowledge Email</b> in {0}").format(
-                    get_link_to_form("Non Profit Settings", "Non Profit Settings")
+                    get_link_to_form("Frappe NPO Settings", "Frappe NPO Settings")
                 )
             )
 
@@ -273,7 +273,7 @@ def get_member_based_on_subscription(subscription_id, email=None, customer_id=No
 def verify_signature(data, endpoint="Membership"):
     signature = frappe.request.headers.get("X-Razorpay-Signature")
 
-    settings = frappe.get_doc("Non Profit Settings")
+    settings = frappe.get_doc("Frappe NPO Settings")
     key = settings.get_webhook_secret(endpoint)
 
     controller = frappe.get_doc("Razorpay Settings")
@@ -342,7 +342,7 @@ def trigger_razorpay_subscription(*args, **kwargs):
         member.flags.ignore_mandatory = True
         member.save()
 
-        settings = frappe.get_doc("Non Profit Settings")
+        settings = frappe.get_doc("Frappe NPO Settings")
         if settings.allow_invoicing and settings.automate_membership_invoicing:
             membership.reload()
             membership.generate_invoice(
@@ -431,7 +431,7 @@ def process_request_data(data):
 
 
 def get_company_for_memberships():
-    company = frappe.db.get_single_value("Non Profit Settings", "company")
+    company = frappe.db.get_single_value("Frappe NPO Settings", "company")
     if not company:
         from frappe_npo.non_profit.utils import get_company
 

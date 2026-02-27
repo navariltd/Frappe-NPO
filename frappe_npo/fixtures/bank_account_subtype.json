@@ -12,5 +12,12 @@
     "doctype": "Bank Account Subtype",
     "modified": "2026-02-25 07:11:42.751865",
     "name": "Beneficiary"
+  },
+  {
+    "account_subtype": "Agent",
+    "docstatus": 0,
+    "doctype": "Bank Account Subtype",
+    "modified": "2026-02-25 07:11:57.441896",
+    "name": "Agent"
   }
 ]
