@@ -13,8 +13,8 @@ frappe.ui.form.on("Donation", {
 		}
 
 		const { message: setting } = await frappe.db.get_value(
-			"Non Profit Settings",
-			"Non Profit Settings",
+			"Frappe NPO Settings",
+			"Frappe NPO Settings",
 			["enable_payment_table_on_donation"],
 		);
 

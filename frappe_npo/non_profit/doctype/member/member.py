@@ -30,13 +30,13 @@ class Member(Document):
         validate_email_address(email.strip(), True)
 
     def setup_subscription(self):
-        non_profit_settings = frappe.get_doc("Non Profit Settings")
+        non_profit_settings = frappe.get_doc("Frappe NPO Settings")
         if not non_profit_settings.enable_razorpay_for_memberships:
             frappe.throw(
                 _(
                     "Please check Enable Razorpay for Memberships in {0} to setup subscription"
                 )
-            ).format(get_link_to_form("Non Profit Settings", "Non Profit Settings"))
+            ).format(get_link_to_form("Frappe NPO Settings", "Frappe NPO Settings"))
 
         controller = get_payment_gateway_controller("Razorpay")
         settings = controller.get_settings({})

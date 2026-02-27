@@ -29,8 +29,8 @@ class Donation(Document):
 
     def compute_total_and_validate(self):
         non_profit_settings = frappe.get_doc(
-            "Non Profit Settings",
-            "Non Profit Settings",
+            "Frappe NPO Settings",
+            "Frappe NPO Settings",
         )
 
         enable_payment_table = non_profit_settings.get(
@@ -85,14 +85,14 @@ class Donation(Document):
         self.create_payment_entry()
 
     def create_payment_entry(self, date=None):
-        settings = frappe.get_doc("Non Profit Settings")
+        settings = frappe.get_doc("Frappe NPO Settings")
         if not settings.automate_donation_payment_entries:
             return
 
         if not settings.donation_payment_account:
             frappe.throw(
                 _("You need to set <b>Payment Account</b> for Donation in {0}").format(
-                    get_link_to_form("Non Profit Settings", "Non Profit Settings")
+                    get_link_to_form("Frappe NPO Settings", "Frappe NPO Settings")
                 )
             )
 
@@ -213,7 +213,7 @@ def get_donor(email):
 @frappe.whitelist()
 def create_donor(payment):
     donor_details = frappe._dict(payment)
-    donor_type = frappe.db.get_single_value("Non Profit Settings", "default_donor_type")
+    donor_type = frappe.db.get_single_value("Frappe NPO Settings", "default_donor_type")
 
     donor = frappe.new_doc("Donor")
     donor.update(
@@ -233,7 +233,7 @@ def create_donor(payment):
 
 
 def get_company_for_donations():
-    company = frappe.db.get_single_value("Non Profit Settings", "donation_company")
+    company = frappe.db.get_single_value("Frappe NPO Settings", "donation_company")
     if not company:
         from frappe_npo.non_profit.utils import get_company
 
@@ -311,7 +311,7 @@ def project_filter_by_donor(donor=None):
 
 @frappe.whitelist()
 def calculate_donation_paid_amount(doc):
-    settings = frappe.get_cached_doc("Non Profit Settings")
+    settings = frappe.get_cached_doc("Frappe NPO Settings")
 
     total_paid = 0.0
     if settings.get("enable_payment_table_on_donation"):
