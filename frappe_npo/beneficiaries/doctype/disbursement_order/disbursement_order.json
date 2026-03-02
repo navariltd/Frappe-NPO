@@ -120,7 +120,8 @@
    "fieldname": "donor",
    "fieldtype": "Link",
    "label": "Donor",
-   "options": "Donor"
+   "options": "Donor",
+   "reqd": 1
   },
   {
    "fieldname": "project",
