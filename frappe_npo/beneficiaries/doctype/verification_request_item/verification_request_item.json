@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "beneficiary",
+  "beneficiary_no",
   "bank_account",
   "focal_point",
   "column_break_fitv",
@@ -114,13 +115,22 @@
   {
    "fieldname": "column_break_jqeq",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "beneficiary_no",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Beneficiary No"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-02-25 08:42:55.389514",
+ "modified": "2026-03-02 13:17:58.576488",
  "modified_by": "Administrator",
  "module": "Beneficiaries",
  "name": "Verification Request Item",

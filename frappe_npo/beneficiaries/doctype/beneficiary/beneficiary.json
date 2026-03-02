@@ -39,8 +39,10 @@
   "column_break_ifez",
   "is_proxy",
   "contact_html",
+  "primary_contact",
   "column_break_sytn",
   "address_html",
+  "primary_address",
   "section_break_epas",
   "email",
   "phone_number",
@@ -791,6 +793,18 @@
    "fieldtype": "Link",
    "label": "Bank Account",
    "options": "Bank Account"
+  },
+  {
+   "fieldname": "primary_contact",
+   "fieldtype": "Link",
+   "label": "Primary Contact",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "primary_address",
+   "fieldtype": "Link",
+   "label": "Primary Address",
+   "options": "Address"
   }
  ],
  "image_field": "image",
@@ -822,7 +836,7 @@
    "link_fieldname": "beneficiary"
   }
  ],
- "modified": "2026-02-27 12:37:14.421296",
+ "modified": "2026-03-02 09:30:53.079252",
  "modified_by": "Administrator",
  "module": "Beneficiaries",
  "name": "Beneficiary",

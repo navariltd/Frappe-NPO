@@ -10,14 +10,18 @@
   "territory",
   "district",
   "beneficiary_no",
-  "mode_of_payment",
-  "payment_entry",
-  "stock_entry",
   "column_break_pbpz",
+  "mode_of_payment",
+  "stock_entry",
+  "payment_entry",
+  "focal_point",
+  "section_break_zdsl",
   "item_code",
-  "uom",
   "qty",
+  "uom",
+  "column_break_bxyy",
   "rate",
+  "currency",
   "amount",
   "bank_transfer_fee"
  ],
@@ -148,13 +152,41 @@
    "label": "Bank Transfer Fee",
    "non_negative": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_zdsl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bxyy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "focal_point",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Focal Point",
+   "options": "Focal Point"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Currency",
+   "options": "Currency"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-02-27 13:28:45.581348",
+ "modified": "2026-03-02 09:35:31.951242",
  "modified_by": "Administrator",
  "module": "Beneficiaries",
  "name": "Disbursement Order Party",
