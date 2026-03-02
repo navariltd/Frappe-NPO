@@ -21,6 +21,14 @@
   "column_break_rewa",
   "enable_student_creation_on_beneficiary",
   "enable_programme_details",
+  "disbursement_section",
+  "default_status_for_auto_created_sales_order",
+  "default_status_for_auto_created_sales_invoice",
+  "default_status_for_auto_created_payment_entry",
+  "column_break_oiwu",
+  "default_project_template_for_agents",
+  "create_a_project_for_each_agent",
+  "auto_create_payment_entries",
   "default_accounts_section",
   "beneficiary_accounts",
   "disbursement_accounts",
@@ -362,12 +370,60 @@
    "fieldname": "enable_territory_dimension",
    "fieldtype": "Check",
    "label": "Enable Territory Dimension"
+  },
+  {
+   "fieldname": "disbursement_section",
+   "fieldtype": "Section Break",
+   "label": "Disbursement"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "default_status_for_auto_created_sales_order",
+   "fieldtype": "Select",
+   "label": "Default Status for Auto Created Sales Order",
+   "options": "Draft\nSubmitted"
+  },
+  {
+   "fieldname": "column_break_oiwu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "default_status_for_auto_created_sales_invoice",
+   "fieldtype": "Select",
+   "label": "Default Status for Auto Created Sales Invoice",
+   "options": "Draft\nSubmitted"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "default_status_for_auto_created_payment_entry",
+   "fieldtype": "Select",
+   "label": "Default Status for Auto Created Payment Entry",
+   "options": "Draft\nSubmitted"
+  },
+  {
+   "fieldname": "default_project_template_for_agents",
+   "fieldtype": "Link",
+   "label": "Default Project Template for Agents",
+   "options": "Project Template"
+  },
+  {
+   "default": "0",
+   "fieldname": "create_a_project_for_each_agent",
+   "fieldtype": "Check",
+   "label": "Create a Project for each Agent"
+  },
+  {
+   "default": "0",
+   "fieldname": "auto_create_payment_entries",
+   "fieldtype": "Check",
+   "label": "Auto Create Payment Entries"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-02-27 14:12:26.338767",
+ "modified": "2026-03-02 08:55:03.121423",
  "modified_by": "Administrator",
  "module": "Frappe NPO",
  "name": "Frappe NPO Settings",
