@@ -17,8 +17,8 @@
   "from_date",
   "to_date",
   "column_break_pvqe",
-  "customers_purchase_order",
-  "customers_purchase_order_date",
+  "po_no",
+  "po_date",
   "accounts_section",
   "company_bank_account",
   "column_break_xmyu",
@@ -30,6 +30,7 @@
   "allocation_items_section",
   "items",
   "distribute_items_equally",
+  "create_a_sales_order_for_each_state",
   "select_beneficiaries_section",
   "total_amount",
   "amended_from",
@@ -265,18 +266,7 @@
    "label": "Entries created"
   },
   {
-   "fieldname": "customers_purchase_order",
-   "fieldtype": "Data",
-   "label": "Customer's Purchase Order",
-   "reqd": 1
-  },
-  {
-   "fieldname": "customers_purchase_order_date",
-   "fieldtype": "Date",
-   "label": "Customer's Purchase Order Date",
-   "reqd": 1
-  },
-  {
+   "default": "Cash",
    "fieldname": "disbursement_type",
    "fieldtype": "Select",
    "in_list_view": 1,
@@ -308,6 +298,24 @@
    "fieldtype": "Link",
    "label": "State",
    "options": "Territory"
+  },
+  {
+   "default": "0",
+   "fieldname": "create_a_sales_order_for_each_state",
+   "fieldtype": "Check",
+   "label": "Create a sales order for each State/Agent"
+  },
+  {
+   "fieldname": "po_no",
+   "fieldtype": "Data",
+   "label": "Customer's Purchase Order",
+   "reqd": 1
+  },
+  {
+   "fieldname": "po_date",
+   "fieldtype": "Date",
+   "label": "Customer's Purchase Order Date",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
