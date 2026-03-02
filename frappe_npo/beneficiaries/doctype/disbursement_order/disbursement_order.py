@@ -319,6 +319,16 @@ class DisbursementOrder(Document):
             ):
                 beneficiary_id = upload_results["beneficiaries"][idx]
 
+            focal_point = row.get("focal_point")
+            if focal_point and not frappe.db.exists("Focal Point", focal_point):
+                try:
+                    new_fp = frappe.get_doc(
+                        {"doctype": "Focal Point", "name": focal_point}
+                    )
+                    new_fp.insert(ignore_permissions=True)
+                except Exception:
+                    pass
+
             mapped_row = {}
             for header in headers:
                 mapped_row[header] = row.get(header, "")
@@ -405,10 +415,37 @@ class DisbursementOrder(Document):
                     "received_amount": data["total_amount"],
                     "reference_no": self.po_no,
                     "reference_date": self.po_date,
+                    "territory": state,
                     "disbursement_order": self.name,
                     "remarks": f"State transfer for {state} - Disbursement Order {self.name}",
                 }
             )
+
+            for row in self.beneficiaries:
+                row_state = row.territory or frappe.db.get_value(
+                    "Beneficiary", row.beneficiary, "territory"
+                )
+
+                ben = frappe.get_doc("Beneficiary", row.beneficiary)
+
+                if row_state != state:
+                    continue
+
+                pe.append(
+                    "beneficiaries",
+                    {
+                        "beneficiary": row.beneficiary,
+                        "beneficiary_no": row.beneficiary_no,
+                        "bank_account": ben.bank_account,
+                        "focal_point": row.focal_point,
+                        "beneficiary_contact": ben.primary_contact,
+                        "beneficiary_address": ben.primary_address,
+                        "amount": (row.amount or 0) + (row.bank_transfer_fee or 0),
+                        "currency": row.currency,
+                        "status": "Open",
+                        "comments": row.remarks if hasattr(row, "remarks") else None,
+                    },
+                )
 
             pe.insert(ignore_permissions=True)
 

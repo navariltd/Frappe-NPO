@@ -11,7 +11,7 @@
    "indent": 0,
    "keep_closed": 0,
    "label": "Home",
-   "link_to": "Frappe NPO",
+   "link_to": "AIGT-HDR",
    "link_type": "Workspace",
    "show_arrow": 0,
    "type": "Link"
@@ -282,11 +282,11 @@
    "type": "Link"
   }
  ],
- "modified": "2026-02-24 10:02:56.977326",
+ "modified": "2026-03-02 15:35:17.597899",
  "modified_by": "Administrator",
  "module": "Non Profit",
- "name": "Frappe NPO",
+ "name": "AIGT-HDR",
  "owner": "Administrator",
  "standard": 1,
- "title": "Frappe NPO"
+ "title": "AIGT-HDR"
 }

@@ -8,14 +8,20 @@
  "field_order": [
   "naming_series",
   "verification_type",
-  "sales_order",
+  "state",
   "disbursement_order",
   "column_break_jyza",
-  "state",
-  "agent_user",
   "agent",
-  "column_break_rjkh",
+  "agent_user",
   "focal_point",
+  "column_break_rjkh",
+  "company",
+  "sales_order",
+  "agent_payment_entry",
+  "section_break_khrc",
+  "agent_bank_account",
+  "column_break_ichy",
+  "agent_account",
   "section_break_mymk",
   "items",
   "section_break_irye",
@@ -50,7 +56,8 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Disbursement Order",
-   "options": "Disbursement Order"
+   "options": "Disbursement Order",
+   "search_index": 1
   },
   {
    "fieldname": "sales_order",
@@ -120,13 +127,55 @@
    "label": "Items",
    "options": "Verification Request Item",
    "reqd": 1
+  },
+  {
+   "fieldname": "agent_payment_entry",
+   "fieldtype": "Link",
+   "label": "Agent Payment Entry",
+   "options": "Payment Entry",
+   "search_index": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fetch_from": "agent.bank_account",
+   "fieldname": "agent_bank_account",
+   "fieldtype": "Link",
+   "label": "Agent Bank Account",
+   "options": "Bank Account"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_khrc",
+   "fieldtype": "Section Break",
+   "label": "Accounts"
+  },
+  {
+   "fieldname": "column_break_ichy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "agent_bank_account.account",
+   "fieldname": "agent_account",
+   "fieldtype": "Link",
+   "label": "Agent Account",
+   "options": "Account"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2026-02-25 08:42:10.755641",
+ "links": [
+  {
+   "link_doctype": "Payment Entry",
+   "link_fieldname": "reference_no"
+  }
+ ],
+ "modified": "2026-03-02 14:01:58.835701",
  "modified_by": "Administrator",
  "module": "Beneficiaries",
  "name": "Verification Request",
