@@ -23,14 +23,12 @@ frappe.ui.form.on("Disbursement Order", {
 		set_district_filter(frm);
 	},
 
-	territory: function (frm) {
-		set_district_filter(frm);
-	},
-
 	refresh: function (frm) {
 		if (frm.doc.docstatus == 0 && !frm.is_new()) {
 			frm.trigger("render_custom_buttons");
 		}
+
+		frm.trigger("check_linked_entries_status");
 		if (frm.is_dirty()) {
 			frm.page.set_primary_action(__("Save"), () => frm.save());
 		} else {
@@ -40,35 +38,139 @@ frappe.ui.form.on("Disbursement Order", {
 						frm.events.get_beneficiary_details(frm);
 					});
 				}
-			} else if (frm.doc.docstatus === 1) {
-				if (!frm.doc.entries_created) {
-					let label =
-						frm.doc.disbursement_type === "Cash"
-							? __("Create Payment Entries")
-							: __("Create Stock Entries");
-					frm.page.set_primary_action(label, () => {
-						frm.events.process_disbursement(frm);
-					});
+			}
+		}
+
+		frm.trigger("handle_account_sync");
+
+		frm.trigger("handle_bank_account_sync");
+	},
+
+	company: function (frm) {
+		frm.clear_table("beneficiaries");
+		frm.trigger("handle_account_sync");
+		frm.refresh();
+	},
+
+	paid_from: function (frm) {
+		frm.trigger("handle_bank_account_sync");
+	},
+
+	disbursement_type: function (frm) {
+		frm.clear_table("beneficiaries");
+		frm.refresh();
+	},
+
+	territory: function (frm) {
+		set_district_filter(frm);
+	},
+
+	handle_bank_account_sync: function (frm) {
+		if (!frm.doc.company_bank_account && frm.doc.paid_from) {
+			frappe.db.get_value(
+				"Bank Account",
+				{
+					account: frm.doc.paid_from,
+					company: frm.doc.company,
+				},
+				"name",
+				(r) => {
+					if (r && r.name) {
+						frm.set_value("company_bank_account", r.name, null, true);
+					}
+				},
+			);
+		}
+	},
+
+	handle_account_sync: function (frm) {
+		if (!frm.doc.company) return;
+
+		frappe.db.get_value(
+			"Company",
+			frm.doc.company,
+			"default_disbursement_bank_account",
+			(r) => {
+				if (r && r.default_disbursement_bank_account) {
+					frm.set_value("company_bank_account", r.default_disbursement_bank_account);
 				} else {
 					frappe.call({
-						method: "frappe.client.get_list",
+						method: "frappe.client.get",
 						args: {
-							doctype: "Sales Invoice",
-							fields: ["name"],
-							filters: {
-								disbursement_order: frm.doc.name,
-							},
+							doctype: "Frappe NPO Settings",
 						},
 						callback: function (r) {
-							if (r.message && r.message.length > 0) {
-							} else {
-								frm.add_custom_button(__("Create Sales Invoice"), function () {
-									frm.events.create_sales_invoice(frm);
-								}).addClass("btn-primary");
+							if (r.message && r.message.disbursement_accounts) {
+								const row = r.message.disbursement_accounts.find(
+									(a) => a.company === frm.doc.company,
+								);
+
+								if (row) {
+									frm.set_value("paid_from", row.account);
+								}
 							}
 						},
 					});
 				}
+			},
+		);
+	},
+
+	check_linked_entries_status: function (frm) {
+		frappe.call({
+			doc: frm.doc,
+			method: "get_linked_entries_status",
+			callback: function (r) {
+				if (!r.message) return;
+
+				const status = r.message;
+
+				frm.doc.entries_created = status.payment_entries || status.stock_entries;
+
+				frm.doc.sales_invoice_created = status.sales_invoice;
+
+				frm.doc.create_project = status.create_project;
+
+				frm.events.render_post_submit_actions(frm);
+			},
+		});
+	},
+
+	render_post_submit_actions: function (frm) {
+		if (frm.doc.docstatus !== 1) return;
+
+		if (frm.doc.create_project) {
+			frm.add_custom_button(
+				__("Agent Projects"),
+				function () {
+					frm.events.create_projects(frm);
+				},
+				__("Create"),
+			);
+		}
+
+		if (!frm.doc.entries_created) {
+			let label =
+				frm.doc.disbursement_type === "Cash" ? __("Payment Entries") : __("Stock Entries");
+
+			frm.add_custom_button(
+				label,
+				function () {
+					frm.events.process_disbursement(frm);
+				},
+				__("Create"),
+			);
+		} else {
+			frm.page.clear_primary_action();
+
+			if (!frm.doc.sales_invoice_created) {
+				frm.add_custom_button(
+					__("Sales Invoice"),
+					function () {
+						frm.events.create_sales_invoice(frm);
+					},
+					__("Create"),
+				);
 			}
 		}
 	},
@@ -116,16 +218,22 @@ frappe.ui.form.on("Disbursement Order", {
 		let method_name =
 			frm.doc.disbursement_type === "Cash" ? "make_payment_entries" : "make_stock_entries";
 
-		frappe.confirm(__("Create disbursement entries for all beneficiaries?"), function () {
-			frappe.call({
-				doc: frm.doc,
-				method: method_name,
-				freeze: true,
-				callback: function () {
-					frm.reload_doc();
-				},
-			});
-		});
+		let entry_label =
+			frm.doc.disbursement_type === "Cash" ? "Payment Entries" : "Stock Entries";
+
+		frappe.confirm(
+			__(`This will create ${entry_label} for all beneficiaries. Do you want to proceed?`),
+			function () {
+				frappe.call({
+					doc: frm.doc,
+					method: method_name,
+					freeze: true,
+					callback: function () {
+						frm.reload_doc();
+					},
+				});
+			},
+		);
 	},
 
 	create_sales_invoice: function (frm) {
@@ -148,14 +256,24 @@ frappe.ui.form.on("Disbursement Order", {
 		});
 	},
 
-	disbursement_type: function (frm) {
-		frm.clear_table("beneficiaries");
-		frm.refresh();
-	},
+	create_projects: function (frm) {
+		frappe.call({
+			doc: frm.doc,
+			method: "create_agent_projects",
+			freeze: true,
+			callback: function (r) {
+				if (!r.message) return;
 
-	company: function (frm) {
-		frm.clear_table("beneficiaries");
-		frm.refresh();
+				const data = r.message;
+
+				if (!data.agent_projects) {
+					frappe.msgprint(__("Agent Projects could not be created."));
+					return;
+				} else {
+					frappe.set_route("List", "Project", { disbursement_order: frm.doc.name });
+				}
+			},
+		});
 	},
 
 	setup_beneficiary_filter_group(frm) {
@@ -307,6 +425,16 @@ frappe.ui.form.on("Disbursement Order", {
 });
 
 frappe.ui.form.on("Disbursement Order Item", {
+	item_code: function (frm, cdt, cdn) {
+		let row = locals[cdt][cdn];
+		if (row.item_code) {
+			frappe.db.get_value("Item", row.item_code, "stock_uom", (r) => {
+				if (r && r.stock_uom) {
+					frappe.model.set_value(cdt, cdn, "uom", r.stock_uom);
+				}
+			});
+		}
+	},
 	rate: (frm, cdt, cdn) => update_row_amount(frm, cdt, cdn, "items"),
 	qty: (frm, cdt, cdn) => update_row_amount(frm, cdt, cdn, "items"),
 });
