@@ -56,7 +56,10 @@ doctype_js = {
     "Sales Person": "overrides/sales_person.js",
     "Stock Entry": "overrides/stock_entry.js",
 }
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+doctype_list_js = {
+    "Payment Entry": "overrides/payment_entry_list.js",
+}
+
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
@@ -155,6 +158,7 @@ doc_events = {
     "ToDo": {
         "before_save": "frappe_npo.controllers.case.before_save",
     },
+    "Payment Entry": {"after_save": "frappe_npo.overrides.payment_entry.after_save"},
 }
 
 # Scheduled Tasks
