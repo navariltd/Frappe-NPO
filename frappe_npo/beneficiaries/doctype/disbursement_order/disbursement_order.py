@@ -1,17 +1,25 @@
 # Copyright (c) 2026, hussain@frappe.io and contributors
 # For license information, please see license.txt
 
+import json
 import frappe
 from frappe import _
 from frappe.model.document import Document
 from frappe.utils import today
-import json
+from frappe.query_builder import DocType
+from frappe.desk.form.assign_to import add as assign_to
 
 from ....utils.data import extract_data_from_file, get_doctype_headers
 
 
 class DisbursementOrder(Document):
-    def before_save(self):
+    def validate(self):
+        self.validate_multiple_so_setting()
+        if self.from_date and self.to_date and self.from_date > self.to_date:
+            frappe.throw(
+                _("From Date must be earlier than or equal to To Date."),
+                title=_("Invalid Date Range"),
+            )
         total_amount = 0
         for row in self.beneficiaries or []:
             row.amount = (row.qty or 0) * (row.rate or 0)
@@ -66,22 +74,56 @@ class DisbursementOrder(Document):
 
         self.total_bank_transfer_fee = total_transfer_fees
 
-    def create_territory_sales_orders(self):
+    def validate_multiple_so_setting(self):
+        if not self.create_a_sales_order_for_each_state:
+            return
+
+        allow_multiple = frappe.db.get_single_value(
+            "Selling Settings", "allow_against_multiple_purchase_orders"
+        )
+
+        if not allow_multiple:
+            frappe.throw(
+                _(
+                    "Multiple Sales Orders per state is enabled, but your system does not "
+                    "allow multiple Sales Orders against the same Customer Purchase Order.<br><br>"
+                    "Please enable <b>Allow Multiple Sales Orders Against a Customer's Purchase Order</b> "
+                    "in <a href='/app/selling-settings' target='_blank'><b>Selling Settings</b></a> "
+                    "and try again."
+                ),
+                title=_("Selling Settings Configuration Required"),
+            )
+
+    @frappe.whitelist()
+    def create_sales_orders(self):
+        sales_order_status = frappe.db.get_single_value(
+            "Frappe NPO Settings",
+            "default_status_for_auto_created_sales_order",
+        )
         territory_data = {}
+
+        single_so = not self.create_a_sales_order_for_each_state
+        grouping_key = "ALL" if single_so else None
 
         for row in self.beneficiaries:
             territory = row.territory or frappe.db.get_value(
                 "Beneficiary", row.beneficiary, "territory"
             )
 
-            if not territory:
+            if not territory and not single_so:
                 continue
 
-            if territory not in territory_data:
-                territory_data[territory] = {"distribution_amount": 0, "bank_fees": 0}
+            key = grouping_key if single_so else territory
 
-            territory_data[territory]["distribution_amount"] += row.amount or 0
-            territory_data[territory]["bank_fees"] += row.bank_transfer_fee or 0
+            if key not in territory_data:
+                territory_data[key] = {
+                    "distribution_amount": 0,
+                    "bank_fees": 0,
+                    "territory": territory if not single_so else None,
+                }
+
+            territory_data[key]["distribution_amount"] += row.amount or 0
+            territory_data[key]["bank_fees"] += row.bank_transfer_fee or 0
 
         customer = (
             frappe.get_value("Donor", self.donor, "customer") if self.donor else None
@@ -93,21 +135,53 @@ class DisbursementOrder(Document):
             )
             return
 
-        for territory, totals in territory_data.items():
+        if not self.items:
+            frappe.throw(_("Please add at least one item in the Items table."))
+
+        distribution_item_code = self.items[0].item_code
+
+        bank_item_code = None
+
+        for item in self.items:
+            name_check = (item.item_code or "").lower()
+            if any(keyword in name_check for keyword in ["bank", "fee", "charge"]):
+                bank_item_code = item.item_code
+                break
+
+        if not bank_item_code:
+            possible_name = "Bank Transfer Charges"
+
+            if frappe.db.exists("Item", possible_name):
+                bank_item_code = possible_name
+            else:
+                item = frappe.new_doc("Item")
+                item.item_code = possible_name
+                item.item_name = possible_name
+                item.is_stock_item = 0
+                item.is_sales_item = 1
+                item.insert(ignore_permissions=True)
+                bank_item_code = item.name
+
+        for key, totals in territory_data.items():
             so = frappe.new_doc("Sales Order")
+            so.flags.ignore_permissions = True
             so.customer = customer
             so.transaction_date = today()
             so.delivery_date = self.to_date or today()
             so.company = self.company
-            so.territory = territory
+            so.po_no = self.po_no
+            so.po_date = self.po_date
             so.donor = self.donor
             so.disbursement_order = self.name
+
+            if not single_so:
+                so.territory = totals["territory"]
 
             if totals["distribution_amount"] > 0:
                 so.append(
                     "items",
                     {
-                        "item_code": "Cash Distribution",
+                        "item_code": distribution_item_code,
                         "qty": 1,
                         "rate": totals["distribution_amount"],
                         "delivery_date": so.delivery_date,
@@ -118,7 +192,7 @@ class DisbursementOrder(Document):
                 so.append(
                     "items",
                     {
-                        "item_code": "Bank Transfer Charges",
+                        "item_code": bank_item_code,
                         "qty": 1,
                         "rate": totals["bank_fees"],
                         "delivery_date": so.delivery_date,
@@ -127,11 +201,19 @@ class DisbursementOrder(Document):
 
             if so.items:
                 so.insert(ignore_permissions=True)
-                frappe.msgprint(
-                    _("Sales Order {0} created for Territory {1}").format(
-                        so.name, territory
+                if sales_order_status == "Submitted":
+                    so.submit()
+
+                if single_so:
+                    frappe.msgprint(
+                        _("Sales Order {0} created successfully.").format(so.name)
                     )
-                )
+                else:
+                    frappe.msgprint(
+                        _("Sales Order {0} created for Territory {1}").format(
+                            so.name, totals["territory"]
+                        )
+                    )
 
     @frappe.whitelist()
     def get_beneficiaries(self, advanced_filters=None):
