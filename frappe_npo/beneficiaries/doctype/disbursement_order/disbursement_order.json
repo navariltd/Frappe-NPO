@@ -334,9 +334,13 @@
   {
    "link_doctype": "Payment Entry",
    "link_fieldname": "disbursement_order"
+  },
+  {
+   "link_doctype": "Project",
+   "link_fieldname": "disbursement_order"
   }
  ],
- "modified": "2026-02-27 14:31:32.523727",
+ "modified": "2026-03-02 08:39:27.365659",
  "modified_by": "Administrator",
  "module": "Beneficiaries",
  "name": "Disbursement Order",
