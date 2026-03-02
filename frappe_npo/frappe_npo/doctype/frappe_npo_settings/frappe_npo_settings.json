@@ -25,10 +25,11 @@
   "default_status_for_auto_created_sales_order",
   "default_status_for_auto_created_sales_invoice",
   "default_status_for_auto_created_payment_entry",
-  "column_break_oiwu",
   "default_project_template_for_agents",
+  "column_break_oiwu",
   "create_a_project_for_each_agent",
   "auto_create_payment_entries",
+  "enable_progressive_disbursement",
   "default_accounts_section",
   "beneficiary_accounts",
   "disbursement_accounts",
@@ -418,12 +419,19 @@
    "fieldname": "auto_create_payment_entries",
    "fieldtype": "Check",
    "label": "Auto Create Payment Entries"
+  },
+  {
+   "default": "0",
+   "description": "If enabled, a Payment Entry (Type: Pay) is created automatically for each beneficiary upon verification. If disabled, all Payment Entries are created on submitting the Verification Request.",
+   "fieldname": "enable_progressive_disbursement",
+   "fieldtype": "Check",
+   "label": "Enable Progressive Disbursement"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-03-02 08:55:03.121423",
+ "modified": "2026-03-02 13:25:40.849051",
  "modified_by": "Administrator",
  "module": "Frappe NPO",
  "name": "Frappe NPO Settings",
