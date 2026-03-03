@@ -16,7 +16,7 @@
   "focal_point",
   "column_break_rjkh",
   "company",
-  "sales_order",
+  "project",
   "agent_payment_entry",
   "section_break_khrc",
   "agent_bank_account",
@@ -58,12 +58,6 @@
    "label": "Disbursement Order",
    "options": "Disbursement Order",
    "search_index": 1
-  },
-  {
-   "fieldname": "sales_order",
-   "fieldtype": "Link",
-   "label": "Sales Order",
-   "options": "Sales Order"
   },
   {
    "fieldname": "column_break_jyza",
@@ -164,6 +158,17 @@
    "fieldtype": "Link",
    "label": "Agent Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Project",
+   "options": "Project",
+   "search_index": 1
   }
  ],
  "grid_page_length": 50,
@@ -175,7 +180,7 @@
    "link_fieldname": "reference_no"
   }
  ],
- "modified": "2026-03-02 14:01:58.835701",
+ "modified": "2026-03-03 10:43:21.205269",
  "modified_by": "Administrator",
  "module": "Beneficiaries",
  "name": "Verification Request",

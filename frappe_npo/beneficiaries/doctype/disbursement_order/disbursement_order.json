@@ -10,7 +10,6 @@
   "column_break_16",
   "naming_series",
   "disbursement_type",
-  "donation",
   "donor",
   "column_break_vkxq",
   "company",
@@ -108,13 +107,6 @@
   {
    "fieldname": "select_beneficiaries_section",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "donation",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Donation",
-   "options": "Donation"
   },
   {
    "fieldname": "donor",
@@ -290,7 +282,7 @@
    "fieldname": "company_bank_account",
    "fieldtype": "Link",
    "label": "Company Bank Account",
-   "link_filters": "[[\"Bank Account\",\"account_subtype\",\"not in\",[\"Agent\",\"Beneficiary\",\"Proxy\"]]]",
+   "link_filters": "[[\"Bank Account\",\"account_subtype\",\"=\",\"Company\"],[\"Bank Account\",\"is_company_account\",\"=\",1]]",
    "options": "Bank Account",
    "reqd": 1
   },
@@ -344,7 +336,7 @@
    "link_fieldname": "disbursement_order"
   }
  ],
- "modified": "2026-03-02 09:41:07.899535",
+ "modified": "2026-03-03 10:29:32.994853",
  "modified_by": "Administrator",
  "module": "Beneficiaries",
  "name": "Disbursement Order",

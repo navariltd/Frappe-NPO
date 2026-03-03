@@ -37,12 +37,12 @@ class DisbursementOrder(Document):
             )
 
     def on_submit(self):
-        if self.beneficiaries and self.disbursement_type == "Cash":
-            self.create_sales_orders()
-
         settings = frappe.get_doc("Frappe NPO Settings", "Frappe NPO Settings")
         if settings.create_a_project_for_each_agent:
             self.create_agent_projects()
+        if self.beneficiaries and self.disbursement_type == "Cash":
+            self.create_sales_orders()
+
         if settings.auto_create_payment_entries:
             self.make_payment_entries()
 
@@ -134,11 +134,13 @@ class DisbursementOrder(Document):
         )
 
         if not customer:
-            frappe.msgprint(
-                _("No Customer linked to Donor. Skipping Sales Order creation.")
+            frappe.throw(
+                _(
+                    "Cannot create Sales Order for State {0} because the linked Donor does not have a Customer. "
+                    "Please link a Customer to the Donor <a href='/app/donor/{1}' target='_blank'><b>{1}</b></a> and try again."
+                ).format(totals["territory"], self.donor),
+                title=_("Donor Configuration Required"),
             )
-            return
-
         if not self.items:
             frappe.throw(_("Please add at least one item in the Items table."))
 
@@ -177,6 +179,14 @@ class DisbursementOrder(Document):
             so.po_date = self.po_date
             so.donor = self.donor
             so.disbursement_order = self.name
+            so.territory = totals["territory"] if not single_so else None
+
+            project = frappe.get_value(
+                "Project",
+                {"disbursement_order": self.name, "territory": totals["territory"]},
+            )
+            if project:
+                so.project = project
 
             if not single_so:
                 so.territory = totals["territory"]
@@ -402,7 +412,10 @@ class DisbursementOrder(Document):
                 frappe.throw(
                     _("No Agent Bank Account configured for State {0}").format(state)
                 )
-
+            project = frappe.get_value(
+                "Project",
+                {"disbursement_order": self.name, "territory": state},
+            )
             pe = frappe.get_doc(
                 {
                     "doctype": "Payment Entry",
@@ -417,6 +430,7 @@ class DisbursementOrder(Document):
                     "reference_date": self.po_date,
                     "territory": state,
                     "disbursement_order": self.name,
+                    "project": project,
                     "remarks": f"State transfer for {state} - Disbursement Order {self.name}",
                 }
             )
@@ -443,6 +457,7 @@ class DisbursementOrder(Document):
                         "amount": (row.amount or 0) + (row.bank_transfer_fee or 0),
                         "currency": row.currency,
                         "status": "Open",
+                        "mode_of_payment": row.mode_of_payment,
                         "comments": row.remarks if hasattr(row, "remarks") else None,
                     },
                 )
@@ -474,11 +489,6 @@ class DisbursementOrder(Document):
             {"disbursement_order": self.name},
         )
 
-        invoice_exists = frappe.db.exists(
-            "Sales Invoice",
-            {"disbursement_order": self.name},
-        )
-
         if project_creation_allowed:
             project_exists = frappe.db.exists(
                 "Project",
@@ -492,7 +502,6 @@ class DisbursementOrder(Document):
             "payment_entries": bool(payment_exists),
             "stock_entries": bool(stock_exists),
             "create_project": create_project,
-            "sales_invoice": bool(invoice_exists),
         }
 
     @frappe.whitelist()
@@ -557,6 +566,20 @@ class DisbursementOrder(Document):
             project.agent_user = user
             project.expected_start_date = self.from_date
             project.expected_end_date = self.to_date
+            project.territory = state
+            if self.donor and not frappe.get_value("Donor", self.donor, "customer"):
+                frappe.throw(
+                    _(
+                        "Cannot create Project for State {0} because the linked Donor does not have a Customer. "
+                        "Please link a Customer to the Donor <a href='/app/donor/{1}' target='_blank'><b>{1}</b></a> and try again."
+                    ).format(state, self.donor),
+                    title=_("Donor Configuration Required"),
+                )
+            project.customer = (
+                frappe.get_value("Donor", self.donor, "customer")
+                if self.donor
+                else None
+            )
             project.append("users", {"user": user})
 
             if project_template:

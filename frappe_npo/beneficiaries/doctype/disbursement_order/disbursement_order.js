@@ -42,18 +42,12 @@ frappe.ui.form.on("Disbursement Order", {
 		}
 
 		frm.trigger("handle_account_sync");
-
-		frm.trigger("handle_bank_account_sync");
 	},
 
 	company: function (frm) {
 		frm.clear_table("beneficiaries");
 		frm.trigger("handle_account_sync");
 		frm.refresh();
-	},
-
-	paid_from: function (frm) {
-		frm.trigger("handle_bank_account_sync");
 	},
 
 	disbursement_type: function (frm) {
@@ -63,24 +57,6 @@ frappe.ui.form.on("Disbursement Order", {
 
 	territory: function (frm) {
 		set_district_filter(frm);
-	},
-
-	handle_bank_account_sync: function (frm) {
-		if (!frm.doc.company_bank_account && frm.doc.paid_from) {
-			frappe.db.get_value(
-				"Bank Account",
-				{
-					account: frm.doc.paid_from,
-					company: frm.doc.company,
-				},
-				"name",
-				(r) => {
-					if (r && r.name) {
-						frm.set_value("company_bank_account", r.name, null, true);
-					}
-				},
-			);
-		}
 	},
 
 	handle_account_sync: function (frm) {
@@ -127,8 +103,6 @@ frappe.ui.form.on("Disbursement Order", {
 
 				frm.doc.entries_created = status.payment_entries || status.stock_entries;
 
-				frm.doc.sales_invoice_created = status.sales_invoice;
-
 				frm.doc.create_project = status.create_project;
 
 				frm.events.render_post_submit_actions(frm);
@@ -160,18 +134,6 @@ frappe.ui.form.on("Disbursement Order", {
 				},
 				__("Create"),
 			);
-		} else {
-			frm.page.clear_primary_action();
-
-			if (!frm.doc.sales_invoice_created) {
-				frm.add_custom_button(
-					__("Sales Invoice"),
-					function () {
-						frm.events.create_sales_invoice(frm);
-					},
-					__("Create"),
-				);
-			}
 		}
 	},
 
@@ -234,26 +196,6 @@ frappe.ui.form.on("Disbursement Order", {
 				});
 			},
 		);
-	},
-
-	create_sales_invoice: function (frm) {
-		frappe.call({
-			doc: frm.doc,
-			method: "create_sales_invoice",
-			freeze: true,
-			callback: function (r) {
-				if (!r.message) return;
-
-				const data = r.message;
-
-				if (!data.sales_invoice) {
-					frappe.msgprint(__("Sales Invoice could not be created."));
-					return;
-				} else {
-					frappe.set_route("Form", "Sales Invoice", data.sales_invoice);
-				}
-			},
-		});
 	},
 
 	create_projects: function (frm) {
