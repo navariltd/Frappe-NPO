@@ -457,6 +457,7 @@ class DisbursementOrder(Document):
                         "amount": (row.amount or 0) + (row.bank_transfer_fee or 0),
                         "currency": row.currency,
                         "status": "Open",
+                        "mode_of_payment": row.mode_of_payment,
                         "comments": row.remarks if hasattr(row, "remarks") else None,
                     },
                 )
