@@ -474,11 +474,6 @@ class DisbursementOrder(Document):
             {"disbursement_order": self.name},
         )
 
-        invoice_exists = frappe.db.exists(
-            "Sales Invoice",
-            {"disbursement_order": self.name},
-        )
-
         if project_creation_allowed:
             project_exists = frappe.db.exists(
                 "Project",
@@ -492,7 +487,6 @@ class DisbursementOrder(Document):
             "payment_entries": bool(payment_exists),
             "stock_entries": bool(stock_exists),
             "create_project": create_project,
-            "sales_invoice": bool(invoice_exists),
         }
 
     @frappe.whitelist()
