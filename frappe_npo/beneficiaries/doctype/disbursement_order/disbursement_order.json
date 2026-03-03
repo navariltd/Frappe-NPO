@@ -282,7 +282,7 @@
    "fieldname": "company_bank_account",
    "fieldtype": "Link",
    "label": "Company Bank Account",
-   "link_filters": "[[\"Bank Account\",\"account_subtype\",\"not in\",[\"Agent\",\"Beneficiary\",\"Proxy\"]]]",
+   "link_filters": "[[\"Bank Account\",\"account_subtype\",\"=\",\"Company\"],[\"Bank Account\",\"is_company_account\",\"=\",1]]",
    "options": "Bank Account",
    "reqd": 1
   },
