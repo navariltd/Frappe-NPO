@@ -89,17 +89,28 @@ def make_payment_verification_requests(name):
             "Bank Account", row.bank_account, "account_subtype"
         )
 
-        item_data = {
-            "beneficiary": row.beneficiary,
-            "beneficiary_no": row.beneficiary_no,
-            "bank_account": row.bank_account,
-            "focal_point": row.focal_point,
-            "amount": row.amount,
-            "currency": row.currency,
-            "beneficiary_contact": row.beneficiary_contact,
-            "beneficiary_address": row.beneficiary_address,
-            "status": "Open",
-        }
+        item_data = row.as_dict()
+
+        exclude_fields = [
+            "name",
+            "parent",
+            "parentfield",
+            "parenttype",
+            "idx",
+            "owner",
+            "creation",
+            "modified",
+            "modified_by",
+        ]
+
+        for field in exclude_fields:
+            item_data.pop(field, None)
+
+        item_data.update(
+            {
+                "status": "Open",
+            }
+        )
 
         if account_subtype == "Beneficiary":
             personal_beneficiaries.append(item_data)
@@ -134,6 +145,7 @@ def create_vr_doc(parent_doc, req_type, items, focal_point=None):
     vr.verification_type = req_type
     vr.disbursement_order = parent_doc.disbursement_order
     vr.agent_payment_entry = parent_doc.name
+    vr.project = parent_doc.project
 
     if focal_point:
         vr.focal_point = focal_point

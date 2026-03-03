@@ -120,6 +120,10 @@ class VerificationRequest(Document):
         if item.status != "Verified":
             return
         party = frappe.db.get_value("Beneficiary", item.beneficiary, "supplier")
+        if not party:
+            frappe.throw(
+                _("No Supplier linked for Beneficiary {0}").format(item.beneficiary)
+            )
         existing = frappe.get_all(
             "Payment Entry", filters={"reference_no": self.name, "party": party}
         )
@@ -143,6 +147,8 @@ class VerificationRequest(Document):
                 "disbursement_order": self.disbursement_order,
                 "reference_no": self.name,
                 "reference_date": nowdate(),
+                "mode_of_payment": item.mode_of_payment,
+                "project": self.project,
             }
         )
         pe.insert(ignore_permissions=True)

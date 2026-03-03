@@ -11,6 +11,7 @@ function setup_disbursement_bank_account_filter(frm) {
 				disabled: 0,
 				is_company_account: 1,
 				company: frm.doc.name,
+				account_subtype: "Company",
 			},
 		};
 	});
