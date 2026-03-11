@@ -314,29 +314,8 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [
-  {
-   "link_doctype": "Sales Order",
-   "link_fieldname": "disbursement_order"
-  },
-  {
-   "link_doctype": "Sales Invoice",
-   "link_fieldname": "disbursement_order"
-  },
-  {
-   "link_doctype": "Payment Entry",
-   "link_fieldname": "disbursement_order"
-  },
-  {
-   "link_doctype": "Project",
-   "link_fieldname": "disbursement_order"
-  },
-  {
-   "link_doctype": "Verification Request",
-   "link_fieldname": "disbursement_order"
-  }
- ],
- "modified": "2026-03-03 10:29:32.994853",
+ "links": [],
+ "modified": "2026-03-11 08:32:59.006897",
  "modified_by": "Administrator",
  "module": "Beneficiaries",
  "name": "Disbursement Order",
