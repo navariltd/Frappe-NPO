@@ -52,6 +52,7 @@ doctype_js = {
     "Company": "overrides/company.js",
     "Payment Entry": "overrides/payment_entry.js",
     "Project": "overrides/project.js",
+    "Sales Invoice": "overrides/sales_invoice.js",
     "Sales Order": "overrides/sales_order.js",
     "Sales Person": "overrides/sales_person.js",
     "Stock Entry": "overrides/stock_entry.js",
@@ -150,9 +151,9 @@ after_migrate = "frappe_npo.install.after_migrate"
 
 doc_events = {
     "User": {
-        "after_insert": "frappe_npo.beneficiaries.doctype.changemakers_user_profile.changemakers_user_profile.create_user_profile",
+        "after_insert": "frappe_npo.beneficiaries.doctype.beneficiary_user_profile.beneficiary_user_profile.create_user_profile",
         "on_trash": [
-            "frappe_npo.beneficiaries.doctype.changemakers_user_profile.changemakers_user_profile.delete_user_profile",
+            "frappe_npo.beneficiaries.doctype.beneficiary_user_profile.beneficiary_user_profile.delete_user_profile",
         ],
     },
     "ToDo": {
