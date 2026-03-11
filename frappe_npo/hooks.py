@@ -150,9 +150,9 @@ after_migrate = "frappe_npo.install.after_migrate"
 
 doc_events = {
     "User": {
-        "after_insert": "frappe_npo.beneficiaries.doctype.changemakers_user_profile.changemakers_user_profile.create_user_profile",
+        "after_insert": "frappe_npo.beneficiaries.doctype.beneficiary_user_profile.beneficiary_user_profile.create_user_profile",
         "on_trash": [
-            "frappe_npo.beneficiaries.doctype.changemakers_user_profile.changemakers_user_profile.delete_user_profile",
+            "frappe_npo.beneficiaries.doctype.beneficiary_user_profile.beneficiary_user_profile.delete_user_profile",
         ],
     },
     "ToDo": {
