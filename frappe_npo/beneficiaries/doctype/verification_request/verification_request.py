@@ -136,6 +136,7 @@ class VerificationRequest(Document):
                 "payment_type": "Pay",
                 "party_type": "Supplier",
                 "party": (party),
+                "party_bank_account": item.bank_account,
                 "reference_name": item.name,
                 "paid_to": target_account,
                 "paid_from": self.agent_account,
