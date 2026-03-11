@@ -180,7 +180,7 @@
    "link_fieldname": "reference_no"
   }
  ],
- "modified": "2026-03-03 10:43:21.205269",
+ "modified": "2026-03-11 08:34:28.463998",
  "modified_by": "Administrator",
  "module": "Beneficiaries",
  "name": "Verification Request",
@@ -188,6 +188,7 @@
  "owner": "Administrator",
  "permissions": [
   {
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -196,6 +197,20 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Non Profit Agent",
    "share": 1,
    "submit": 1,
    "write": 1
