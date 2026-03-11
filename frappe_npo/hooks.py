@@ -52,6 +52,7 @@ doctype_js = {
     "Company": "overrides/company.js",
     "Payment Entry": "overrides/payment_entry.js",
     "Project": "overrides/project.js",
+    "Sales Invoice": "overrides/sales_invoice.js",
     "Sales Order": "overrides/sales_order.js",
     "Sales Person": "overrides/sales_person.js",
     "Stock Entry": "overrides/stock_entry.js",
