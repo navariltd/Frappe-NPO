@@ -10,10 +10,6 @@ frappe.ui.form.on("NPO Program", {
 			fetchProjects(frm);
 		}
 	},
-
-	refresh: (frm) => {
-		fetchProjects(frm);
-	},
 });
 
 function fetchProjects(frm) {
