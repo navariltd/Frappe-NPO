@@ -159,7 +159,6 @@ class ProgramSummaryReport:
 
         if conditions:
             query = query.where(Criterion.all(conditions))
-            print(f"Applying Conditions: {query}")
 
         return query
 
@@ -218,7 +217,6 @@ class ProgramSummaryReport:
                         "indent": 2,
                     }
                 )
-        print(f"Processed Data Rows: {rows}")
 
         return rows
 
