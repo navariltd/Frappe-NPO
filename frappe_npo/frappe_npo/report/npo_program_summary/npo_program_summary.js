@@ -66,7 +66,7 @@ frappe.query_reports["NPO Program Summary"] = {
 		if (column.fieldname === "project_status") {
 			const badgeColor = mapStatusToBadge(value);
 
-			value = `<span class="badge" style="background-color: ${badgeColor}">${value}</span>`;
+			value = `<span class="badge" style="background-color: ${badgeColor}; color: white;">${value}</span>`;
 		}
 		return value;
 	},
