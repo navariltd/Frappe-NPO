@@ -1,9 +1,9 @@
 // Copyright (c) 2026, Navari Ltd and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("NPO Program", {
+frappe.ui.form.on("Project Group", {
 	refresh(frm) {
-		let wrapper = frm.fields_dict["program_summary"].$wrapper;
+		let wrapper = frm.fields_dict["summary"].$wrapper;
 		wrapper.empty();
 
 		if (!frm.doc.__islocal) {
@@ -21,7 +21,7 @@ function fetchProjects(frm) {
 			renderProjects(res.message, container);
 		},
 		error: () => {
-			frappe.msgprint(_("Error fetching projects"));
+			frappe.msgprint("Error fetching projects");
 		},
 	});
 }
@@ -29,7 +29,7 @@ function fetchProjects(frm) {
 function renderProjects(projects, container) {
 	if (!projects || !projects.length) {
 		$(container).html(
-			'<p class="text-muted" style="padding: 10px;">No projects found for this program.</p>',
+			'<p class="text-muted" style="padding: 10px;">No projects found for this program.</p>'
 		);
 		return;
 	}
@@ -92,7 +92,7 @@ function cellFormatter(doctype) {
 	};
 }
 function createContainer(frm) {
-	let wrapper = frm.fields_dict["program_summary"].$wrapper;
+	let wrapper = frm.fields_dict["summary"].$wrapper;
 	wrapper.empty();
 	let container = $("<div>").appendTo(wrapper)[0];
 

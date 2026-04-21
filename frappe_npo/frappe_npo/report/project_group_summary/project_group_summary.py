@@ -1,6 +1,7 @@
 # Copyright (c) 2026, Navari Ltd and contributors
 # For license information, please see license.txt
 
+import calendar
 from dataclasses import dataclass
 from typing import Optional
 
@@ -12,24 +13,24 @@ from pypika.queries import QueryBuilder
 
 
 def execute(filters: dict) -> tuple[list[dict], list[list]]:
-	return ProgramSummaryReport(ReportFilters(**filters)).run()
+	return ProjectGroupSummaryReport(ReportFilters(**filters)).run()
 
 
 @dataclass
 class ReportFilters:
 	company: str
-	program_name: str | None = None
-	program_type: str | None = None
+	project_group_name: str | None = None
+	project_type: str | None = None
 	status: str | None = None
 	expected_start_date: str | None = None
 	expected_end_date: str | None = None
-	program_manager: str | None = None
+	project_group_manager: str | None = None
 
 
 @dataclass
-class ProgramSummaryReport:
+class ProjectGroupSummaryReport:
 	filters: ReportFilters
-	program = DocType("NPO Program")
+	project_group = DocType("Project Group")
 	project = DocType("Project")
 	task = DocType("Task")
 	budget = DocType("Budget")
@@ -43,8 +44,8 @@ class ProgramSummaryReport:
 	def get_columns(self) -> list[dict]:
 		return [
 			{
-				"label": _("Program"),
-				"fieldname": "program",
+				"label": _("Project Group"),
+				"fieldname": "project_group",
 				"fieldtype": "Data",
 				"width": 150,
 			},
@@ -119,19 +120,19 @@ class ProgramSummaryReport:
 		filters_dict = filters.__dict__
 		base_program_filters = (
 			"company",
-			"program_name",
-			"program_type",
+			"project_group_name",
+			"project_type",
 			"status",
-			"program_manager",
+			"project_group_manager",
 		)
 
 		for key, value in filters_dict.items():
 			if key in base_program_filters and value:
-				conditions.append(self.program[key] == value)
+				conditions.append(self.project_group[key] == value)
 
 		date_filters = {
-			"expected_start_date": self.program.expected_start_date,
-			"expected_end_date": self.program.expected_end_date,
+			"expected_start_date": self.project_group.expected_start_date,
+			"expected_end_date": self.project_group.expected_end_date,
 		}
 
 		for key, field in date_filters.items():
@@ -145,9 +146,9 @@ class ProgramSummaryReport:
 		conditions = self.build_conditions(filters)
 
 		query = (
-			frappe.qb.from_(self.program)
+			frappe.qb.from_(self.project_group)
 			.left_join(self.project)
-			.on(self.program.name == self.project.program)
+			.on(self.project_group.name == self.project.project_group)
 			.left_join(self.task)
 			.on(self.project.name == self.task.project)
 			.left_join(self.budget)
@@ -156,7 +157,7 @@ class ProgramSummaryReport:
 				| ((self.budget.budget_against == "Task") & (self.budget.task == self.task.name))
 			)
 			.select(
-				self.program.name.as_("program"),
+				self.project_group.name.as_("project_group"),
 				self.project.project_name,
 				self.project.name.as_("project_id"),
 				self.project.project_type,
@@ -180,7 +181,7 @@ class ProgramSummaryReport:
 
 	def process_data(self, data: list[dict]) -> list[dict]:
 		rows = []
-		seen_programs = set()
+		seen_project_groups = set()
 		seen_projects = set()
 		seen_tasks = set()  # ADD THIS
 
@@ -205,17 +206,17 @@ class ProgramSummaryReport:
 					}
 
 		for d in data:
-			program = d.get("program")
+			project_group = d.get("project_group")
 			project_id = d.get("project_id")
 			project_name = d.get("project_name")
 			task_id = d.get("task_id")
 			task_title = d.get("task_title")
 
-			if program and program not in seen_programs:
+			if project_group and project_group not in seen_project_groups:
 				rows.append(
 					{
-						"name": program,
-						"program": frappe.bold(program),
+						"name": project_group,
+						"project_group": frappe.bold(project_group),
 						"project_name": None,
 						"project_id": None,
 						"project_type": None,
@@ -229,7 +230,7 @@ class ProgramSummaryReport:
 						"indent": 0,
 					}
 				)
-				seen_programs.add(program)
+				seen_project_groups.add(project_group)
 
 			if project_id and project_id not in seen_projects:
 				pb = project_budgets.get(project_id, {})
@@ -247,13 +248,13 @@ class ProgramSummaryReport:
 						"task_id": None,
 						"task_budget": None,
 						"task_budget_id": None,
-						"parent": program,
+						"parent": project_group,
 						"indent": 1,
 					}
 				)
 				seen_projects.add(project_id)
 
-			if task_id and task_id not in seen_tasks:  # ADD THE GUARD
+			if task_id and task_id not in seen_tasks:
 				tb = task_budgets.get(task_id, {})
 				rows.append(
 					{
@@ -273,24 +274,18 @@ class ProgramSummaryReport:
 						"indent": 2,
 					}
 				)
-				seen_tasks.add(task_id)  # ADD THIS
+				seen_tasks.add(task_id)
 
 		return rows
 
 	def get_report_summary(self, data: list[dict]) -> list[dict]:
-		total_programs = len(set(d.get("program") for d in data if d.get("program")))
-
-		active_programs = len(
-			set(d.get("program") for d in data if d.get("program") and d.get("status") == "Active")
-		)
+		total_project_groups = len(set(d.get("project_group") for d in data if d.get("project_group")))
 
 		total_projects = len(set(d.get("project_id") for d in data if d.get("project_id")))
 
 		active_projects = len(
 			set(
-				d.get("project_id")
-				for d in data
-				if d.get("project_id") and d.get("project_status") == "Active"
+				d.get("project_id") for d in data if d.get("project_id") and d.get("project_status") == "Open"
 			)
 		)
 
@@ -299,15 +294,9 @@ class ProgramSummaryReport:
 
 		return [
 			{
-				"value": total_programs,
+				"value": total_project_groups,
 				"indicator": "Blue",
-				"label": _("Total Programs"),
-				"datatype": "Int",
-			},
-			{
-				"value": active_programs,
-				"indicator": "Green",
-				"label": _("Active Programs"),
+				"label": _("Total Project Groups"),
 				"datatype": "Int",
 			},
 			{

@@ -1,7 +1,7 @@
 // Copyright (c) 2026, Navari Ltd and contributors
 // For license information, please see license.txt
 
-frappe.query_reports["NPO Program Summary"] = {
+frappe.query_reports["Project Group Summary"] = {
 	filters: [
 		{
 			fieldname: "company",
@@ -9,12 +9,13 @@ frappe.query_reports["NPO Program Summary"] = {
 			fieldtype: "Link",
 			options: "Company",
 			reqd: 1,
+			default: frappe.defaults.get_user_default("Company"),
 		},
 		{
-			fieldname: "program_name",
-			label: __("Program"),
+			fieldname: "project_group_name",
+			label: __("Project Group"),
 			fieldtype: "Link",
-			options: "NPO Program",
+			options: "Project Group",
 			get_query: () => {
 				let company = frappe.query_report.get_filter_value("company");
 				return {
@@ -25,10 +26,10 @@ frappe.query_reports["NPO Program Summary"] = {
 			},
 		},
 		{
-			fieldname: "program_type",
-			label: __("Program Type"),
+			fieldname: "project_type",
+			label: __("Project Type"),
 			fieldtype: "Link",
-			options: "NPO Program Type",
+			options: "Project Type",
 		},
 		{
 			fieldname: "status",
@@ -47,14 +48,14 @@ frappe.query_reports["NPO Program Summary"] = {
 			fieldtype: "Date",
 		},
 		{
-			fieldname: "program_manager",
-			label: __("Program Manager"),
+			fieldname: "project_group_manager",
+			label: __("Project Group Manager"),
 			fieldtype: "Link",
 			options: "User",
 			get_query: () => {
 				return {
 					filters: {
-						"roles.role": "Program Manager",
+						"roles.role": "Projects Manager",
 					},
 				};
 			},
