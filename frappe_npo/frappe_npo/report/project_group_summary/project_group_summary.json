@@ -13,11 +13,11 @@
  "modified": "2026-04-15 10:29:21.650228",
  "modified_by": "Administrator",
  "module": "Frappe NPO",
- "name": "NPO Program Summary",
+ "name": "Project Group Summary",
  "owner": "Administrator",
  "prepared_report": 0,
- "ref_doctype": "NPO Program",
- "report_name": "NPO Program Summary",
+ "ref_doctype": "Project Group",
+ "report_name": "Project Group Summary",
  "report_type": "Script Report",
  "roles": [
   {
