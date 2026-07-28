@@ -56,3 +56,4 @@ jspm_packages/
 
 frappe_npo/public/frontend
 frappe_npo/public/node_modules
+.claude/*
