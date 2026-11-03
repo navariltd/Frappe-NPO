@@ -28,18 +28,18 @@ this person?" a single lookup.
 
 Statuses are not decoration — several of them change what the app allows:
 
-| Status | What the app does with it |
-| --- | --- |
-| **Waitlist** | Offers a **Local Administrator Acknowledgement** action, which files that acknowledgement as a case. |
-| **Active** | The working state. Offers **Disqualification**, **Relocation** and **Bereavement** actions, which open a case of that type. |
+| Status                                  | What the app does with it                                                                                                        |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| **Waitlist**                            | Offers a **Local Administrator Acknowledgement** action, which files that acknowledgement as a case.                             |
+| **Active**                              | The working state. Offers **Disqualification**, **Relocation** and **Bereavement** actions, which open a case of that type.      |
 | **Relocated / Deceased / Disqualified** | Requires a **Replacement** — the app will not leave the person un-replaced, because a funder needs to know who took their place. |
-| Any status change | Drives whether the person counts against a recruitment phase's slots, and whether they appear as active in reports. |
+| Any status change                       | Drives whether the person counts against a recruitment phase's slots, and whether they appear as active in reports.              |
 
 The lifecycle can be switched off in settings for organisations that only keep a list;
 for everyone else, leaving it on prevents the classic NGO data problem of a status that
 means something different in every district.
 
-## 7.3 Adding one person
+## 7.3 Adding a benefeciary
 
 1. Search first — check they are not already on file under a different spelling.
 2. Create the beneficiary: name, gender, date of birth or age, contact, address and
@@ -51,20 +51,6 @@ means something different in every district.
    they came in through. Without these tags the person will not appear in funded
    reporting.
 6. Save. Supplier (and student, where relevant) records are created for you.
-
-## 7.4 Adding a whole intake
-
-When a camp or survey brings 200 people:
-
-1. Download the blank template from the beneficiary list.
-2. Fill it in one row per person, using exactly the values the sheet asks for.
-3. Use **Upload Beneficiaries** on the list view; the app checks every row and tells you
-   which ones fail and why.
-4. Fix and re-upload the failures — successful rows are already in.
-5. Reconcile the count against the camp register before you close the day.
-
-Bulk upload is how field teams avoid weeks of typing. Do one small file first (five
-rows), confirm it looks right, then load the rest.
 
 ## 7.5 Actions on the beneficiary screen
 
@@ -80,17 +66,7 @@ make sense for that person's status:
 Each action creates a linked record rather than an isolated note, which is why an auditor
 can follow the story from intake to exit.
 
-## 7.6 Merging duplicates and retiring records
-
-- **Duplicates:** pick the record you will keep and mark the other as replaced by it. The
-  losing record stays visible for history but stops appearing as a live person. Do not
-  delete — cases, payments and camp attendance point at it.
-- **Data protection:** if someone asks to be erased, remove the identifying details but
-  keep the statistical record, so past reports still add up.
-- **Wrong status:** if the lifecycle setting allows status editing, correct it; if not,
-  use the matching case action so the change is explained.
-
-## 7.7 The Beneficiary report
+## 7.6 The Beneficiary report
 
 The report is the answer to "who are we serving?" — filter by programme, lead donor,
 sub-donor, beneficiary type, status, country/state/county, institution, course, thematic
@@ -98,4 +74,3 @@ area or by intake dates, then export. It is the standard annexure for donor repo
 for the monthly programme review.
 
 Once a person is on file, the work you do for them lives in [cases](08-cases.md).
-

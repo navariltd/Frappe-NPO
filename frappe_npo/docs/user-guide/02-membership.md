@@ -22,7 +22,7 @@ supporter is (**Member**), and the period they paid for (**Membership**).
 
 ## 2.2 The renewal rule that saves you work
 
-Every membership has a period. When you create the next membership for the same member *shortly before or after* the previous one ends, the app continues from the
+Every membership has a period. When you create the next membership for the same member _shortly before or after_ the previous one ends, the app continues from the
 existing end date instead of starting a fresh period — no accidental gap, no
 double-billing for days the member already paid for.
 
@@ -43,8 +43,8 @@ is what members expect and what auditors like.
 3. **Create the membership**, pick the type, let the dates fill in, save.
 4. **Generate the invoice** if invoicing is switched on; check the amount and send it.
 5. **Record the payment** when it arrives. The membership status follows the money and
-   the dates: *New* when created, *Current* once paid and running, *Pending* while
-   something is outstanding, *Expired* once the end date passes, *Cancelled* if it is
+   the dates: _New_ when created, _Current_ once paid and running, _Pending_ while
+   something is outstanding, _Expired_ once the end date passes, _Cancelled_ if it is
    voided.
 6. **Send the acknowledgement** email, if you have not automated it.
 
@@ -55,7 +55,7 @@ without calling finance.
 ## 2.4 Online joining
 
 With online membership switched on, a visitor fills in a form on your website, pays
-through Razorpay, and:
+through configured payment gateway, and:
 
 - a member record is created (or matched to the existing one by email),
 - the membership is created for the type they chose,
@@ -68,7 +68,7 @@ work the same way (chapter 3).
 ## 2.5 Keeping the register clean
 
 - **Expiry runs by itself.** A scheduled job moves memberships past their end date to
-  *Expired*, so "current members" means current.
+  _Expired_, so "current members" means current.
 - **Expiring Memberships report** lists everyone whose period ends in a chosen month,
   with contact details, ready for a renewal campaign. Run it for next month on the
   first of every month.
@@ -84,26 +84,3 @@ records exist. When a member gives a donation of the kind that qualifies, raise 
 certificate for it exactly as for any other donor
 ([chapter 3, section 3.5](03-donations.md#35-80g-certificates)); the
 certificate uses the company's 80G number and PAN from settings.
-
-## 2.7 Questions we get asked
-
-**A member renewed late — will the system charge them for the gap?**
-No. Inside the 30-day window the period continues from the old end date; outside it, a
-new period starts from the date you enter.
-
-**Can one person hold two memberships?**
-They can, but you almost always want one active membership per person. Use the report
-to catch overlaps.
-
-**Can I change the fee for existing members?**
-Change the amount on the membership type and it applies to memberships created after
-that. Existing periods keep the fee they were created with — which is what you want for
-audit.
-
-**Somebody paid cash and wants a receipt today.**
-Create the membership, generate the invoice, record the payment, print the invoice.
-Two minutes, and the books are right.
-
-**Where do the emails come from?**
-The email template and the acknowledgement switch live in settings; the sender is the
-company's email account, so set that up first.

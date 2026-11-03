@@ -9,9 +9,9 @@ itself as you use it; this guide explains the workflow.
 
 Two modules ship together in this app and they are meant to be used together:
 
-| Module | What it is for | Menu name |
-| --- | --- | --- |
-| **Non Profit** | The "back office" of a non-profit: members, donations, donors, volunteers, chapters, grants, certifications, 80G receipts. Combines the classic ERPNext Non Profit app with the Navari customisations. | **Frappe NPO** |
+| Module            | What it is for                                                                                                                                                                                                                                          | Menu name         |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| **Non Profit**    | The "back office" of a non-profit: members, donations, donors, volunteers, chapters, grants, certifications, 80G receipts. Combines the classic ERPNext Non Profit app with the Navari customisations.                                                  | **Frappe NPO**    |
 | **Beneficiaries** | The "front line": the people you serve, the cases/needs you handle, rescue and field work, services delivered (food, shelter, medical, entitlements), money and goods disbursed to them, partners and impact measurement. Based on Frappe Changemakers. | **Beneficiaries** |
 
 Both modules share one set of masters (Company, Cost Center, Project, Item,
@@ -33,7 +33,7 @@ Reports.
 
 Those sidebars are a curated subset — they cover the screens you use every day and
 leave the long tail (shelter homes, care centres, camps, entitlement requests, …)
-reachable from the search bar at the top of the desk (the *Awesome Bar*): start typing
+reachable from the search bar at the top of the desk (the _Awesome Bar_): start typing
 a screen name such as "Shelter Home" and pick it from the list. Chapter 13 includes a
 "where to find it" table for every screen.
 
@@ -57,39 +57,3 @@ a screen name such as "Shelter Home" and pick it from the list. Chapter 13 inclu
 11. [Disbursements and verification](11-disbursements.md) — paying people in batches, cash/goods/services, agent verification
 12. [Partners, projects and impact](12-partners-projects-impact.md) — partners, controlled intake, budgets, impact reporting
 13. [Reports and dashboards](13-reports-and-dashboards.md) — every report, the charts, a monthly routine
-
-## The one-minute mental model
-
-```
-Donor ──gives──> Donation ──allocated by──> Donation Allocation
-                                                │
-                                    ┌───────────┴────────────┐
-                              Funding Pool / Budget      Disbursement Order
-                              (which programme)          (cash / goods / services)
-                                                                │
-                                                        Beneficiaries
-                                                                │
-                                                             Cases
-                                                (the needs those people have)
-```
-
-Around that spine sit the people-facing records: **Member / Membership** (your
-supporters' club), **Volunteer** and **Chapter** (people who give time),
-**Certification** (accreditation you hand out), **Partner / Organisation**
-(agencies you work with), and **Impact Measurement** (what you report upwards).
-
-## A note on what "Frappe" gives you for free
-
-You do not need to build any of the following — they are part of every screen:
-
-- **List view** with filters, sorting, saved filters, bulk edit, export to Excel/CSV.
-- **Search bar (Awesome Bar)** — type a name or a document number from anywhere.
-- **Attachments**, **comments**, **tags**, **assignments**, **sharing**, **email links** on every record.
-- **Print / PDF** of any record, using the print format chosen in settings.
-- **Reports** can be opened, filtered and exported to Excel; charts can be drilled into.
-
-## Something not covered here?
-
-If a screen behaves differently from this guide, check the app's version first
-(footer of the desk or **About** in the Help menu). This guide describes the
-`frappe_npo` app on Frappe/ERPNext **version 16**.

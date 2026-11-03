@@ -57,7 +57,7 @@ multi-state trust run the same app — they just switch different things on.
 **Reporting and analysis**
 
 - Switch on the **Beneficiary** and **Territory** accounting dimensions for cost per
-  beneficiary and area-wise reporting. Do this *before* you post anything — dimensions
+  beneficiary and area-wise reporting. Do this _before_ you post anything — dimensions
   cannot be added to entries made earlier.
 
 > The **Enable Progressive Disbursement** switch exists but is not connected to
@@ -80,46 +80,3 @@ Work down this list and you will not be stuck mid-task:
 6. **Branches / offices** — who owns which case, member and volunteer.
 7. Then the people-side masters: donor types, membership types, volunteer types,
    beneficiary types, case types, funding pools, organisations and partners.
-
-## 1.3 Who can do what
-
-The app ships with roles that match how NGOs divide work:
-
-| Role | Typically responsible for |
-| --- | --- |
-| Social Worker | Beneficiaries and cases in the field |
-| Shelter Team Member | Shelter admissions, exits and daily services |
-| Healthcare Team Member | Medical case sheets, hospitalisation, health camps |
-| Food Team Member | Food distribution and ration records |
-| SMT(NGO)-Field Co-ordinator | Intake, recruitment phases, field team output |
-| Medical Co-ordinator | Clinical review of medical records |
-| Program Manager | Programmes, budgets, disbursement approvals |
-| Partner SMT | Partner organisations and their beneficiaries |
-| Data MIS/Documentation (Admin) | Data quality, bulk uploads, reporting, settings |
-
-Give people the narrowest role that lets them work. Money, verification and settings
-belong to the Program Manager and the Data/MIS administrator.
-
-## 1.4 Adapting the app without code
-
-- **Add a field** to any screen with Customize Form — it appears for everyone at once.
-- **Rename a label or hide a field** the same way; nothing else breaks.
-- **Print formats** — build your own receipt, ID card or certificate layout.
-- **Notifications** — email or alert people when something happens (a new case, a large
-  donation, a membership about to lapse).
-- **Sidebar and workspace** — put the screens your team uses most in the left panel.
-- **Web pages** — publish chapters, grant calls, the certification directory and
-  joining forms from the Website module.
-
-## 1.5 First-week checklist
-
-- [ ] Company, fiscal year, cost centres and territories loaded.
-- [ ] Settings reviewed; the features you need switched on.
-- [ ] Membership types, donor types, volunteer types, beneficiary types, case types and
-      funding pools entered.
-- [ ] Users created and given roles; at least one Data/MIS administrator.
-- [ ] Print formats chosen for invoices, memberships and receipts.
-- [ ] One test member, one test donation and one test beneficiary taken end to end,
-      including a payment, then cancelled.
-- [ ] Team shown the two sidebars and the search bar (chapter 13).
-

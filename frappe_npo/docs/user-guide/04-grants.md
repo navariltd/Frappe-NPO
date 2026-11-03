@@ -1,14 +1,14 @@
 # 4. Grants
 
-The grants feature keeps track of money you *apply for* rather than money given to you:
+The grants feature keeps track of money you _apply for_ rather than money given to you:
 a call for proposals, the applications you receive or send, and where each one stands.
 
 ## 4.1 What you can do
 
 - Record every grant application in one register — whether the applicant is an
   **individual** or an **organisation**.
-- Track it through a real review cycle instead of a folder of emails: *Open*,
-  *Received*, *In Progress*, *Approved*, *Rejected*, *Expired*, *Withdrawn*.
+- Track it through a real review cycle instead of a folder of emails: _Open_,
+  _Received_, _In Progress_, _Approved_, _Rejected_, _Expired_, _Withdrawn_.
 - Email the reviewer or applicant a review request straight from the application, so the
   ask and the record stay together.
 - Attach the proposal, budget and correspondence to the application.
@@ -26,13 +26,3 @@ a call for proposals, the applications you receive or send, and where each one s
    applications you declined; a funder will ask.
 5. **Expire or withdraw** the ones that lapsed or were pulled, so the open list stays
    meaningful.
-
-## 4.3 Things worth knowing
-
-- A grant is not a donation: nothing is posted to the ledger until money actually
-  arrives, at which point you record it as a donation (with the funder as donor) so
-  reporting stays in one place.
-- Because applications carry the applicant's email, you can mail a whole cycle at once
-  from the list view.
-- The statuses are intentionally few. If your process needs more detail, add a field or
-  a note rather than inventing statuses that only one person understands.

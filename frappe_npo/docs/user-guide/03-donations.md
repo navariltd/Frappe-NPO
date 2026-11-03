@@ -78,41 +78,14 @@ For donors who need a tax receipt:
 
 ## 3.6 The five donation reports
 
-| Report | The question it answers |
-| --- | --- |
-| **Donation** | What came in during a period, pledged vs received vs distributed. |
-| **Donation Payments** | Which individual payments make up that total — reconcile this with the bank. |
-| **Donor Contribution** | Where each donor's money actually went, by recipient and project. |
-| **Donation Allocation** | What is allocated, to whom, and how much is still sitting unallocated. |
-| **Donation Budget Allocation** | How much of each budget was funded by donations. |
+| Report                         | The question it answers                                                      |
+| ------------------------------ | ---------------------------------------------------------------------------- |
+| **Donation**                   | What came in during a period, pledged vs received vs distributed.            |
+| **Donation Payments**          | Which individual payments make up that total — reconcile this with the bank. |
+| **Donor Contribution**         | Where each donor's money actually went, by recipient and project.            |
+| **Donation Allocation**        | What is allocated, to whom, and how much is still sitting unallocated.       |
+| **Donation Budget Allocation** | How much of each budget was funded by donations.                             |
 
 Start with **Donation Allocations** at month end: any donation with a balance still
 unallocated is either unrestricted money you have not yet programmed, or a gap in your
 record keeping. Both are worth knowing before a board meeting.
-
-## 3.7 Working with finance
-
-- A donation is a **submitted** document. Once submitted, amend it rather than editing
-  history; the original stays visible for audit.
-- Donation money reaches the ledger through the payment entries, so if a donation looks
-  right but the accounts do not, check the payment entry first.
-- The donor's customer account (created automatically when a donor is saved, if that
-  setting is on) is what lets you reconcile a donor against receivables.
-- If a gift is refunded, record the refund as a return and cancel the certificate — do
-  not delete the donation.
-
-## 3.8 Questions we get asked
-
-**A donor gave last year and wants one receipt for everything.**
-Issue an 80G certificate for each donation; the series numbers make a complete set.
-
-**Someone promised money but never paid. Can I spend it?**
-No — allocation only works against money received. That is deliberate.
-
-**Can I split one donation across two programmes?**
-Yes, two allocation rows. The guard is the total, not the number of rows.
-
-**Do we have to use funding pools?**
-No. They help when several donations fund one theme; for everyday giving, allocate
-straight from the donation.
-

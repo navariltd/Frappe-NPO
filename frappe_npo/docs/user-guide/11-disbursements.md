@@ -22,11 +22,11 @@ batches — and then proves the money arrived.
 
 ## 11.2 The three routes
 
-| Route | Used for | What the app creates |
-| --- | --- | --- |
-| **Cash** | money transfers to people | Payment Entries, grouped per state/agent account |
-| **Physical Goods** | kits, blankets, food, materials | Stock entries that move the goods out of the warehouse |
-| **Services** | fees, treatment, tuition, hired services | Invoices for the service delivered |
+| Route              | Used for                                 | What the app creates                                   |
+| ------------------ | ---------------------------------------- | ------------------------------------------------------ |
+| **Cash**           | money transfers to people                | Payment Entries, grouped per state/agent account       |
+| **Physical Goods** | kits, blankets, food, materials          | Stock entries that move the goods out of the warehouse |
+| **Services**       | fees, treatment, tuition, hired services | Invoices for the service delivered                     |
 
 Set the accounts for each route once, in settings. If a state has no agent bank account
 configured, the batch will stop and tell you — that check exists so money is never paid
@@ -51,8 +51,8 @@ out of the wrong account.
 
 ## 11.4 Verification, in plain terms
 
-Verification answers a simple question: *is this person's name and bank/mobile account
-really theirs?*
+Verification answers a simple question: _is this person's name and bank/mobile account
+really theirs?_
 
 - **Personal accounts** — the beneficiary's own account is checked.
 - **Proxy accounts** — the money goes through a relative, neighbour or agency; the proxy
@@ -74,14 +74,3 @@ really theirs?*
   the loop between money in and money out.
 - Beneficiary payments are made against the beneficiary's **supplier** account, which is
   why the app creates one automatically.
-
-## 11.6 Controls worth knowing
-
-- **Submitted means submitted.** Do not edit a submitted order; amend it, so the original
-  stays visible.
-- **Check the route, not just the amount.** The most common error is paying cash to
-  someone whose goods were delivered, or vice versa.
-- **Never pay a batch twice.** If an order was submitted and then cancelled, create a new
-  one and reference the old — do not re-submit.
-- **Reconcile monthly.** Compare disbursement orders against payment entries and stock
-  entries for the month; the three should tell the same story.

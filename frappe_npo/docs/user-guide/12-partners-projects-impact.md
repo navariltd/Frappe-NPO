@@ -9,7 +9,7 @@ Two registers, deliberately kept apart:
 
 - **Organisation** — the agencies you deliver through or alongside: partner NGOs, trusts,
   societies, government bodies, companies. Organisations are what care centres, learning
-  centres and user profiles belong to. Mark one *Inactive* when a partnership ends rather
+  centres and user profiles belong to. Mark one _Inactive_ when a partnership ends rather
   than deleting it — history refers to it.
 - **Partner** — the individuals and institutions that bring you beneficiaries, funds or
   services: a community leader, a school, a corporate CSR partner, a referral agency.
@@ -26,7 +26,7 @@ funded cohort.
 
 - Give the round a title and a period, and say how many people it can take.
 - **The app counts the slots for you.** Available slots are recalculated from the number
-  of *Active* beneficiaries tagged to that round; if more people are tagged than there are
+  of _Active_ beneficiaries tagged to that round; if more people are tagged than there are
   slots, saving is blocked with the current counts. That single control is what stops a
   funded cohort of 100 quietly becoming 140.
 - Split a round across branches when several teams share the intake.
@@ -76,15 +76,3 @@ people, at what cost, against which goals.
 The masters behind it — SDG, key result area, strategic focus, thematic area — are there
 so that many projects can be reported in the same vocabulary. Set them up once, with the
 programme team, not per report.
-
-## 12.5 A reporting rhythm that works
-
-1. **Monthly** — pull the beneficiary, My Cases and donation reports; update each
-   partner's impact record for the month.
-2. **Quarterly** — review allocations and budgets against plan; check that every
-   restricted donation is fully allocated.
-3. **Annually** — one impact record per partner for the year, with the SDG lines and the
-   outcome ticks, plus the 80G certificates already issued.
-
-Every figure in an impact record should be reproducible from a report in this app. If it
-is not, fix the data before the funder finds the gap.
