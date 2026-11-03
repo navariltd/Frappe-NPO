@@ -1,0 +1,40 @@
+{
+ "app": "frappe_npo",
+ "creation": "2026-11-03 18:24:38.000000",
+ "docstatus": 0,
+ "doctype": "Dock",
+ "idx": 0,
+ "items": [
+  {
+   "added": 0,
+   "doctype": "Dock Item",
+   "hidden": 0,
+   "icon": "frappe-npo-duotone",
+   "idx": 1,
+   "link_to": "Frappe NPO",
+   "link_type": "Sidebar",
+   "parentfield": "items",
+   "parenttype": "Dock",
+   "title": "Frappe NPO"
+  },
+  {
+   "added": 0,
+   "doctype": "Dock Item",
+   "hidden": 0,
+   "icon": "users-duotone",
+   "idx": 2,
+   "link_to": "Beneficiaries",
+   "link_type": "Sidebar",
+   "parentfield": "items",
+   "parenttype": "Dock",
+   "title": "Beneficiaries"
+  }
+ ],
+ "modified": "2026-11-03 18:24:38.000000",
+ "modified_by": "Administrator",
+ "mount_on": "",
+ "name": "frappe_npo",
+ "owner": "Administrator",
+ "standard": 1,
+ "user": ""
+}
