@@ -12,16 +12,25 @@ app_license = "agpl-3.0"
 
 required_apps = ["erpnext"]
 
-# Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "frappe_npo",
-# 		"logo": "/assets/frappe_npo/logo.png",
-# 		"title": "Frappe NPO",
-# 		"route": "/frappe_npo",
-# 		"has_permission": "frappe_npo.api.permission.has_app_permission"
-# 	}
-# ]
+# The app's tile on the Apps screen and the header of its dock.
+#
+# No `route` on purpose: `/desk/<x>` resolves a workspace or a page, not a sidebar, so pointing it
+# at one lands on "Page <x> not found". Left out, the desk opens the first entry of the app's dock,
+# which is the same destination as clicking that entry.
+add_to_apps_screen = [
+    {
+        "name": "frappe_npo",
+        "logo": "/assets/frappe_npo/non-profit.png",
+        "title": "Frappe NPO",
+    }
+]
+
+# Modules whose navigation is carried by another module of this app.
+#
+# `Non Profit` holds the app's 20-odd doctypes but no workspace, and the one shell it would get is
+# the one titled after `Frappe NPO` above. Declaring it code-only keeps the desk from computing a
+# second, duplicate shell for it: `Non Profit` entities resolve against `Frappe NPO` instead.
+code_only_modules = {"Non Profit": ["Frappe NPO"]}
 
 # Includes in <head>
 # ------------------
@@ -67,7 +76,9 @@ doctype_list_js = {
 # Svg Icons
 # ------------------
 # include app icons in desk
-# app_include_icons = "frappe_npo/public/icons.svg"
+# `frappe-npo-duotone` (the dock's first entry) is this app's logo, shrunk to 128px: the sprite
+# loads on every desk page, so it cannot carry the 640KB original.
+app_include_icons = ["/assets/frappe_npo/icons/frappe_npo-icons.svg"]
 
 # Home Pages
 # ----------
